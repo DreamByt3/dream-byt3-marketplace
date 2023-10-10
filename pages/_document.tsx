@@ -34,13 +34,13 @@ class MyDocument extends Document {
         {/* Favicon */}
         <link
           rel="shortcut icon"
-          type="image/svg"
-          href="https://marketplace.reservoir.tools/reservoir.svg"
+          type="image/png"
+          href="https://nftstorage.link/ipfs/bafkreif5yg2hsuyyi7glnemo2mi62qx2gqtr6y2ncmnwe5cfkwvtkrbok4"
         />
 
-        {/* Reservoir meta tags */}
-        <meta property="reservoir:title" content="Reservoir NFT Explorer" />
-        <meta property="reservoir:icon" content="/reservoir-source-icon.png" />
+        {/* DreamByt3 meta tags */}
+        <meta property="dreambyt3:title" content="DreamByt3" />
+        <meta property="dreambyt3:icon" content="/reservoir-source-icon.png" />
         <meta
           property="reservoir:token-url-mainnet"
           content="/ethereum/asset/${contract}:${tokenId}"
