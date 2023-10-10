@@ -1,32 +1,23 @@
-<svg width="265" height="305" viewBox="0 0 265 305" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M264.426 228.15L132.426 152.147V0L264.426 76.1442V228.15Z" fill="#80D8FF"/>
-<path d="M0.425995 228.15L132.426 152.147V1.52588e-05L0.425995 76.1443V228.15Z" fill="#7ACFFF"/>
-<path d="M132.426 228.15L264.426 152.147L132.426 76.1441L0.425991 152.147L132.426 228.15Z" fill="url(#paint0_linear_2_696)"/>
-<path opacity="0.3" d="M132.426 304.294L0.425991 228.15V76.1441L132.426 152.147V304.294Z" fill="#E4F0FE"/>
-<path d="M0.425991 228.15L132.426 304.294V228.15L0.425991 152.147V228.15Z" fill="url(#paint1_linear_2_696)"/>
-<path opacity="0.3" d="M132.426 304.294L264.426 228.15V76.1441L132.426 152.147V304.294Z" fill="#D0E6FF"/>
-<path d="M264.426 228.15L132.426 304.294V228.15L264.426 152.147V228.15Z" fill="url(#paint2_linear_2_696)"/>
-<path opacity="0.3" d="M132.426 152.147L264.426 76.1443L132.426 1.52588e-05L0.425995 76.1443L132.426 152.147Z" fill="white"/>
-<defs>
-<linearGradient id="paint0_linear_2_696" x1="5.4069" y1="180.504" x2="262.919" y2="122.859" gradientUnits="userSpaceOnUse">
-<stop stop-color="#C132CE"/>
-<stop offset="1" stop-color="#425AFA"/>
-</linearGradient>
-<linearGradient id="paint1_linear_2_696" x1="51.2069" y1="177.603" x2="89.0909" y2="303.801" gradientUnits="userSpaceOnUse">
-<stop stop-color="#425AFA"/>
-<stop offset="0.16" stop-color="#5A52F2"/>
-<stop offset="0.55" stop-color="#9241DE"/>
-<stop offset="0.84" stop-color="#B436D3"/>
-<stop offset="1" stop-color="#C132CE"/>
-</linearGradient>
-<linearGradient id="paint2_linear_2_696" x1="155.784" y1="280.42" x2="239.8" y2="177.199" gradientUnits="userSpaceOnUse">
-<stop stop-color="#C132CE"/>
-<stop offset="0.1" stop-color="#AB39D6"/>
-<stop offset="0.28" stop-color="#8545E3"/>
-<stop offset="0.47" stop-color="#684EED"/>
-<stop offset="0.65" stop-color="#5355F4"/>
-<stop offset="0.83" stop-color="#4659F9"/>
-<stop offset="1" stop-color="#425AFA"/>
-</linearGradient>
-</defs>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="100.000000pt" height="100.000000pt" viewBox="0 0 100.000000 100.000000"
+ preserveAspectRatio="xMidYMid meet">
+<metadata>
+Created by potrace 1.10, written by Peter Selinger 2001-2011
+</metadata>
+<g transform="translate(0.000000,100.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path d="M427 766 c-140 -39 -224 -203 -172 -336 l14 -35 -7 40 c-18 100 5
+181 70 241 105 99 253 97 356 -6 32 -32 39 -36 25 -15 -69 99 -178 141 -286
+111z"/>
+<path d="M213 623 c-21 -49 -22 -166 -1 -214 22 -50 83 -116 132 -142 55 -29
+193 -31 246 -3 68 36 140 124 140 171 0 19 9 19 32 -2 24 -22 32 -12 16 22
+-11 25 -10 29 17 51 l30 24 -37 0 c-32 0 -37 3 -43 30 -4 17 -10 30 -15 30 -4
+0 -10 -13 -13 -30 -6 -27 -10 -30 -44 -30 l-38 0 29 -23 c27 -22 28 -26 18
+-56 l-12 -33 26 17 26 17 -23 -42 c-34 -61 -94 -106 -167 -126 -55 -15 -69
+-16 -115 -4 -159 40 -245 191 -192 339 18 51 10 54 -12 4z m540 -110 c8 -14
+-12 -53 -27 -53 -13 0 -28 44 -18 55 8 8 40 6 45 -2z"/>
+</g>
 </svg>
