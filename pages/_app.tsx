@@ -80,7 +80,7 @@ function AppWrapper(props: AppProps & { baseUrl: string }) {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="light"
+      defaultTheme="dark"
       value={{
         dark: darkTheme.className,
         light: 'light',
@@ -186,7 +186,7 @@ function MyApp({
             //CONFIGURABLE: Set your marketplace fee and recipient, (fee is in BPS)
             // Note that this impacts orders created on your marketplace (offers/listings)
             // marketplaceFee: 250,
-            // marketplaceFeeRecipient: "0xabc"
+            marketplaceFees: ["0x694D91c4cBF877b95059c82F4006b79cdA55b4dd:100"]
           }}
           theme={reservoirKitTheme}
         >
