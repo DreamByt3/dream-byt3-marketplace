@@ -47,6 +47,7 @@ export const Head: FC<Props> = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="DreamByt3" />
+      <meta property="og:url" content="https://nftstorage.link/ipfs/bafkreif4rzqjekjttjqounvnxle4dqvznkqut3c4x3zqgnmx5agtp6jf7q"></meta>
     </NextHead>
   )
 }
