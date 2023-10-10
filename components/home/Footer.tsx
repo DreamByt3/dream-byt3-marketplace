@@ -36,10 +36,6 @@ const developerSectionLinks = [
     href: 'https://docs.dreambyt3.com',
   },
   {
-    name: 'API Reference',
-    href: 'https://docs.reservoir.tools/reference/overview',
-  },
-  {
     name: 'GitHub',
     href: 'https://github.com/DreamByt3',
   },
@@ -98,7 +94,7 @@ export const Footer = () => {
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="Join DreamBy3 Community" />
+        <SectionTitle title="DreamBy3 Community" />
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
