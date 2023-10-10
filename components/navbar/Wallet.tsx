@@ -36,7 +36,7 @@ const currencies = [
     },
     coinGeckoId: 'weth',
   },
-  {
+  /*{
     address: zeroAddress,
     symbol: 'MATIC',
     decimals: polygon.nativeCurrency.decimals,
@@ -65,7 +65,7 @@ const currencies = [
       name: optimism.name,
     },
     coinGeckoId: 'weth',
-  },
+  },*/
 ]
 
 type EnhancedCurrency = (typeof currencies)[0] & {

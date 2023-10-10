@@ -57,7 +57,7 @@ const { chains, publicClient } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Reservoir NFT Explorer',
+  appName: 'DreamByty3',
   projectId: WALLET_CONNECT_PROJECT_ID,
   chains,
 })
@@ -72,7 +72,7 @@ const wagmiClient = createConfig({
 const reservoirKitThemeOverrides = {
   headlineFont: inter.style.fontFamily,
   font: inter.style.fontFamily,
-  primaryColor: '#6E56CB',
+  primaryColor: '#f4a7bb',
   primaryHoverColor: '#644fc1',
 }
 

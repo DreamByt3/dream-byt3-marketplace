@@ -183,7 +183,7 @@ const Navbar = () => {
       <Box css={{ flex: 1, px: '$5' }}>
         <GlobalSearch
           ref={searchRef}
-          placeholder="Search collections and addresses"
+          placeholder="Search NFTs..."
           containerCss={{ width: '100%' }}
           key={router.asPath}
         />
@@ -205,14 +205,14 @@ const Navbar = () => {
             <HoverCard.Root openDelay={120}>
               <HoverCard.Trigger>
                 <a target="_blank" href={`https://docs.reservoir.tools/docs`}>
-                  <NavItem>Developers</NavItem>
+                  <NavItem>More</NavItem>
                 </a>
               </HoverCard.Trigger>
               <HoverCard.Content sideOffset={24} align="start">
                 <Card css={{ p: 24, width: 240 }}>
                   <Flex css={{ gap: '$4' }} direction="column">
                     <a target="_blank" href={`https://reservoir.tools`}>
-                      <NavItem>About Reservoir</NavItem>
+                      <NavItem>About DreamByt3</NavItem>
                     </a>
                     <a
                       target="_blank"
@@ -230,13 +230,9 @@ const Navbar = () => {
 
                     <a
                       target="_blank"
-                      href={`https://github.com/reservoirprotocol`}
+                      href={`https://github.com/DreamByt3`}
                     >
-                      <NavItem>Github</NavItem>
-                    </a>
-
-                    <a href={`https://testnets.reservoir.tools`}>
-                      <NavItem>Testnet Explorer</NavItem>
+                      <NavItem>GitHub</NavItem>
                     </a>
                   </Flex>
                 </Card>

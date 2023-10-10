@@ -252,7 +252,7 @@ export const darkTheme = createTheme({
     //Aliases
 
     //Primary
-    primary1: '$iris1',
+    primary1: '#f4a7bb',
     primary2: '$iris2',
     primary3: '$iris3',
     primary4: '$iris4',
@@ -293,7 +293,7 @@ export const darkTheme = createTheme({
     gray11: '$slate11',
     gray12: '$slate12',
 
-    accent: '#7000FF',
+    accent: '#f4a7bb',
 
     neutralBgSubtle: '$gray3',
     neutralBg: '$gray1',

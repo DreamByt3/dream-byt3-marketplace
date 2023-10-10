@@ -87,7 +87,7 @@ export const DefaultChain: ReservoirChain = {
 
 export default [
   DefaultChain,
-  {
+  /*{
     ...polygon,
     lightIconUrl: '/icons/polygon-icon-dark.svg',
     darkIconUrl: '/icons/polygon-icon-light.svg',
@@ -255,5 +255,25 @@ export default [
     coingeckoId: 'ethereum',
     collectionSetId: process.env.NEXT_PUBLIC_ZKSYNC_COLLECTION_SET_ID,
     community: process.env.NEXT_PUBLIC_ZKSYNC_COMMUNITY,
+  },*/
+  {
+    ...arbitrum,
+    name: 'Arbitrum',
+    lightIconUrl: '/icons/arbitrum-icon-dark.svg',
+    darkIconUrl: '/icons/arbitrum-icon-light.svg',
+    reservoirBaseUrl: reservoirChains.arbitrum.baseApiUrl,
+    proxyApi: '/api/reservoir/arbitrum',
+    routePrefix: 'arbitrum',
+    coingeckoId: 'arbitrum-iou',
+    collectionSetId: process.env.NEXT_PUBLIC_ARBITRUM_COLLECTION_SET_ID,
+    community: process.env.NEXT_PUBLIC_ARBITRUM_COMMUNITY,
+    wssUrl: 'wss://ws-arbitrum.reservoir.tools',
+    listingCurrencies: [
+      { ...nativeCurrencyBase, coinGeckoId: 'arbitrum-iou' },
+      {
+        ...usdcCurrencyBase,
+        contract: usdcContracts[arbitrum.id],
+      },
+    ],
   },
 ] as ReservoirChain[]

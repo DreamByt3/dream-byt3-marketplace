@@ -159,7 +159,7 @@ const HamburgerMenu = () => {
                 width: '100%',
               }}
             >
-              <Text style="subtitle1">Developers</Text>
+              <Text style="subtitle1">More</Text>
             </Anchor>
             <Link href="/portfolio" legacyBehavior>
               <Flex

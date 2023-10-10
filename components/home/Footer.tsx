@@ -33,26 +33,22 @@ const SectionLink: FC<SectionLinkProps> = ({ name, href }) => (
 const developerSectionLinks = [
   {
     name: 'Docs',
-    href: 'https://docs.reservoir.tools/docs',
+    href: 'https://docs.dreambyt3.com',
   },
   {
     name: 'API Reference',
     href: 'https://docs.reservoir.tools/reference/overview',
   },
   {
-    name: 'Github',
-    href: 'https://github.com/reservoirprotocol',
-  },
-  {
-    name: 'Testnets',
-    href: 'https://testnets.reservoir.tools',
+    name: 'GitHub',
+    href: 'https://github.com/DreamByt3',
   },
 ]
 
 const companySectionLinks = [
   {
-    name: 'Jobs',
-    href: 'https://jobs.ashbyhq.com/reservoir',
+    name: 'DREAM Token',
+    href: 'https://coingecko.com',
   },
   {
     name: 'Terms of Use',
@@ -86,13 +82,13 @@ export const Footer = () => {
     >
       <Flex css={{ gap: 80, '@bp600': { gap: 136 } }}>
         <Flex direction="column">
-          <SectionTitle title="Developers" />
+          <SectionTitle title="More" />
           {developerSectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
         </Flex>
         <Flex direction="column">
-          <SectionTitle title="Company" />
+          <SectionTitle title="Protocol" />
           {companySectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
@@ -102,12 +98,12 @@ export const Footer = () => {
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="Join Reservoir Community" />
+        <SectionTitle title="Join DreamBy3 Community" />
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://twitter.com/reservoir0x"
+            href="https://twitter.com/DreamByt3"
           >
             <Button size="xs" color="gray3">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />
