@@ -68,7 +68,7 @@ const Navbar = () => {
                 src="/reservoirLogo.svg"
                 width={36}
                 height={36}
-                alt="Reservoir"
+                alt="DreamByt3"
               />
             </Box>
           </Link>
@@ -117,7 +117,7 @@ const Navbar = () => {
                 src="/reservoirLogo.svg"
                 width={36}
                 height={36}
-                alt="Reservoir"
+                alt="DreamByt3"
               />
             </Box>
           </Link>
@@ -129,10 +129,10 @@ const Navbar = () => {
             }}
           >
             <Link href={`/${routePrefix}`}>
-              <NavItem>Featured</NavItem>
+              <NavItem>Featured NFTs</NavItem>
             </Link>
             <Link href={`/${routePrefix}/collections/trending`}>
-              <NavItem>NFTs</NavItem>
+              <NavItem> DREAM Token</NavItem>
             </Link>
 
             {/* <HoverCard.Root openDelay={200}>
@@ -204,28 +204,25 @@ const Navbar = () => {
           <Box>
             <HoverCard.Root openDelay={120}>
               <HoverCard.Trigger>
-                <a target="_blank" href={`https://docs.reservoir.tools/docs`}>
-                  <NavItem>More</NavItem>
+                <a target="_blank" href={`https://docs.dreambyt3.com`}>
+                  <NavItem>More...</NavItem>
                 </a>
               </HoverCard.Trigger>
               <HoverCard.Content sideOffset={24} align="start">
                 <Card css={{ p: 24, width: 240 }}>
                   <Flex css={{ gap: '$4' }} direction="column">
-                    <a target="_blank" href={`https://reservoir.tools`}>
-                      <NavItem>About DreamByt3</NavItem>
-                    </a>
                     <a
                       target="_blank"
-                      href={`https://docs.reservoir.tools/docs`}
+                      href={`https://docs.dreambyt3.com`}
                     >
                       <NavItem>Docs</NavItem>
                     </a>
 
                     <a
                       target="_blank"
-                      href={`https://docs.reservoir.tools/reference/overview`}
+                      href={`https://medium.com/@DreamByt3`}
                     >
-                      <NavItem>API Reference</NavItem>
+                      <NavItem>Blog</NavItem>
                     </a>
 
                     <a

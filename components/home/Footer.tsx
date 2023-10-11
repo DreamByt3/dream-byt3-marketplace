@@ -39,6 +39,10 @@ const developerSectionLinks = [
     name: 'GitHub',
     href: 'https://github.com/DreamByt3',
   },
+  {
+    name: 'Medium',
+    href: 'https://medium.com/@DreamByt3',
+  },
 ]
 
 const companySectionLinks = [
@@ -78,7 +82,7 @@ export const Footer = () => {
     >
       <Flex css={{ gap: 80, '@bp600': { gap: 136 } }}>
         <Flex direction="column">
-          <SectionTitle title="More" />
+          <SectionTitle title="Resources" />
           {developerSectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
@@ -94,7 +98,7 @@ export const Footer = () => {
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="DreamBy3 Community" />
+        <SectionTitle title="DreamByt3 Community" />
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
