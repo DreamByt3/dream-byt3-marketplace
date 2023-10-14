@@ -33,7 +33,7 @@ type Props = {
 
 const Logo = styled(ReservoirLogoWhiteText, {
   '& .letter': {
-    fill: '$gray12',
+    fill: '#000000',
   },
 })
 
@@ -65,7 +65,7 @@ export const Modal = forwardRef<ElementRef<typeof Dialog>, Props>(
         <Flex
           css={{
             p: 16,
-            backgroundColor: '$gray3',
+            backgroundColor: '#000000',
             alignItems: 'center',
             justifyContent: 'space-between',
             borderTopRightRadius: '$borderRadius',
@@ -112,12 +112,12 @@ export const Modal = forwardRef<ElementRef<typeof Dialog>, Props>(
             borderBottomLeftRadius: '$borderRadius',
           }}
         >
-          <Anchor href="https://reservoir.tools/" target="_blank">
+          <Anchor href="https://docs.dreambyt3.com" target="_blank">
             <Text
               style="body3"
               css={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
             >
-              Powered by <Logo />
+              Powered by DreamByt3
             </Text>
           </Anchor>
         </Flex>

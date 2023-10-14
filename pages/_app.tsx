@@ -57,7 +57,7 @@ const { chains, publicClient } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'DreamByty3',
+  appName: 'DreamByt3',
   projectId: WALLET_CONNECT_PROJECT_ID,
   chains,
 })
@@ -73,7 +73,7 @@ const reservoirKitThemeOverrides = {
   headlineFont: inter.style.fontFamily,
   font: inter.style.fontFamily,
   primaryColor: '#f4a7bb',
-  primaryHoverColor: '#644fc1',
+  primaryHoverColor: '#f4a7bb',
 }
 
 function AppWrapper(props: AppProps & { baseUrl: string }) {

@@ -64,7 +64,7 @@ const HamburgerMenu = () => {
                 src="/reservoirLogo.svg"
                 width={36}
                 height={36}
-                alt="Reservoir"
+                alt="DreamByt3"
               />
             </Box>
           </Link>
@@ -149,7 +149,7 @@ const HamburgerMenu = () => {
             </Link>
 
             <Anchor
-              href="https://docs.reservoir.tools/docs"
+              href="https://docs.dreambyt3.com"
               target="_blank"
               css={{
                 borderBottom: '1px solid $gray4',
@@ -165,7 +165,7 @@ const HamburgerMenu = () => {
               <Flex
                 direction="column"
                 css={{
-                  borderBottom: '1px solid $gray4',
+                  borderBottom: '1px solid #F4A7BB',
                   cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
@@ -184,7 +184,7 @@ const HamburgerMenu = () => {
                 justifyContent: 'space-between',
                 cursor: 'pointer',
                 alignItems: 'center',
-                borderBottom: '1px solid $gray4',
+                borderBottom: '1px solid #F4A7BB',
               }}
               onClick={() => disconnect()}
             >
@@ -235,7 +235,7 @@ const HamburgerMenu = () => {
                 <Text
                   style="subtitle1"
                   css={{
-                    borderBottom: '1px solid $gray4',
+                    borderBottom: '1px solid #F4A7BB',
                     cursor: 'pointer',
                     pb: '$4',
                     pt: '24px',
@@ -246,7 +246,7 @@ const HamburgerMenu = () => {
                 </Text>
               </Link>
               <Anchor
-                href="https://docs.reservoir.tools/docs"
+                href="https://docs.dreambyt3.com"
                 target="_blank"
                 css={{
                   borderBottom: '1px solid $gray4',
@@ -279,7 +279,7 @@ const HamburgerMenu = () => {
               css={{ justifyContent: 'center', width: '44px', height: '44px' }}
               type="button"
               size="small"
-              color="gray3"
+              color="primary"
             >
               <FontAwesomeIcon icon={faTwitter} width={20} height={20} />
             </Button>

@@ -47,7 +47,7 @@ const developerSectionLinks = [
 
 const companySectionLinks = [
   {
-    name: 'DREAM Token',
+    name: '$DREAM Token',
     href: 'https://coingecko.com',
   },
   {
@@ -65,7 +65,7 @@ export const Footer = () => {
     <Flex
       justify="between"
       css={{
-        borderTop: '1px solid $gray7',
+        borderTop: '2px solid #F4A7BB',
         borderStyle: 'solid',
         p: '$5',
         '@lg': {
@@ -105,7 +105,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href="https://twitter.com/DreamByt3"
           >
-            <Button size="xs" color="gray3">
+            <Button size="xs" color="primary">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />
             </Button>
           </a>

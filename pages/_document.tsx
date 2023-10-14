@@ -35,7 +35,7 @@ class MyDocument extends Document {
         <link
           rel="shortcut icon"
           type="image/png"
-          href="https://nftstorage.link/ipfs/bafkreif5yg2hsuyyi7glnemo2mi62qx2gqtr6y2ncmnwe5cfkwvtkrbok4"
+          href="https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png"
         />
 
         {/* DreamByt3 meta tags */}

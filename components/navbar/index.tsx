@@ -49,7 +49,7 @@ const Navbar = () => {
         height: NAVBAR_HEIGHT_MOBILE,
         px: '$4',
         width: '100%',
-        borderBottom: '1px solid $gray4',
+        borderBottom: '2px solid #F4A7BB',
         zIndex: 999,
         background: '$slate1',
         position: 'fixed',
@@ -91,7 +91,7 @@ const Navbar = () => {
         width: '100%',
         // maxWidth: 1920,
         mx: 'auto',
-        borderBottom: '1px solid $gray4',
+        borderBottom: '2px solid #F4A7BB',
         zIndex: 999,
         background: '$neutralBg',
         position: 'fixed',
@@ -129,10 +129,10 @@ const Navbar = () => {
             }}
           >
             <Link href={`/${routePrefix}`}>
-              <NavItem>Featured NFTs</NavItem>
+              <NavItem>Featured</NavItem>
             </Link>
             <Link href={`/${routePrefix}/collections/trending`}>
-              <NavItem> DREAM Token</NavItem>
+              <NavItem>Token</NavItem>
             </Link>
 
             {/* <HoverCard.Root openDelay={200}>
@@ -205,7 +205,7 @@ const Navbar = () => {
             <HoverCard.Root openDelay={120}>
               <HoverCard.Trigger>
                 <a target="_blank" href={`https://docs.dreambyt3.com`}>
-                  <NavItem>More...</NavItem>
+                  <NavItem>More</NavItem>
                 </a>
               </HoverCard.Trigger>
               <HoverCard.Content sideOffset={24} align="start">
@@ -239,7 +239,7 @@ const Navbar = () => {
           {isConnected && (
             <Link href={`/portfolio`}>
               <Box css={{ mr: '$2' }}>
-                <NavItem>Portfolio</NavItem>
+                <NavItem>My Assets</NavItem>
               </Box>
             </Link>
           )}

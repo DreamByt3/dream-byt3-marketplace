@@ -175,7 +175,7 @@ export const AccountSidebar: FC = () => {
                         css={{
                           gap: 6,
                           p: '$3',
-                          color: '$gray10',
+                          color: '#F4A7BB',
                           cursor: 'pointer',
                         }}
                       >
@@ -189,7 +189,7 @@ export const AccountSidebar: FC = () => {
                         css={{
                           gap: 6,
                           p: '$3',
-                          color: '$gray10',
+                          color: '#F4A7BB',
                           cursor: 'pointer',
                         }}
                       >
@@ -203,7 +203,7 @@ export const AccountSidebar: FC = () => {
                         css={{
                           gap: 6,
                           p: '$3',
-                          color: '$gray10',
+                          color: '#F4A7BB',
                           cursor: 'pointer',
                         }}
                       >
@@ -217,7 +217,7 @@ export const AccountSidebar: FC = () => {
                         css={{
                           gap: 6,
                           p: '$3',
-                          color: '$gray10',
+                          color: '#F4A7BB',
                           cursor: 'pointer',
                         }}
                       >

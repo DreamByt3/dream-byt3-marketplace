@@ -421,7 +421,7 @@ const IndexPage: NextPage = () => {
               <Text style="h4" css={{ mb: '$3' }}>
                 Sell your NFTs
               </Text>
-              <Text css={{ color: '$gray11' }}>
+              <Text css={{ color: '#ffffff' }}>
                 <FontAwesomeIcon icon={faWallet} size="2xl" />
               </Text>
               <Text

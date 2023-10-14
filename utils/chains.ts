@@ -255,7 +255,7 @@ export default [
     coingeckoId: 'ethereum',
     collectionSetId: process.env.NEXT_PUBLIC_ZKSYNC_COLLECTION_SET_ID,
     community: process.env.NEXT_PUBLIC_ZKSYNC_COMMUNITY,
-  },*/
+  },
   {
     ...arbitrum,
     name: 'Arbitrum',
@@ -275,5 +275,5 @@ export default [
         contract: usdcContracts[arbitrum.id],
       },
     ],
-  },
+  },*/
 ] as ReservoirChain[]

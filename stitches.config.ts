@@ -108,7 +108,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         neutralBg: 'white',
         neutralBgSubtle: 'white',
         panelShadow: 'rgba(0,0,0,0.1)',
-        panelBg: '$gray2',
+        panelBg: '#000000',
         panelBorder: 'transparent',
         dropdownBg: 'white',
         sidebarOverlay: 'black',
@@ -295,13 +295,13 @@ export const darkTheme = createTheme({
 
     accent: '#f4a7bb',
 
-    neutralBgSubtle: '$gray3',
-    neutralBg: '$gray1',
+    neutralBgSubtle: '#000000',
+    neutralBg: '#000000',
 
-    panelBg: '$gray3',
+    panelBg: '#000000',
     panelBorder: '$slate7',
     panelShadow: 'transparent',
-    dropdownBg: '$gray3',
+    dropdownBg: '#000000',
     sidebarOverlay: 'black',
   },
 })

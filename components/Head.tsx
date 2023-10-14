@@ -14,7 +14,7 @@ type Props = {
  * @param description - The description of the page.
  */
 export const Head: FC<Props> = ({
-  ogImage = 'https://nftstorage.link/ipfs/bafkreif4rzqjekjttjqounvnxle4dqvznkqut3c4x3zqgnmx5agtp6jf7q',
+  ogImage = 'https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png',
   title = 'DreamByt3',
   description = 'DreamByt3 is an NFT Marketplace Dedicated to Creators and Fee Sharing with Users',
 }) => {
@@ -47,7 +47,7 @@ export const Head: FC<Props> = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="DreamByt3" />
-      <meta property="og:url" content="https://nftstorage.link/ipfs/bafkreif4rzqjekjttjqounvnxle4dqvznkqut3c4x3zqgnmx5agtp6jf7q"></meta>
+      <meta property="og:url" content="https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png"></meta>
     </NextHead>
   )
 }
