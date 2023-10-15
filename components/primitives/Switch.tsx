@@ -12,7 +12,7 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   $$focusColor: '$colors$gray12',
   '&[data-state="checked"]': { backgroundColor: '$primary9' },
   '&:focus-visible': {
-    boxShadow: '0 0 0 2px $$focusColor',
+    boxShadow: '0 0 0 1px $$focusColor',
   },
 })
 

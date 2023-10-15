@@ -65,7 +65,7 @@ export const Footer = () => {
     <Flex
       justify="between"
       css={{
-        borderTop: '2px solid #F4A7BB',
+        borderTop: '1px solid #F4A7BB',
         borderStyle: 'solid',
         p: '$5',
         '@lg': {

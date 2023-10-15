@@ -180,7 +180,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                         style={{
                           display: 'block',
                           borderRadius: 8,
-                          border: '2px solid rgba(255,255,255,0.6)',
+                          border: '1px solid #F4A7BB',
                         }}
                         src={optimizeImage(topCollection?.image, 200) as string}
                       />
@@ -437,7 +437,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                             css={{
                               width: 72,
                               height: 72,
-                              border: '2px solid rgba(255,255,255,0.6)',
+                              border: '1px solid rgba(255,255,255,0.6)',
                               position: 'absolute',
                               bottom: '$3',
                               left: '$3',

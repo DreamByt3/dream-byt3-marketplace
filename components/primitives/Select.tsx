@@ -39,7 +39,7 @@ const StyledTrigger = styled(SelectPrimitive.Trigger, {
   backgroundColor: '$gray3',
   $$focusColor: '$colors$accentBorderHover',
   '&:placeholder': { color: '$neutralText' },
-  '&:focus': { boxShadow: '0 0 0 2px $$focusColor' },
+  '&:focus': { boxShadow: '0 0 0 1px $$focusColor' },
 })
 
 const StyledContent = styled(SelectPrimitive.Content, {
@@ -48,7 +48,7 @@ const StyledContent = styled(SelectPrimitive.Content, {
   borderRadius: 8,
   overflow: 'hidden',
   $$focusColor: '$gray4',
-  boxShadow: '0 0 0 2px $$focusColor',
+  boxShadow: '0 0 0 1px $$focusColor',
 })
 
 const textCss = {
