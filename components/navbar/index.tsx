@@ -132,7 +132,7 @@ const Navbar = () => {
               <NavItem>Featured</NavItem>
             </Link>
             <Link href={`/${routePrefix}/collections/trending`}>
-              <NavItem>Token</NavItem>
+              <NavItem>Buy DREAM</NavItem>
             </Link>
 
             {/* <HoverCard.Root openDelay={200}>
@@ -202,7 +202,7 @@ const Navbar = () => {
       >
         <Flex css={{ gap: '$5', mr: 12 }}>
           <Box>
-            <HoverCard.Root openDelay={120}>
+            <HoverCard.Root openDelay={0}>
               <HoverCard.Trigger>
                 <a target="_blank" href={`https://docs.dreambyt3.com`}>
                   <NavItem>More</NavItem>

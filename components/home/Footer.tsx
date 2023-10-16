@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Text, Box, Flex, Anchor, Button } from '../primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 type SectionTitleProps = {
   title: string
@@ -49,13 +49,16 @@ const companySectionLinks = [
   {
     name: '$DREAM Token',
     href: 'https://coingecko.com',
+  }, {
+    name: 'Governance',
+    href: 'https://snapshot.org/#/dreambyt3.eth',
   },
   {
-    name: 'Terms of Use',
+    name: 'Terms',
     href: 'https://reservoir.tools/terms',
   },
   {
-    name: 'Privacy Policy',
+    name: 'Privacy',
     href: 'https://reservoir.tools/privacy',
   },
 ]
@@ -98,7 +101,7 @@ export const Footer = () => {
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="DreamByt3 Community" />
+        <SectionTitle title="Community" />
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
@@ -107,6 +110,25 @@ export const Footer = () => {
           >
             <Button size="xs" color="primary">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />
+            </Button>
+            </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://discord.gg/rt5VmK2pKK"
+            aria-label="Discord"
+          >
+            <Button
+              size="xs"
+              color="primary"
+              css={{
+                '&:hover': {
+                  background: 'primary',
+                },
+              }}
+              aria-label="Discord"
+            >
+              <FontAwesomeIcon icon={faDiscord} width={14} height={14} />
             </Button>
           </a>
         </Flex>
