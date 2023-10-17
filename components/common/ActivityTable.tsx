@@ -87,7 +87,7 @@ export const ActivityTable: FC<Props> = ({ data }) => {
               />
             )
           })}
-          <Box ref={loadMoreRef} css={{ height: 20 }}></Box>
+          <Box ref={loadMoreRef} css={{ height: 20 }}/>
         </Flex>
       )}
       {data.isValidating && (
