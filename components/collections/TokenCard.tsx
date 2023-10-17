@@ -74,6 +74,7 @@ export default ({
         position: 'relative',
         transition: 'border .5s',
         border: '2px solid transparent',
+        minHeight: 350,
         '&:hover': {
           border: '2px solid $primary10'
         },
@@ -327,7 +328,7 @@ export default ({
             </Flex>
           )}
           {token?.token?.lastSale?.price?.amount?.decimal ? (
-            <Flex css={{ gap: '$2', marginTop: 'auto' }}>
+            <Flex css={{ gap: '$2', marginTop: 16 }}>
               <Text css={{ color: '$gray11' }} style="subtitle3">
                 Last Sale
               </Text>
@@ -349,11 +350,9 @@ export default ({
           css={{
             width: '100%',
             transition: 'bottom 0.25s ease-in-out',
-            '@sm': {
-              position: 'relative'
-            },
+            position: 'absolute',
+            bottom: 0,
             '@lg': {
-              position: 'absolute',
               bottom: -44,
               left: 0,
               right: 0,
