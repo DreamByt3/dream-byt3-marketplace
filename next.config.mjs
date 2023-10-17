@@ -1,18 +1,18 @@
 import { DefaultChain } from './.cache/chains.mjs'
-import { withSentryConfig } from '@sentry/nextjs'
-
-const sentryWebpackPluginOptions = {
-  org: process.env.SENTRY_ORG,
-  project: 'javascript-nextjs',
-  silent: true,
-}
+// import { withSentryConfig } from '@sentry/nextjs'
+//
+// const sentryWebpackPluginOptions = {
+//   org: process.env.SENTRY_ORG,
+//   project: 'javascript-nextjs',
+//   silent: true,
+// }
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  sentry: {
-    hideSourceMaps: false,
-  },
+  // sentry: {
+  //   hideSourceMaps: false,
+  // },
   async rewrites() {
     return [
       {
@@ -78,4 +78,6 @@ const nextConfig = {
   },
 }
 
-export default withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+// export default withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+
+export default nextConfig;

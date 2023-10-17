@@ -22,7 +22,7 @@ const ProgressBar: FC<Props> = ({ value, max, ...props }) => {
             backgroundPosition: i + 1 <= value ? 'left' : 'right',
             transition: 'all 0.5s ease',
           }}
-        ></Flex>
+        />
       ))}
     </Flex>
   )

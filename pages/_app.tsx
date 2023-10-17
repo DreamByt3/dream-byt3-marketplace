@@ -1,22 +1,18 @@
-import AnalyticsProvider, {
-  initializeAnalytics,
-} from 'components/AnalyticsProvider'
-initializeAnalytics()
-import ErrorTrackingProvider from 'components/ErrorTrackingProvider'
-
+import nProgress from 'nprogress'
+import { Router } from 'next/router'
 import { Inter } from '@next/font/google'
 import type { AppContext, AppProps } from 'next/app'
 import { default as NextApp } from 'next/app'
-import { ThemeProvider, useTheme } from 'next-themes'
-import { darkTheme, globalReset } from 'stitches.config'
+import { globalReset } from 'stitches.config'
 import '@rainbow-me/rainbowkit/styles.css'
+import 'nprogress/nprogress.css'
 import {
   RainbowKitProvider,
   getDefaultWallets,
   darkTheme as rainbowDarkTheme,
-  lightTheme as rainbowLightTheme,
 } from '@rainbow-me/rainbowkit'
 import { WagmiConfig, createConfig, configureChains } from 'wagmi'
+import {SessionProvider} from 'next-auth/react'
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -24,11 +20,9 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import {
   ReservoirKitProvider,
   darkTheme as reservoirDarkTheme,
-  lightTheme as reservoirLightTheme,
-  ReservoirKitTheme,
   CartProvider,
 } from '@reservoir0x/reservoir-kit-ui'
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import ToastContextProvider from 'context/ToastContextProvider'
 import supportedChains from 'utils/chains'
@@ -38,6 +32,7 @@ import { WebsocketContextProvider } from 'context/WebsocketContextProvider'
 import ReferralContextProvider, {
   ReferralContext,
 } from 'context/ReferralContextProvider'
+import {useTheme} from "next-themes";
 
 //CONFIGURABLE: Use nextjs to load your own custom font: https://nextjs.org/docs/basic-features/font-optimization
 const inter = Inter({
@@ -57,7 +52,7 @@ const { chains, publicClient } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Reservoir NFT Explorer',
+  appName: 'DreamByte',
   projectId: WALLET_CONNECT_PROJECT_ID,
   chains,
 })
@@ -72,32 +67,31 @@ const wagmiClient = createConfig({
 const reservoirKitThemeOverrides = {
   headlineFont: inter.style.fontFamily,
   font: inter.style.fontFamily,
+  buttonTextColor: '#000',
+  buttonTextHoverColor: '#000',
   primaryColor: '#6E56CB',
   primaryHoverColor: '#644fc1',
 }
 
+nProgress.configure({
+  showSpinner: false,
+})
+
+Router.events.on("routeChangeStart", nProgress.start);
+Router.events.on("routeChangeError", nProgress.done);
+Router.events.on("routeChangeComplete", nProgress.done);
+
 function AppWrapper(props: AppProps & { baseUrl: string }) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      value={{
-        dark: darkTheme.className,
-        light: 'light',
-      }}
-    >
-      <WagmiConfig config={wagmiClient}>
+    <WagmiConfig config={wagmiClient}>
+      <SessionProvider>
         <ChainContextProvider>
-          <AnalyticsProvider>
-            <ErrorTrackingProvider>
-              <ReferralContextProvider>
-                <MyApp {...props} />
-              </ReferralContextProvider>
-            </ErrorTrackingProvider>
-          </AnalyticsProvider>
+          <ReferralContextProvider>
+            <MyApp {...props} />
+          </ReferralContextProvider>
         </ChainContextProvider>
-      </WagmiConfig>
-    </ThemeProvider>
+      </SessionProvider>
+    </WagmiConfig>
   )
 }
 
@@ -108,35 +102,7 @@ function MyApp({
 }: AppProps & { baseUrl: string }) {
   globalReset()
 
-  const { theme } = useTheme()
   const marketplaceChain = useMarketplaceChain()
-  const [reservoirKitTheme, setReservoirKitTheme] = useState<
-    ReservoirKitTheme | undefined
-  >()
-
-  const [rainbowKitTheme, setRainbowKitTheme] = useState<
-    | ReturnType<typeof rainbowDarkTheme>
-    | ReturnType<typeof rainbowLightTheme>
-    | undefined
-  >()
-
-  useEffect(() => {
-    if (theme == 'dark') {
-      setReservoirKitTheme(reservoirDarkTheme(reservoirKitThemeOverrides))
-      setRainbowKitTheme(
-        rainbowDarkTheme({
-          borderRadius: 'small',
-        })
-      )
-    } else {
-      setReservoirKitTheme(reservoirLightTheme(reservoirKitThemeOverrides))
-      setRainbowKitTheme(
-        rainbowLightTheme({
-          borderRadius: 'small',
-        })
-      )
-    }
-  }, [theme])
   const { feesOnTop } = useContext(ReferralContext)
 
   const FunctionalComponent = Component as FC
@@ -152,61 +118,55 @@ function MyApp({
 
   return (
     <HotkeysProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        value={{
-          dark: darkTheme.className,
-          light: 'light',
-        }}
-      >
-        <ReservoirKitProvider
-          options={{
-            // Reservoir API key which you can generate at https://reservoir.tools/
-            // This is a protected key and displays as 'undefined' on the browser
-            // DO NOT add NEXT_PUBLIC to the key or you'll risk leaking it on the browser
-            apiKey: process.env.RESERVOIR_API_KEY,
-            //CONFIGURABLE: Override any configuration available in RK: https://docs.reservoir.tools/docs/reservoirkit-ui#configuring-reservoirkit-ui
-            // Note that you should at the very least configure the source with your own domain
-            chains: supportedChains.map(
-              ({ reservoirBaseUrl, proxyApi, id, name }) => {
-                return {
-                  id,
-                  name,
-                  baseApiUrl: proxyApi
-                    ? `${baseUrl}${proxyApi}`
-                    : reservoirBaseUrl,
-                  active: marketplaceChain.id === id,
-                }
+      <ReservoirKitProvider
+        options={{
+          // Reservoir API key which you can generate at https://reservoir.tools/
+          // This is a protected key and displays as 'undefined' on the browser
+          // DO NOT add NEXT_PUBLIC to the key or you'll risk leaking it on the browser
+          apiKey: process.env.RESERVOIR_API_KEY,
+          //CONFIGURABLE: Override any configuration available in RK: https://docs.reservoir.tools/docs/reservoirkit-ui#configuring-reservoirkit-ui
+          // Note that you should at the very least configure the source with your own domain
+          chains: supportedChains.map(
+            ({ reservoirBaseUrl, proxyApi, id, name }) => {
+              return {
+                id,
+                name,
+                baseApiUrl: proxyApi
+                  ? `${baseUrl}${proxyApi}`
+                  : reservoirBaseUrl,
+                active: marketplaceChain.id === id,
               }
-            ),
-            logLevel: 4,
-            source: source,
-            normalizeRoyalties: NORMALIZE_ROYALTIES,
-            //CONFIGURABLE: Set your marketplace fee and recipient, (fee is in BPS)
-            // Note that this impacts orders created on your marketplace (offers/listings)
-            // marketplaceFee: 250,
-            marketplaceFees: ["0x694D91c4cBF877b95059c82F4006b79cdA55b4dd:100"]
-          }}
-          theme={reservoirKitTheme}
-        >
-          <CartProvider feesOnTopUsd={feesOnTop}>
-            <WebsocketContextProvider>
-              <Tooltip.Provider>
-                <RainbowKitProvider
-                  chains={chains}
-                  theme={rainbowKitTheme}
-                  modalSize="compact"
-                >
-                  <ToastContextProvider>
-                    <FunctionalComponent {...pageProps} />
-                  </ToastContextProvider>
-                </RainbowKitProvider>
-              </Tooltip.Provider>
-            </WebsocketContextProvider>
-          </CartProvider>
-        </ReservoirKitProvider>
-      </ThemeProvider>
+            }
+          ),
+          logLevel: 4,
+          source: source,
+          normalizeRoyalties: NORMALIZE_ROYALTIES,
+          disablePoweredByReservoir: true,
+          //CONFIGURABLE: Set your marketplace fee and recipient, (fee is in BPS)
+          // Note that this impacts orders created on your marketplace (offers/listings)
+          // marketplaceFee: 250,
+          marketplaceFees: ["0x694D91c4cBF877b95059c82F4006b79cdA55b4dd:100"]
+        }}
+        theme={reservoirDarkTheme(reservoirKitThemeOverrides)}
+      >
+        <CartProvider feesOnTopUsd={feesOnTop}>
+          <WebsocketContextProvider>
+            <Tooltip.Provider>
+              <RainbowKitProvider
+                chains={chains}
+                theme={rainbowDarkTheme({
+                  borderRadius: 'small',
+                })}
+                modalSize="compact"
+              >
+                <ToastContextProvider>
+                  <FunctionalComponent {...pageProps} />
+                </ToastContextProvider>
+              </RainbowKitProvider>
+            </Tooltip.Provider>
+          </WebsocketContextProvider>
+        </CartProvider>
+      </ReservoirKitProvider>
     </HotkeysProvider>
   )
 }

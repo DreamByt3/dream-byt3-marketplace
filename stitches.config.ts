@@ -1,22 +1,13 @@
 import {
-  crimson,
-  slate,
   crimsonDark,
   violetDark,
   slateDark,
   greenDark,
-  iris,
   irisDark,
-  gray,
-  green,
   violetDarkA,
   whiteA,
   redDark,
-  red,
   blackA,
-  violet,
-  violetA,
-  indigo,
 } from '@radix-ui/colors'
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
@@ -37,19 +28,19 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
   createStitches({
     theme: {
       colors: {
-        ...gray,
-        ...crimson,
-        ...violet,
-        ...violetA,
-        ...slate,
-        ...red,
+        ...crimsonDark,
+        ...violetDark,
+        ...violetDarkA,
+        ...slateDark,
+        ...greenDark,
+        ...irisDark,
         ...whiteA,
+        ...redDark,
         ...blackA,
-        ...iris,
-        ...green,
-        ...indigo,
 
         //Aliases
+
+        //Primary
         primary1: '$iris1',
         primary2: '$iris2',
         primary3: '$iris3',
@@ -91,26 +82,15 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         gray11: '$slate11',
         gray12: '$slate12',
 
-        //Red
-        red1: '$crimson1',
-        red2: '$crimson2',
-        red3: '$crimson3',
-        red4: '$crimson4',
-        red5: '$crimson5',
-        red6: '$crimson6',
-        red7: '$crimson7',
-        red8: '$crimson8',
-        red9: '$crimson9',
-        red10: '$crimson10',
-        red11: '$crimson11',
-        red12: '$crimson12',
+        accent: '#7000FF',
 
-        neutralBg: 'white',
-        neutralBgSubtle: 'white',
-        panelShadow: 'rgba(0,0,0,0.1)',
-        panelBg: '$gray2',
-        panelBorder: 'transparent',
-        dropdownBg: 'white',
+        neutralBgSubtle: '$gray3',
+        neutralBg: '$gray1',
+
+        panelBg: '$gray3',
+        panelBorder: '$slate7',
+        panelShadow: 'transparent',
+        dropdownBg: '$gray3',
         sidebarOverlay: 'black',
       },
       space: {
@@ -211,6 +191,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
       },
     },
     media: {
+      xs: '(min-width: 300px)',
       sm: '(min-width: 600px)',
       md: '(min-width: 900px)',
       lg: '(min-width: 1200px)',
@@ -236,72 +217,3 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
   })
 
 export const globalReset = globalCss(reset)
-
-export const darkTheme = createTheme({
-  colors: {
-    ...crimsonDark,
-    ...violetDark,
-    ...violetDarkA,
-    ...slateDark,
-    ...greenDark,
-    ...irisDark,
-    ...whiteA,
-    ...redDark,
-    ...blackA,
-
-    //Aliases
-
-    //Primary
-    primary1: '$iris1',
-    primary2: '$iris2',
-    primary3: '$iris3',
-    primary4: '$iris4',
-    primary5: '$iris5',
-    primary6: '$iris6',
-    primary7: '$iris7',
-    primary8: '$iris8',
-    primary9: '$iris9',
-    primary10: '$iris10',
-    primary11: '$iris11',
-    primary12: '$iris12',
-
-    //Secondary
-    secondary1: '$violetA1',
-    secondary2: '$violetA2',
-    secondary3: '$violetA3',
-    secondary4: '$violetA4',
-    secondary5: '$violetA5',
-    secondary6: '$violetA6',
-    secondary7: '$violetA7',
-    secondary8: '$violetA8',
-    secondary9: '$violetA9',
-    secondary10: '$violetA10',
-    secondary11: '$violetA11',
-    secondary12: '$violetA12',
-
-    //Gray
-    gray1: '$slate1',
-    gray2: '$slate2',
-    gray3: '$slate3',
-    gray4: '$slate4',
-    gray5: '$slate5',
-    gray6: '$slate6',
-    gray7: '$slate7',
-    gray8: '$slate8',
-    gray9: '$slate9',
-    gray10: '$slate10',
-    gray11: '$slate11',
-    gray12: '$slate12',
-
-    accent: '#7000FF',
-
-    neutralBgSubtle: '$gray3',
-    neutralBg: '$gray1',
-
-    panelBg: '$gray3',
-    panelBorder: '$slate7',
-    panelShadow: 'transparent',
-    dropdownBg: '$gray3',
-    sidebarOverlay: 'black',
-  },
-})
