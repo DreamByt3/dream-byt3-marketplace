@@ -14,9 +14,9 @@ type Props = {
  * @param description - The description of the page.
  */
 export const Head: FC<Props> = ({
-  ogImage = 'https://explorer.reservoir.tools/og-image.png',
-  title = 'Reservoir | Multi-Chain NFT Explorer',
-  description = 'Reservoir Multi-Chain NFT Explorer is an open source NFT explorer built with Reservoir.',
+  ogImage = 'https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png',
+  title = 'DreamByt3',
+  description = 'DreamByt3 is Sustainable NFT Marketplace Dedicated to Creators and Fee Sharing with Users',
 }) => {
   return (
     <NextHead>
@@ -30,14 +30,14 @@ export const Head: FC<Props> = ({
       <meta name="description" content={description} />
 
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@reservoir0x" />
+      <meta name="twitter:card" content="NFT Marketplace" />
+      <meta name="twitter:site" content="@DreamByt3" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
 
       {/* Open Graph */}
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content="https://dreambyt3.com" />
       <meta property="og:determiner" content="the" />
       <meta property="og:locale" content="en" />
       <meta property="og:title" content={title} />
@@ -46,7 +46,8 @@ export const Head: FC<Props> = ({
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Reservoir NFT Explorer Banner" />
+      <meta property="og:image:alt" content="DreamByt3" />
+      <meta property="og:url" content="https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png"></meta>
     </NextHead>
   )
 }

@@ -32,6 +32,7 @@ export const reset = {
 */
 
   body: {
+    backgroundColor: 'hsl(200, 7.0%, 8.8%)',
     margin: 0 /* 1 */,
     lineHeight: 'inherit' /* 2 */,
     height: '100%',
@@ -41,6 +42,7 @@ export const reset = {
 
     // Wallet Connect Modal's zIndex
     '--wcm-z-index': 99999,
+    color: '#fff'
   },
 
   /*
@@ -323,4 +325,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   '[hidden]': {
     display: 'none',
   },
+
+  'body #nprogress .bar': {
+    background: '#8DFF79 linear-gradient(-109.6deg, #9231fc 11.2%, #f4a7bb 91.1%)'
+  },
+
+  '.roulette_container': {
+    transform: 'rotate(-20deg)'
+  }
 }

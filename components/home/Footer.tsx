@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Text, Box, Flex, Anchor, Button } from '../primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 type SectionTitleProps = {
   title: string
@@ -33,33 +33,32 @@ const SectionLink: FC<SectionLinkProps> = ({ name, href }) => (
 const developerSectionLinks = [
   {
     name: 'Docs',
-    href: 'https://docs.reservoir.tools/docs',
+    href: 'https://docs.dreambyt3.com',
   },
   {
-    name: 'API Reference',
-    href: 'https://docs.reservoir.tools/reference/overview',
+    name: 'GitHub',
+    href: 'https://github.com/DreamByt3',
   },
   {
-    name: 'Github',
-    href: 'https://github.com/reservoirprotocol',
-  },
-  {
-    name: 'Testnets',
-    href: 'https://testnets.reservoir.tools',
+    name: 'Medium',
+    href: 'https://medium.com/@DreamByt3',
   },
 ]
 
 const companySectionLinks = [
   {
-    name: 'Jobs',
-    href: 'https://jobs.ashbyhq.com/reservoir',
+    name: '$DREAM Token',
+    href: 'https://coingecko.com',
+  }, {
+    name: 'Governance',
+    href: 'https://snapshot.org/#/dreambyt3.eth',
   },
   {
-    name: 'Terms of Use',
+    name: 'Terms',
     href: 'https://reservoir.tools/terms',
   },
   {
-    name: 'Privacy Policy',
+    name: 'Privacy',
     href: 'https://reservoir.tools/privacy',
   },
 ]
@@ -69,7 +68,7 @@ export const Footer = () => {
     <Flex
       justify="between"
       css={{
-        borderTop: '1px solid $gray7',
+        borderTop: '1px solid #F4A7BB',
         borderStyle: 'solid',
         p: '$5',
         '@lg': {
@@ -86,13 +85,13 @@ export const Footer = () => {
     >
       <Flex css={{ gap: 80, '@bp600': { gap: 136 } }}>
         <Flex direction="column">
-          <SectionTitle title="Developers" />
+          <SectionTitle title="Resources" />
           {developerSectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
         </Flex>
         <Flex direction="column">
-          <SectionTitle title="Company" />
+          <SectionTitle title="Protocol" />
           {companySectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
@@ -102,15 +101,34 @@ export const Footer = () => {
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="Join Reservoir Community" />
+        <SectionTitle title="Community" />
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://twitter.com/reservoir0x"
+            href="https://twitter.com/DreamByt3"
           >
-            <Button size="xs" color="gray3">
+            <Button size="xs" color="primary">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />
+            </Button>
+            </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://discord.gg/rt5VmK2pKK"
+            aria-label="Discord"
+          >
+            <Button
+              size="xs"
+              color="primary"
+              css={{
+                '&:hover': {
+                  background: 'primary',
+                },
+              }}
+              aria-label="Discord"
+            >
+              <FontAwesomeIcon icon={faDiscord} width={14} height={14} />
             </Button>
           </a>
         </Flex>

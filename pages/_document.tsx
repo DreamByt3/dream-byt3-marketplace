@@ -34,36 +34,16 @@ class MyDocument extends Document {
         {/* Favicon */}
         <link
           rel="shortcut icon"
-          type="image/svg"
-          href="https://marketplace.reservoir.tools/reservoir.svg"
+          type="image/png"
+          href="https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png"
         />
 
-        {/* Reservoir meta tags */}
-        <meta property="reservoir:title" content="Reservoir NFT Explorer" />
-        <meta property="reservoir:icon" content="/reservoir-source-icon.png" />
+        {/* DreamByt3 meta tags */}
+        <meta property="reservoir:title" content="DreamByt3" />
+        <meta property="reservoir:icon" content="/dreambyt3-source-icon.png" />
         <meta
           property="reservoir:token-url-mainnet"
           content="/ethereum/asset/${contract}:${tokenId}"
-        />
-        <meta
-          property="reservoir:token-url-goerli"
-          content="/goerli/asset/${contract}:${tokenId}"
-        />
-        <meta
-          property="reservoir:token-url-polygon"
-          content="/polygon/asset/${contract}:${tokenId}"
-        />
-        <meta
-          property="reservoir:token-url-arbitrum"
-          content="/arbitrum/asset/${contract}:${tokenId}"
-        />
-        <meta
-          property="reservoir:token-url-optimism"
-          content="/optimism/asset/${contract}:${tokenId}"
-        />
-        <meta
-          property="reservoir:token-url-zora"
-          content="/zora/asset/${contract}:${tokenId}"
         />
         <body>
           <Main />

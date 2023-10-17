@@ -36,7 +36,7 @@ const currencies = [
     },
     coinGeckoId: 'weth',
   },
-  {
+  /*{
     address: zeroAddress,
     symbol: 'MATIC',
     decimals: polygon.nativeCurrency.decimals,
@@ -65,7 +65,7 @@ const currencies = [
       name: optimism.name,
     },
     coinGeckoId: 'weth',
-  },
+  },*/
 ]
 
 type EnhancedCurrency = (typeof currencies)[0] & {
@@ -127,10 +127,10 @@ const Wallet = () => {
       if (currency.address === zeroAddress) {
         //CONFIGURABLE: Configure these to show the fetched balance results configured above in the useBalance hooks
         switch (currency.chain.id) {
-          case polygon.id: {
-            balance = maticBalance.data?.value || 0n
-            break
-          }
+          //case polygon.id: {
+          //balance = maticBalance.data?.value || 0n
+          // break
+          //}
           case mainnet.id: {
             balance = ethBalance.data?.value || 0n
             break

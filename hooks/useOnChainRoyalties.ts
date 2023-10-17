@@ -1,6 +1,6 @@
 import { parseUnits } from 'viem'
 import { useContractReads } from 'wagmi'
-import { mainnet, goerli } from 'wagmi/chains'
+import { mainnet } from 'wagmi/chains'
 
 type Props = {
   tokens?: {
@@ -57,7 +57,7 @@ export default function ({ tokens, enabled, chainId = mainnet.id }: Props) {
       manifoldContract = '0x0385603ab55642cb4dd5de3ae9e306809991804f'
       break
     }
-    case 137: {
+    /*case 137: {
       manifoldContract = '0x28EdFcF0Be7E86b07493466e7631a213bDe8eEF2'
       break
     }
@@ -72,7 +72,7 @@ export default function ({ tokens, enabled, chainId = mainnet.id }: Props) {
     case 56: {
       manifoldContract = '0xEF770dFb6D5620977213f55f99bfd781D04BBE15'
       break
-    }
+    }*/
   }
 
   const amount = parseUnits('1', 18)

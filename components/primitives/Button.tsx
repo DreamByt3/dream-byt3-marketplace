@@ -12,7 +12,7 @@ const Button = styled('button', {
   lineHeight: '20px',
   $$focusColor: '$colors$gray12',
   '&:focus-visible': {
-    boxShadow: '0 0 0 2px $$focusColor',
+    boxShadow: '0 0 0 1px $$focusColor',
   },
   '&:disabled': {
     backgroundColor: '$gray8',
@@ -25,8 +25,8 @@ const Button = styled('button', {
   variants: {
     color: {
       primary: {
-        backgroundColor: '$primary9',
-        color: 'white',
+        backgroundColor: '$primary11',
+        color: '#000',
         '&:hover': {
           backgroundColor: '$primary10',
         },

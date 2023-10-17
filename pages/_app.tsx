@@ -52,7 +52,7 @@ const { chains, publicClient } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'DreamByte',
+  appName: 'DreamByt3',
   projectId: WALLET_CONNECT_PROJECT_ID,
   chains,
 })
@@ -69,8 +69,8 @@ const reservoirKitThemeOverrides = {
   font: inter.style.fontFamily,
   buttonTextColor: '#000',
   buttonTextHoverColor: '#000',
-  primaryColor: '#6E56CB',
-  primaryHoverColor: '#644fc1',
+  primaryColor: '#f4a7bb',
+  primaryHoverColor: '#f4a7bb',
 }
 
 nProgress.configure({

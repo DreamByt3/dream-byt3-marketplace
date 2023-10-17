@@ -10,7 +10,7 @@ export const AnchorStyle = {
     color: '$gray12',
     outline: 'none',
     borderRadius: 4,
-    boxShadow: '0 0 0 2px $$focusColor',
+    boxShadow: '0 0 0 1px $$focusColor',
   },
   variants: {
     color: {

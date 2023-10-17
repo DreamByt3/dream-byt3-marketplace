@@ -7,10 +7,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import NavItem from './NavItem'
-import ThemeSwitcher from './ThemeSwitcher'
 import HamburgerMenu from './HamburgerMenu'
 import MobileSearch from './MobileSearch'
-import { useTheme } from 'next-themes'
 import { useMediaQuery } from 'react-responsive'
 import { useMarketplaceChain, useMounted } from '../../hooks'
 import { useAccount } from 'wagmi'
@@ -23,9 +21,8 @@ export const NAVBAR_HEIGHT = 81
 export const NAVBAR_HEIGHT_MOBILE = 77
 
 const Navbar = () => {
-  const { theme } = useTheme()
   const { isConnected } = useAccount()
-  const isMobile = useMediaQuery({ query: '(max-width: 960px' })
+  const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const isMounted = useMounted()
   const { routePrefix } = useMarketplaceChain()
 
@@ -63,12 +60,12 @@ const Navbar = () => {
       <Box css={{ flex: 1 }}>
         <Flex align="center">
           <Link href={`/${routePrefix}`}>
-            <Box css={{ width: 46, cursor: 'pointer' }}>
+            <Box css={{ width: 34, cursor: 'pointer' }}>
               <Image
-                src="/reservoirLogo.svg"
-                width={36}
-                height={36}
-                alt="Reservoir"
+                src="/dreamByt3Logo.svg"
+                width={39}
+                height={39}
+                alt="DreamByt3"
               />
             </Box>
           </Link>
@@ -85,11 +82,8 @@ const Navbar = () => {
       css={{
         height: NAVBAR_HEIGHT,
         px: '$5',
-        '@xl': {
-          px: '$6',
-        },
         width: '100%',
-        // maxWidth: 1920,
+        maxWidth: 1920,
         mx: 'auto',
         borderBottom: '1px solid $gray4',
         zIndex: 999,
@@ -102,141 +96,65 @@ const Navbar = () => {
       align="center"
       justify="between"
     >
-      <Box
-        css={{
-          flex: 'unset',
-          '@bp1300': {
-            flex: 1,
-          },
-        }}
-      >
-        <Flex align="center">
+      <Flex align="center" justify="between" css={{ flex: 1 }}>
+        <Flex align="center" css={{ flex: 1 }}>
           <Link href={`/${routePrefix}`}>
-            <Box css={{ cursor: 'pointer' }}>
+            <Box css={{ width: 112, cursor: 'pointer' }}>
               <Image
-                src="/reservoirLogo.svg"
-                width={36}
-                height={36}
-                alt="Reservoir"
+                src="/dreamByt3Logo.svg"
+                width={50}
+                height={50}
+                alt="DreamByt3"
               />
             </Box>
           </Link>
-          <Flex
-            align="center"
-            css={{
-              gap: '$5',
-              ml: '$5',
-            }}
-          >
-            <Link href={`/${routePrefix}`}>
-              <NavItem>Featured</NavItem>
-            </Link>
+          <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
             <Link href={`/${routePrefix}/collections/trending`}>
-              <NavItem>NFTs</NavItem>
+              <NavItem>Trending</NavItem>
             </Link>
-
-            {/* <HoverCard.Root openDelay={200}>
-              <HoverCard.Trigger>
-                <Link href={`/${routePrefix}/collection-rankings`}>
-                  <NavItem
-                    active={router.pathname.includes('collection-rankings')}
-                  >
-                    NFTs
-                  </NavItem>
-                </Link>
-              </HoverCard.Trigger>
-              <HoverCard.Content sideOffset={24} align="start">
-                <Card css={{ p: 24, width: 240 }}>
-                  <Flex css={{ gap: '$4' }} direction="column">
-                    <Link href={`/${routePrefix}/collection-rankings`}>
-                      <NavItem
-                        active={router.pathname.includes('collection-rankings')}
-                      >
-                        Trending Collections
-                      </NavItem>
-                    </Link>
-                    <Link href={`/${routePrefix}/collection-rankings`}>
-                      <NavItem
-                        active={router.pathname.includes('collection-rankings')}
-                      >
-                        Trending Mints
-                      </NavItem>
-                    </Link>
-                  </Flex>
-                </Card>
-              </HoverCard.Content>
-            </HoverCard.Root> */}
-
-            {false && (
-              <Link href={`/${routePrefix}/collections/minting`}>
-                <NavItem>Mints</NavItem>
-              </Link>
-            )}
-            {false && (
-              <Link href="/swap">
-                <NavItem>Tokens</NavItem>
-              </Link>
-            )}
+            <Link href="#">
+              <NavItem>Buy DREAM</NavItem>
+            </Link>
+          </Flex>
+          <Flex css={{ flex: 1, px: '$5', maxWidth: 600 }}>
+            <GlobalSearch
+              ref={searchRef}
+              placeholder="Search NFTs..."
+              containerCss={{ width: '100%' }}
+              key={router.asPath}
+            />
           </Flex>
         </Flex>
-      </Box>
-      <Box css={{ flex: 1, px: '$5' }}>
-        <GlobalSearch
-          ref={searchRef}
-          placeholder="Search collections and addresses"
-          containerCss={{ width: '100%' }}
-          key={router.asPath}
-        />
-      </Box>
-
-      <Flex
-        css={{
-          gap: '$3',
-          flex: 'unset',
-          '@bp1300': {
-            flex: 1,
-          },
-        }}
-        justify="end"
-        align="center"
-      >
         <Flex css={{ gap: '$5', mr: 12 }}>
           <Box>
-            <HoverCard.Root openDelay={120}>
+            <HoverCard.Root openDelay={0}>
               <HoverCard.Trigger>
-                <a target="_blank" href={`https://docs.reservoir.tools/docs`}>
-                  <NavItem>Developers</NavItem>
+                <a target="_blank" href={`https://docs.dreambyt3.com`}>
+                  <NavItem>More</NavItem>
                 </a>
               </HoverCard.Trigger>
               <HoverCard.Content sideOffset={24} align="start">
                 <Card css={{ p: 24, width: 240 }}>
                   <Flex css={{ gap: '$4' }} direction="column">
-                    <a target="_blank" href={`https://reservoir.tools`}>
-                      <NavItem>About Reservoir</NavItem>
-                    </a>
                     <a
                       target="_blank"
-                      href={`https://docs.reservoir.tools/docs`}
+                      href={`https://docs.dreambyt3.com`}
                     >
                       <NavItem>Docs</NavItem>
                     </a>
 
                     <a
                       target="_blank"
-                      href={`https://docs.reservoir.tools/reference/overview`}
+                      href={`https://medium.com/@DreamByt3`}
                     >
-                      <NavItem>API Reference</NavItem>
+                      <NavItem>Blog</NavItem>
                     </a>
 
                     <a
                       target="_blank"
-                      href={`https://github.com/reservoirprotocol`}
+                      href={`https://github.com/DreamByt3`}
                     >
-                      <NavItem>Github</NavItem>
-                    </a>
-
-                    <a href={`https://testnets.reservoir.tools`}>
-                      <NavItem>Testnet Explorer</NavItem>
+                      <NavItem>GitHub</NavItem>
                     </a>
                   </Flex>
                 </Card>
@@ -246,12 +164,14 @@ const Navbar = () => {
           {isConnected && (
             <Link href={`/portfolio`}>
               <Box css={{ mr: '$2' }}>
-                <NavItem>Portfolio</NavItem>
+                <NavItem>My Assets</NavItem>
               </Box>
             </Link>
           )}
         </Flex>
+      </Flex>
 
+      <Flex css={{ gap: '$3' }} justify="end" align="center">
         {isConnected ? (
           <AccountSidebar />
         ) : (

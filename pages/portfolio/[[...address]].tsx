@@ -419,17 +419,16 @@ const IndexPage: NextPage = () => {
               css={{ mx: 'auto', py: '120px', maxWidth: '350px', gap: '$4' }}
             >
               <Text style="h4" css={{ mb: '$3' }}>
-                Sell your NFT instantly
+                Sell your NFTs
               </Text>
-              <Text css={{ color: '$gray11' }}>
+              <Text css={{ color: '#ffffff' }}>
                 <FontAwesomeIcon icon={faWallet} size="2xl" />
               </Text>
               <Text
                 style="body1"
                 css={{ color: '$gray11', textAlign: 'center', mb: '$4' }}
               >
-                Connect wallet to instant sell your token across all major
-                marketplaces.
+                Connect to DreamByt3 to trade NFTs
               </Text>
               <ConnectWalletButton />
             </Flex>
@@ -449,7 +448,7 @@ const IndexPage: NextPage = () => {
             if (error?.type === 'price mismatch') {
               addToast?.({
                 title: 'Could not accept offer',
-                description: 'Offer was lower than expected.',
+                description: 'Offer Was Not Accepted',
               })
               return
             }
@@ -457,13 +456,13 @@ const IndexPage: NextPage = () => {
             if (error?.code === 4001) {
               addToast?.({
                 title: 'User canceled transaction',
-                description: 'You have canceled the transaction.',
+                description: 'Tx Cancelled',
               })
               return
             }
             addToast?.({
               title: 'Could not accept offer',
-              description: 'The transaction was not completed.',
+              description: 'Tx Not Completed',
             })
           }}
         />

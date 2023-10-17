@@ -123,7 +123,7 @@ export default ({
             zIndex: 1,
             maxWidth: '50%',
             backgroundColor: 'rgba(	38, 41, 43, 0.3)',
-            backdropFilter: 'blur(2px)',
+            backdropFilter: 'blur(1px)',
           }}
         >
           <Text
