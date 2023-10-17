@@ -227,17 +227,6 @@ export const AccountSidebar: FC = () => {
                     </Link>
                   </Grid>
                   <Wallet />
-
-                  <Flex
-                    css={{ m: '$4', mt: '$5' }}
-                    justify="between"
-                    align="center"
-                  >
-                    <Text style="body1" css={{ mb: '$2', flex: 1 }} as="p">
-                      Theme
-                    </Text>
-                    <ThemeSwitcher />
-                  </Flex>
                   <Button
                     size="large"
                     css={{ my: '$4', justifyContent: 'center' }}

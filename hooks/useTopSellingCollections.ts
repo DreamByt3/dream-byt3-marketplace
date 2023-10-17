@@ -18,6 +18,7 @@ export default function (
   const chain =
     chainId !== undefined
       ? client?.chains.find((chain) => chain.id === chainId)
+      // @ts-ignore
       : client?.currentChain()
 
   const path = new URL(`${chain?.baseApiUrl}/collections/top-selling/v2`)

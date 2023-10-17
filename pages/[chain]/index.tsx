@@ -62,6 +62,22 @@ const Home: NextPage<any> = ({ ssr }) => {
     chain?.id
   )
 
+  const { data: topMintingCollectionsData } = useTopSellingCollections(
+    {
+      period: '24h',
+      limit: 12,
+      fillType: 'mint',
+    },
+    {
+      revalidateOnMount: true,
+      refreshInterval: 300000,
+      fallbackData: ssr.topMintingCollections[marketplaceChain.id]?.collections
+        ? ssr.topMintingCollections[marketplaceChain.id]
+        : null,
+    },
+    chain?.id
+  )
+
   const topCollection = topSellingCollectionsData?.collections?.[0]
 
   const { scrollY } = useViewportScroll();
@@ -289,11 +305,11 @@ const Home: NextPage<any> = ({ ssr }) => {
       </Box>
       <Box
         css={{
-          mt: 120,
           p: 24,
           height: '100%',
           '@bp800': {
             px: '$5',
+            mt: 120,
           },
           '@xl': {
             px: '$6',
@@ -512,12 +528,18 @@ const Home: NextPage<any> = ({ ssr }) => {
         align="center"
         justify="center"
         css={{
-          py: 120,
-          gap: 40
+          py: 80,
+          gap: 40,
+          '@md': {
+            py: 120
+          }
         }}
       >
-        <Text style="h4">Sustainable NFT Marketplace</Text>
-        <StyledImage src="/logo.png" height={95} width={450} />
+        <Text style={{
+          '@initial': 'h6',
+          '@md': 'h4'
+        }}>Sustainable NFT Marketplace</Text>
+        <StyledImage src="/logo.png" height={95} width={450} css={{ maxWidth: '80%' }} />
       </Flex>
       <Footer />
     </Layout>
@@ -531,7 +553,8 @@ type ChainTopSellingCollections = Record<string, TopSellingCollectionsSchema>
 
 export const getServerSideProps: GetServerSideProps<{
   ssr: {
-    topSellingCollections: ChainTopSellingCollections
+    topSellingCollections: ChainTopSellingCollections,
+    topMintingCollections: ChainTopSellingCollections
   }
 }> = async ({ params, res }) => {
   const chainPrefix = params?.chain || ''
@@ -540,6 +563,7 @@ export const getServerSideProps: GetServerSideProps<{
     DefaultChain
 
   const topSellingCollections: ChainTopSellingCollections = {}
+  const topMintingCollections: ChainTopSellingCollections = {}
   try {
     const response = await fetcher(
       `${chain.reservoirBaseUrl}/collections/top-selling/v2?period=24h&includeRecentSales=true&limit=13&fillType=sale`,
@@ -550,7 +574,17 @@ export const getServerSideProps: GetServerSideProps<{
       }
     )
 
+    const response2 = await fetcher(
+      `${chain.reservoirBaseUrl}/collections/top-selling/v2?period=24h&limit=12&fillType=mint`,
+      {
+        headers: {
+          'x-api-key': process.env.RESERVOIR_API_KEY || '',
+        },
+      }
+    )
+
     topSellingCollections[chain.id] = response.data
+    topMintingCollections[chain.id] = response2.data
 
     res.setHeader(
       'Cache-Control',
@@ -559,7 +593,7 @@ export const getServerSideProps: GetServerSideProps<{
   } catch (e) {}
 
   return {
-    props: { ssr: { topSellingCollections } },
+    props: { ssr: { topSellingCollections, topMintingCollections } },
   }
 }
 

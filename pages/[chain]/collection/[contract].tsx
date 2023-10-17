@@ -377,14 +377,40 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
             <Flex
               justify="between"
               wrap="wrap"
-              css={{ mb: '$4', gap: '$4' }}
-              align="start"
+              align="end"
+              css={{
+                mb: '$4',
+                gap: '$4',
+                height: 300,
+                position: 'relative',
+                backgroundSize: 'cover',
+                backgroundImage: `url(${optimizeImage(collection?.banner, 1820)})`,
+                backgroundPosition: 'center center',
+                backgroundRepeat: 'no-repeat',
+                borderRadius: 16,
+                overflow: 'hidden'
+              }}
             >
+              <Box
+                css={{
+                  position: 'absolute',
+                  top: 0,
+                  display: 'block',
+                  zIndex: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backdropFilter: 'blur(2px)',
+                  background: 'rgb(255,111,253, 0.1)',
+                }}
+              />
               <Flex
                 direction="column"
                 css={{
                   gap: '$4',
                   minWidth: 0,
+                  zIndex: 1,
+                  p: 32,
                   //flex: 1,
                   width: '100%',
                   '@lg': { width: 'unset' },
@@ -399,8 +425,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                       width: 72,
                       height: 72,
                       borderRadius: 8,
-                      objectFit: 'cover',
-                      border: '1px solid $gray5',
+                      objectFit: 'cover'
                     }}
                     alt="Collection Page Image"
                   />
@@ -426,7 +451,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                         }}
                       >
                         <Box css={{ color: '$gray9' }}>
-                          <FontAwesomeIcon icon={faCube} size="xs" />
+                          <FontAwesomeIcon icon={faCube} size="xs" color="#f4a7bb" />
                         </Box>
                         <Text as="p" style="body3">
                           {truncateAddress(collection?.primaryContract || '')}
@@ -443,7 +468,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                             color: '$gray9',
                           }}
                         >
-                          <FontAwesomeIcon size="xs" icon={faCog} />
+                          <FontAwesomeIcon size="xs" icon={faCog} color="#f4a7bb" />
                         </Flex>
                         <Text style="body3">{contractKind}</Text>
                       </Flex>
@@ -459,7 +484,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                             color: '$gray9',
                           }}
                         >
-                          <FontAwesomeIcon size="xs" icon={faGlobe} />
+                          <FontAwesomeIcon size="xs" icon={faGlobe} color="#f4a7bb" />
                         </Flex>
                         <Text style="body3">{chain}</Text>
                       </Flex>
@@ -476,7 +501,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                               color: '$green9',
                             }}
                           >
-                            <FontAwesomeIcon size="xs" icon={faSeedling} />
+                            <FontAwesomeIcon size="xs" icon={faSeedling} color="#f4a7bb" />
                           </Flex>
                           <Text style="body3">Minting Now</Text>
                         </Flex>
@@ -485,7 +510,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                   </Box>
                 </Flex>
               </Flex>
-              <Flex align="center">
+              <Flex align="center" css={{ zIndex: 1, p: 16 }}>
                 <Flex css={{ alignItems: 'center', gap: '$3' }}>
                   {nativePrice ? (
                     <Sweep
@@ -915,7 +940,7 @@ export const getServerSideProps: GetServerSideProps<{
     headers
   )
 
-  const promises = await Promise.allSettled([
+  const promises: any = await Promise.allSettled([
     collectionsPromise,
     tokensPromise,
   ]).catch(() => {})
@@ -930,7 +955,7 @@ export const getServerSideProps: GetServerSideProps<{
 
   const hasAttributes =
     tokens?.tokens?.some(
-      (token) => (token?.token?.attributes?.length || 0) > 0
+      (token: any) => (token?.token?.attributes?.length || 0) > 0
     ) || false
 
   res.setHeader(
