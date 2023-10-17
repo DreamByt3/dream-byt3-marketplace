@@ -1,16 +1,27 @@
-<h3 align="center">DreamByt3 NFT Marketplace</h3>
+<h3 align="center">DREAMBYT3 NFT Marketplace</h3>
   <p align="center">
 
-DreamByt3 is the first sustainable NFT marketplace, powered by $DREAM and the community.
+DREAMBYT3 is the first sustainable NFT marketplace, powered by $DREAM and the community.
 
-## Links
+---
 
-### App: [DreamByt3](https://dreambyt3.com)
-### Twitter: [@DreamByt3](https://x.com/DreamByt3)
-### Discord: [Discord](https://discord.gg/rt5VmK2pKK)
-### Medium: [Medium](https://medium.com/@DreamByt3)
-### Docs: [Docs](https://docs.dreambyt3.com/)
-### Snapshot Space: [Snapshot Space](https://snapshot.org/#/dreambyt3.eth)
-### GitHub: [GitHub](https://github.com/DreamByt3)
+![image](https://github.com/DreamByt3/dreambyt3-marketplace/assets/147350979/68d85ce7-8eb4-4092-86b2-62c3294d88fc)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+---
+
+<h2 align="center">Links:</h2>
+
+[DREAMBYT3 App](https://dreambyt3.com)
+---
+[X](https://x.com/DreamByt3)
+---
+[Discord](https://discord.gg/rt5VmK2pKK)
+---
+[Medium](https://medium.com/@DreamByt3)
+---
+[Docs](https://docs.dreambyt3.com/)
+---
+[Snapshot Space](https://snapshot.org/#/dreambyt3.eth)
+---
+[GitHub](https://github.com/DreamByt3)
+---
