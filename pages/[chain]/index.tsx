@@ -130,11 +130,14 @@ const Home: NextPage<any> = ({ ssr }) => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'linear-gradient(rgba(8, 4, 4, 0) 50%, rgb(8, 4, 4) 90.22%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
+            backdropFilter: 'blur(2px)',
+            backgroundColor: 'rgb(60,9,60, 0.4)',
+            backgroundImage: 'linear-gradient(rgba(8, 4, 4, 0) 50%, rgb(8, 4, 4) 90.22%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
           }}
         />
         <Flex>
           <Flex
+            align="end"
             css={{
               minHeight: 540,
               flex: 1,
@@ -167,36 +170,44 @@ const Home: NextPage<any> = ({ ssr }) => {
             {topSellingCollectionsData && (
               <Box css={{ flex: 2, zIndex: 4 }}>
                 <Flex direction="column" css={{ height: '100%' }}>
-                  <Box css={{ flex: 1 }}>
-                    <Text style="h3" css={{ mt: '$3', mb: '$2' }} as="h3">
-                      {topCollection?.name}
-                    </Text>
+                  <Flex
+                    justify="between"
+                    css={{
+                      width: '100%',
+                    }}
+                  >
+                    <Box css={{ flex: 1 }}>
+                      <Text style="h3" css={{ mt: '$3', mb: '$2' }} as="h3">
+                        {topCollection?.name}
+                      </Text>
 
-                    <Box
-                      css={{
-                        maxWidth: 720,
-                        lineHeight: 1.5,
-                        fontSize: 16,
-                        fontWeight: 400,
-                        display: '-webkit-box',
-                        color: '$gray12',
-                        fontFamily: '$body',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}
-                    >
-                      <ReactMarkdown
-                        children={topCollection?.description || ''}
-                        components={{
-                          a: MarkdownLink,
-                          p: Text as any,
+                      <Box
+                        css={{
+                          maxWidth: 450,
+                          lineHeight: 1.5,
+                          fontSize: 16,
+                          fontWeight: 400,
+                          display: '-webkit-box',
+                          color: '$gray12',
+                          fontFamily: '$body',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
                         }}
-                      />
+                      >
+                        <ReactMarkdown
+                          children={topCollection?.description || ''}
+                          components={{
+                            a: MarkdownLink,
+                            p: Text as any,
+                          }}
+                        />
+                      </Box>
                     </Box>
-
-                    <Flex css={{ mt: '$4' }}>
+                    <Flex
+                      align="end"
+                    >
                       <Box css={{ mr: '$5' }}>
                         <Text style="subtitle2" color="subtle">
                           FLOOR
@@ -226,11 +237,11 @@ const Home: NextPage<any> = ({ ssr }) => {
                         </Text>
                       </Box>
                     </Flex>
-                  </Box>
+                  </Flex>
                   <Flex
                     align="end"
                     justify="between"
-                    css={{ gap: '$4', mt: '$5' }}
+                    css={{ gap: '$4' }}
                   >
                     <Button as={Link} color="primary" size="large" href={`/${chain.routePrefix}/collection/${topCollection?.id}`}>
                       View Collection
