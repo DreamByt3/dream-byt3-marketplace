@@ -63,6 +63,9 @@ export default styled('span', {
       error: {
         color: '$red11',
       },
+      primary: {
+        color: '$primary10'
+      },
       dark: {
         color: '#000'
       }
