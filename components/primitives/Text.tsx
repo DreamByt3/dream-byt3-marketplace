@@ -63,6 +63,9 @@ export default styled('span', {
       error: {
         color: '$red11',
       },
+      dark: {
+        color: '#000'
+      }
     },
     italic: {
       true: {
