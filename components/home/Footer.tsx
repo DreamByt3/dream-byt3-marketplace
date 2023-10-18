@@ -55,11 +55,11 @@ const companySectionLinks = [
   },
   {
     name: 'Terms',
-    href: 'https://reservoir.tools/terms',
+    href: '/terms',
   },
   {
     name: 'Privacy',
-    href: 'https://reservoir.tools/privacy',
+    href: '/privacy',
   },
 ]
 
