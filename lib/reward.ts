@@ -1,12 +1,11 @@
-import {ethers} from "ethers";
 import {paths} from "@reservoir0x/reservoir-sdk";
 import fetcher from "utils/fetcher";
-import supportedChains, {OFT_CHAINS} from "utils/chains";
+import supportedChains from "utils/chains";
 import db from "lib/db";
 import {getUSDAndNativePrices, USDAndNativePrices} from "../utils/price";
-import {AddressZero} from "@ethersproject/constants";
 import {BigNumber} from "@ethersproject/bignumber";
 import {formatEther} from "viem";
+import dreamContracts from "../utils/dreamContracts";
 
 let lastUpdate = (new Date()).getTime();
 const EXTRA_REWARD_PER_PERIOD=0.00001
@@ -42,12 +41,11 @@ const fetchCollection =  async (chainId: number, continuation: string | undefine
   return data
 }
 
-const fetchNFTEToEthValue =  async (chainId: number): Promise<USDAndNativePrices> => {
-  const chain = OFT_CHAINS.find(c => c.id === chainId)
-  const NFTEAddress = chain?.address || AddressZero
+const fetchDREAMToEthValue =  async (chainId: number): Promise<USDAndNativePrices> => {
+  const DREAMAddress = dreamContracts[chainId]
   const date = new Date()
 
-  return getUSDAndNativePrices(NFTEAddress,
+  return getUSDAndNativePrices(DREAMAddress,
     chainId,
     '1',
     Math.floor(date.valueOf() / 1000),
@@ -124,16 +122,15 @@ type CalculateReward = (
 ) => Promise<number>
 
 export const calculateReward: CalculateReward = async (chainId, account, collectionId, paymentToken, amount, period, isListing)  => {
-  const chain = OFT_CHAINS.find(c => c.id === chainId)
-  const isNFTE = paymentToken === chain?.address
+  const isDREAM = paymentToken === dreamContracts[chainId]
   let value = +formatEther(BigInt(`${+amount || 0}`)).toString()
 
   if (!account) {
     return 0;
   }
 
-  if (isNFTE) {
-    const nfteToNative = await fetchNFTEToEthValue(chainId).catch(() => ({ nativePrice: 0 }))
+  if (isDREAM) {
+    const nfteToNative = await fetchDREAMToEthValue(chainId).catch(() => ({ nativePrice: 0 }))
     value = BigNumber.from(value).mul(BigNumber.from(nfteToNative?.nativePrice)).toNumber()
   }
 
@@ -175,10 +172,10 @@ export const calculateReward: CalculateReward = async (chainId, account, collect
       value,
       percentDiff,
       reward,
-      isNFTE,
+      isDREAM,
       isListing
     })
   }
 
-  return reward * (isNFTE ? 2 : 1)
+  return reward * (isDREAM ? 2 : 1)
 }

@@ -31,6 +31,7 @@ export type ReservoirChain = Chain & {
   routePrefix: string
   apiKey?: string
   coingeckoId?: string
+  coingeckoNetworkId?: string
   collectionSetId?: string
   community?: string
   wssUrl?: string
@@ -72,6 +73,7 @@ export const DefaultChain: ReservoirChain = {
   // Coingecko id, used to convert the chain's native prices to usd. Can be found here:
   // https://www.coingecko.com/en/api/documentation#operations-coins-get_coins_list
   coingeckoId: 'ethereum',
+  coingeckoNetworkId: 'ethereum',
   collectionSetId: process.env.NEXT_PUBLIC_ETH_COLLECTION_SET_ID,
   community: process.env.NEXT_PUBLIC_ETH_COMMUNITY,
   wssUrl: 'wss://ws.reservoir.tools',

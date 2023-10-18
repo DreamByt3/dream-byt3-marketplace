@@ -9,7 +9,7 @@ const Button = styled('button', {
   gap: '$space$2',
   display: 'inline-flex',
   alignItems: 'center',
-  lineHeight: '20px',
+  lineHeight: 20,
   $$focusColor: '$colors$gray12',
   '&:focus-visible': {
     boxShadow: '0 0 0 1px $$focusColor',
@@ -52,6 +52,13 @@ const Button = styled('button', {
           backgroundColor: '$gray5',
         },
       },
+      red: {
+        backgroundColor: '$red3',
+        color: '$red12',
+        '&:hover': {
+          backgroundColor: '$red4',
+        },
+      },
       ghost: {
         backgroundColor: 'transparent',
         p: 0,
@@ -77,13 +84,13 @@ const Button = styled('button', {
       none: {},
       xs: {
         p: '$space$3',
-        lineHeight: '16px',
+        lineHeight: 16,
         minHeight: 40,
       },
       small: {
         px: '$space$3',
         py: '$space$4',
-        lineHeight: '12px',
+        lineHeight: 12,
         minHeight: 44,
       },
       medium: {

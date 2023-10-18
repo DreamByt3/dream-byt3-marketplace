@@ -43,7 +43,7 @@ export const parseError = (error: any, defaultMessage?: string) => {
   }
 
   if (message === 'Improper ratio') {
-    message = 'NFTE/WETH amount improper ratio'
+    message = 'DREAM/WETH amount improper ratio'
   }
 
   if (message === 'Execution reverted for an unknown reason.') {
@@ -59,7 +59,7 @@ export const parseError = (error: any, defaultMessage?: string) => {
   }
 
   if (name === 'ZeroDeposits') {
-    message = 'You must deposit ETH/ARB/NFTE or an eligible NFT to enter'
+    message = 'You must deposit ETH/ARB/DREAM or an eligible NFT to enter'
   }
 
   if (name === 'OLD') {
