@@ -72,7 +72,7 @@ const SwapPage = () => {
           direction="column"
           css={{
             pb: 200,
-            pt: 50,
+            pt: 100,
             gap: 40,
             alignItems: 'center',
             '@md': {
@@ -105,9 +105,9 @@ const SwapPage = () => {
                 ...darkTheme,
                 container: 'hsl(240,2%,11%)',
                 module: 'hsl(220,4%,16%)',
-                accent: '#f14e7a',
+                accent: '#f14e9a',
                 accentSoft: '#f4a7bb',
-                interactive: '#483238',
+                interactive: '#542947',
                 outline: '#261b1d',
                 dialog: '#000',
                 scrim: 'hsla(224, 33%, 16%, 0.5)',
@@ -120,7 +120,7 @@ const SwapPage = () => {
                 onInteractive: '#fff',
 
                 deepShadow: 'hsla(0, 0%, 0%, 0.32), hsla(0, 0%, 0%, 0.24), hsla(0, 0%, 0%, 0.24)',
-                networkDefaultShadow: 'hsla(270,96%,64%, 0.16)',
+                networkDefaultShadow: '#000',
               }}
             />
           )}

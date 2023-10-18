@@ -74,6 +74,7 @@ const Img = (props: ComponentPropsWithoutRef<typeof StyledImg>) => {
   ) : (
     <StyledImg
       {...props}
+      unoptimized
       loader={props.loader || defaultLoader}
       onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         setCollectionImageBroken(true)
