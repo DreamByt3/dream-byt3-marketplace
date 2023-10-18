@@ -14,6 +14,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@google-cloud/storage": "^7.3.0",
     "@next/font": "^13.1.6",
     "@nftearth/uniswap-widgets": "^1.0.8",
     "@radix-ui/colors": "^2.0.0",

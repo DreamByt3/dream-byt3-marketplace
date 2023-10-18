@@ -95,7 +95,7 @@ const DetailsSettings:FC<Props> = ({ profile }) => {
 
           await fileUpload(acceptedFiles[0], newFileName);
 
-          setProfileImage(`https://nftearth-image.storage.googleapis.com/${newFileName}`);
+          setProfileImage(`https://dream-store.storage.googleapis.com/${newFileName}`);
         }
       }
     }
@@ -117,7 +117,7 @@ const DetailsSettings:FC<Props> = ({ profile }) => {
           const newFileName = `profile-banner-${profile._id}.${acceptedFiles[0].name.split('.').pop()}`;
           await fileUpload(acceptedFiles[0], newFileName);
 
-          setBannerImage(`https://nftearth-image.storage.googleapis.com/${newFileName}`);
+          setBannerImage(`https://dream-store.storage.googleapis.com/${newFileName}`);
         }
       },
       onError: err => console.log(err)
