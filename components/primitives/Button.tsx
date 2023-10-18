@@ -9,7 +9,7 @@ const Button = styled('button', {
   gap: '$space$2',
   display: 'inline-flex',
   alignItems: 'center',
-  lineHeight: 20,
+  lineHeight: '20px',
   $$focusColor: '$colors$gray12',
   '&:focus-visible': {
     boxShadow: '0 0 0 1px $$focusColor',
@@ -84,13 +84,13 @@ const Button = styled('button', {
       none: {},
       xs: {
         p: '$space$3',
-        lineHeight: 16,
+        lineHeight: '16px',
         minHeight: 40,
       },
       small: {
         px: '$space$3',
         py: '$space$4',
-        lineHeight: 12,
+        lineHeight: '12px',
         minHeight: 44,
       },
       medium: {
