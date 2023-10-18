@@ -112,7 +112,7 @@ const Navbar = () => {
             <Link href={`/${routePrefix}/collections/trending`}>
               <NavItem>Trending</NavItem>
             </Link>
-            <Link href="#">
+            <Link href="/swap">
               <NavItem>Buy DREAM</NavItem>
             </Link>
           </Flex>
@@ -126,41 +126,6 @@ const Navbar = () => {
           </Flex>
         </Flex>
         <Flex css={{ gap: '$5', mr: 12 }}>
-          <Box>
-            <HoverCard.Root openDelay={0}>
-              <HoverCard.Trigger>
-                <a target="_blank" href={`https://docs.dreambyt3.com`}>
-                  <NavItem>More</NavItem>
-                </a>
-              </HoverCard.Trigger>
-              <HoverCard.Content sideOffset={24} align="start">
-                <Card css={{ p: 24, width: 240 }}>
-                  <Flex css={{ gap: '$4' }} direction="column">
-                    <a
-                      target="_blank"
-                      href={`https://docs.dreambyt3.com`}
-                    >
-                      <NavItem>Docs</NavItem>
-                    </a>
-
-                    <a
-                      target="_blank"
-                      href={`https://medium.com/@DreamByt3`}
-                    >
-                      <NavItem>Blog</NavItem>
-                    </a>
-
-                    <a
-                      target="_blank"
-                      href={`https://github.com/DreamByt3`}
-                    >
-                      <NavItem>GitHub</NavItem>
-                    </a>
-                  </Flex>
-                </Card>
-              </HoverCard.Content>
-            </HoverCard.Root>
-          </Box>
           {isConnected && (
             <Link href={`/portfolio`}>
               <Box css={{ mr: '$2' }}>

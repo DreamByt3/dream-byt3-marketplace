@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "^13.1.6",
+    "@nftearth/uniswap-widgets": "^1.0.8",
     "@radix-ui/colors": "^2.0.0",
     "@radix-ui/popper": "^0.1.0",
     "@radix-ui/react-avatar": "^1.0.1",
@@ -33,9 +34,11 @@
     "@reservoir0x/reservoir-kit-ui": "1.11.2",
     "@sentry/nextjs": "^7.53.1",
     "@types/uuid": "^9.0.1",
+    "@upstash/redis": "^1.23.4",
     "dayjs": "^1.11.6",
     "framer-motion": "^6.3.6",
     "lodash": "^4.17.21",
+    "mongodb": "^6.1.0",
     "next": "13.0",
     "next-auth": "^4.23.2",
     "nprogress": "^0.2.0",
@@ -43,6 +46,7 @@
     "posthog-js": "^1.68.4",
     "react": "^18.0",
     "react-dom": "^18.0",
+    "react-dropzone": "^14.2.3",
     "react-hotkeys-hook": "^4.0.4",
     "react-jazzicon": "^1.0.4",
     "react-markdown": "^8.0.7",
@@ -70,6 +74,7 @@
     "@types/react-dom": "^18.0",
     "@types/react-window": "^1.8.5",
     "next-themes": "^0.2.0",
+    "node-gyp": "9.4.0",
     "typescript": "^5.0.4"
   }
 }

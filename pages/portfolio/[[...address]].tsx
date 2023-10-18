@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { Text, Flex, Box } from '../../components/primitives'
+import {Text, Flex, Box, Button} from '../../components/primitives'
 import Layout from 'components/Layout'
 import { useMediaQuery } from 'react-responsive'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -12,7 +12,7 @@ import {
   useUserCollections,
   useUserTokens,
 } from '@reservoir0x/reservoir-kit-ui'
-import { useENSResolver, useMounted } from '../../hooks'
+import {useENSResolver, useMounted, useProfile} from '../../hooks'
 import { TokenTable, TokenTableRef } from 'components/portfolio/TokenTable'
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import { MobileTokenFilters } from 'components/common/MobileTokenFilters'
@@ -20,7 +20,8 @@ import { TokenFilters } from 'components/common/TokenFilters'
 import { FilterButton } from 'components/common/FilterButton'
 import { ListingsTable } from 'components/portfolio/ListingsTable'
 import { OffersTable } from 'components/portfolio/OffersTable'
-import { faCopy, faWallet } from '@fortawesome/free-solid-svg-icons'
+import {faCopy, faGlobe, faWallet} from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ChainToggle from 'components/common/ChainToggle'
 import { Head } from 'components/Head'
@@ -40,6 +41,7 @@ import { ToastContext } from 'context/ToastContextProvider'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { Avatar } from 'components/primitives/Avatar'
 import CopyText from 'components/common/CopyText'
+import Link from "next/link";
 
 type ActivityTypes = Exclude<
   NonNullable<
@@ -58,6 +60,7 @@ const IndexPage: NextPage = () => {
   const address = router.query.address
     ? (router.query.address[0] as `0x${string}`)
     : accountAddress
+  const { data: profile } = useProfile(address)
   const [tabValue, setTabValue] = useState('items')
   const [itemView, setItemView] = useState<ItemView>('list')
 
@@ -76,10 +79,10 @@ const IndexPage: NextPage = () => {
     !router.query.address || router.query.address[0] === accountAddress
 
   const {
-    avatar: ensAvatar,
-    name: resolvedEnsName,
     shortAddress,
   } = useENSResolver(address)
+  const avatar = profile?.profileImage
+  const banner = profile?.bannerImage
 
   let collectionQuery: Parameters<typeof useUserCollections>['1'] = {
     limit: 100,
@@ -97,6 +100,7 @@ const IndexPage: NextPage = () => {
     data: collections,
     isLoading: collectionsLoading,
     fetchNextPage,
+    mutate,
   } = useUserCollections(address as string, collectionQuery)
 
   // Batch listing logic
@@ -169,7 +173,7 @@ const IndexPage: NextPage = () => {
 
   return (
     <>
-      <Head />
+      <Head title={`Profile - ${profile?.username || shortAddress}`}/>
       <Layout>
         <Flex
           direction="column"
@@ -196,49 +200,104 @@ const IndexPage: NextPage = () => {
               ) : (
                 <>
                   <Flex
-                    align="center"
-                    justify="between"
+                    direction="column"
+                    align="end"
+                    justify="end"
                     css={{
-                      gap: '$4',
-                      flexDirection: 'column',
-                      alignItems: 'start',
-                      '@sm': { flexDirection: 'row', alignItems: 'center' },
+                      p: '$4',
+                      backgroundColor: '$secondary8',
+                      ...(banner ? {
+                        backgroundImage: `url(${banner})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      } : {}),
+                      borderRadius: 10,
+                      content: '',
+                      height: 350
                     }}
                   >
-                    <Flex align="center">
-                      {ensAvatar ? (
-                        <Avatar size="xxl" src={ensAvatar} />
-                      ) : (
-                        <Jazzicon
-                          diameter={64}
-                          seed={jsNumberForAddress(address as string)}
-                        />
+                    <Flex justify="center" css={{ gap: 24, zIndex: 2 }}>
+                      {profile?.twitter_id && (
+                        <Link target="_blank" href={`https://twitter.com/${profile?.twitter_username}`}>
+                          <FontAwesomeIcon icon={faTwitter} width={40} height={40}  style={{
+                            padding: 5,
+                            border: '1px #fff solid',
+                            borderRadius: 5,
+                          }} />
+                        </Link>
                       )}
-                      <Flex direction="column" css={{ ml: '$4' }}>
-                        <Text style="h5" as="h5">
-                          {resolvedEnsName ? resolvedEnsName : shortAddress}
-                        </Text>
-                        <CopyText text={address as string}>
-                          <Flex align="center" css={{ cursor: 'pointer' }}>
-                            <Text
-                              style="subtitle2"
-                              color="subtle"
-                              css={{ mr: '$1' }}
-                            >
-                              {shortAddress}
+                      {profile?.discord_id && (
+                        <Link target="_blank" href={`https://discord.com/users/${profile?.discord_id}`}>
+                          <FontAwesomeIcon icon={faDiscord} width={40} height={40} style={{
+                            padding: 5,
+                            border: '1px #fff solid',
+                            borderRadius: 5,
+                          }} />
+                        </Link>
+                      )}
+                      {profile?.website && (
+                        <Link target="_blank" href={profile.website}>
+                          <FontAwesomeIcon icon={faGlobe} width={40} height={40} style={{
+                            padding: 5,
+                            border: '1px #fff solid',
+                            borderRadius: 5,
+                          }} />
+                        </Link>
+                      )}
+                    </Flex>
+                  </Flex>
+                  <Flex direction="column" css={{ marginTop: -135, p: '$5' }}>
+                    <Flex justify="between"  css={{
+                      '@xs': {
+                        flexDirection: 'column'
+                      },
+                      '@lg': {
+                        flexDirection: 'row'
+                      },
+                      gap: 20
+                    }}>
+                      <Flex direction="column" css={{ gap: 20 }}>
+                        {avatar ? (
+                          <Avatar size="xxxl" corners="rounded" src={avatar} />
+                        ) : (
+                          <Jazzicon
+                            diameter={150}
+                            paperStyles={{ borderRadius: '10px' }}
+                            seed={jsNumberForAddress(address as string)}
+                          />
+                        )}
+                        <Flex align="center" justify="center" css={{ flex: 1, alignContent: 'space-between' }}>
+                          <Flex direction="column">
+                            <Text style="h5">
+                              {profile?.username || shortAddress}
                             </Text>
-                            <Box css={{ color: '$gray10' }}>
-                              <FontAwesomeIcon
-                                icon={faCopy}
-                                width={12}
-                                height={12}
-                              />
-                            </Box>
+                            <CopyText text={address as string}>
+                              <Flex align="center" css={{ cursor: 'pointer' }}>
+                                <Text
+                                  style="subtitle1"
+                                  color="subtle"
+                                  css={{ mr: '$3' }}
+                                >
+                                  {shortAddress}
+                                </Text>
+                                <Box css={{ color: '$gray10' }}>
+                                  <FontAwesomeIcon
+                                    icon={faCopy}
+                                    width={16}
+                                    height={16}
+                                  />
+                                </Box>
+                              </Flex>
+                            </CopyText>
                           </Flex>
-                        </CopyText>
+                        </Flex>
+                      </Flex>
+                      <Flex justify="end" align="end" css={{ flex: 1}}>
+                        <Flex direction="column" align="end" css={{ gap: 20 }}>
+                          <ChainToggle />
+                        </Flex>
                       </Flex>
                     </Flex>
-                    <ChainToggle />
                   </Flex>
                   <Tabs.Root
                     defaultValue="items"
@@ -278,6 +337,7 @@ const IndexPage: NextPage = () => {
                             filterCollection={filterCollection}
                             setFilterCollection={setFilterCollection}
                             loadMoreCollections={fetchNextPage}
+                            isLoading={collectionsLoading}
                           />
                         ) : (
                           <TokenFilters
@@ -349,6 +409,7 @@ const IndexPage: NextPage = () => {
                             setSelectedItems={setSelectedItems}
                             isOwner={isOwner}
                             itemView={itemView}
+                            refetch={mutate}
                           />
                         </Box>
                         {!isSmallDevice && (

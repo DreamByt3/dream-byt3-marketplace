@@ -63,6 +63,7 @@ import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
 import { ItemView } from './ViewToggle'
 import PortfolioTokenCard from './PortfolioTokenCard'
 import optimizeImage from 'utils/optimizeImage'
+import Transfer from '../buttons/Transfer'
 
 type Props = {
   address: Address | undefined
@@ -74,6 +75,7 @@ type Props = {
   itemView: ItemView
   acceptModalOpen?: boolean
   setSelectedItems: Dispatch<SetStateAction<UserToken[]>>
+  refetch: () => void
 }
 
 const ownerDesktopTemplateColumns = '1.25fr repeat(3, .75fr) 1.5fr'
@@ -92,6 +94,7 @@ export const TokenTable = forwardRef<TokenTableRef, Props>(
       isOwner,
       itemView,
       setSelectedItems,
+      refetch
     },
     ref
   ) => {
@@ -150,7 +153,7 @@ export const TokenTable = forwardRef<TokenTableRef, Props>(
     useEffect(() => {
       const eventListener: Parameters<
         NonNullable<ReturnType<typeof useReservoirClient>>['addEventListener']
-      >['0'] = (event, chainId) => {
+      >[0] = (event, chainId) => {
         switch (event.name) {
           case 'accept_offer_complete': {
             if (!acceptBidModalOpen && !selectedItems.length) {
@@ -190,6 +193,9 @@ export const TokenTable = forwardRef<TokenTableRef, Props>(
               <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" />
             </Text>
             <Text css={{ color: '$gray11' }}>No items found</Text>
+            <Button size="xs" onClick={() => mutate()}>
+              <FontAwesomeIcon icon={faRefresh} width={16} height={16}/>
+            </Button>
           </Flex>
         ) : (
           <Flex direction="column" css={{ width: '100%' }}>
@@ -260,7 +266,7 @@ export const TokenTable = forwardRef<TokenTableRef, Props>(
                 ))}
               </Grid>
             )}
-            <div ref={loadMoreRef}></div>
+            <div ref={loadMoreRef} />
           </Flex>
         )}
         {isValidating && (
@@ -363,6 +369,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
                   objectFit: 'cover',
                   aspectRatio: '1/1',
                 }}
+                unoptimized
                 loader={({ src }) => src}
                 src={imageSrc}
                 alt={`${token?.token?.name}`}
@@ -418,6 +425,12 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
           </Flex>
         </Flex>
         <Flex css={{ gap: '$2', width: '100%' }}>
+          {isOwner && (
+            <Transfer
+              token={token as ReturnType<typeof useTokens>['data'][0]}
+              mutate={mutate}
+            />
+          )}
           {token?.token?.topBid?.price?.amount?.decimal && isOwner ? (
             <AcceptBid
               tokenId={token.token.tokenId}
@@ -673,6 +686,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
                     objectFit: 'cover',
                     aspectRatio: '1/1',
                   }}
+                  unoptimized
                   loader={({ src }) => src}
                   src={imageSrc}
                   alt={`${token?.token?.name}`}
@@ -857,6 +871,11 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
       {isOwner && (
         <TableCell>
           <Flex justify="end" css={{ gap: '$3' }}>
+            <Transfer
+              token={token as ReturnType<typeof useTokens>['data'][0]}
+              mutate={mutate}
+            />
+
             {token?.token?.topBid?.price?.amount?.decimal && (
               <AcceptBid
                 openState={[

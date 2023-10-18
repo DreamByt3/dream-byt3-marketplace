@@ -147,20 +147,19 @@ const HamburgerMenu = () => {
                 NFTs
               </Text>
             </Link>
-
-            <Anchor
-              href="https://docs.dreambyt3.com"
-              target="_blank"
-              css={{
-                borderBottom: '1px solid $gray4',
-                cursor: 'pointer',
-                pb: '$4',
-                pt: '24px',
-                width: '100%',
-              }}
-            >
-              <Text style="subtitle1">More</Text>
-            </Anchor>
+            <Link href="/swap" legacyBehavior>
+              <Text
+                style="subtitle1"
+                css={{
+                  borderBottom: '1px solid $gray4',
+                  cursor: 'pointer',
+                  pb: '$4',
+                  pt: '24px',
+                }}
+              >
+                Buy Dream
+              </Text>
+            </Link>
             <Link href="/portfolio" legacyBehavior>
               <Flex
                 direction="column"
@@ -246,8 +245,7 @@ const HamburgerMenu = () => {
                 </Text>
               </Link>
               <Anchor
-                href="https://docs.dreambyt3.com"
-                target="_blank"
+                href="/swap"
                 css={{
                   borderBottom: '1px solid $gray4',
                   cursor: 'pointer',
@@ -256,7 +254,7 @@ const HamburgerMenu = () => {
                   width: '100%',
                 }}
               >
-                <Text style="subtitle1">Docs</Text>
+                <Text style="subtitle1">Buy Dream</Text>
               </Anchor>
             </Flex>
             <Box>

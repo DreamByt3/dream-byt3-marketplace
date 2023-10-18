@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from 'react'
 import { AnimatedOverlay, Content } from 'components/primitives/Dialog'
 import { useAccount, useDisconnect } from 'wagmi'
-import { useENSResolver } from 'hooks'
+import { useENSResolver, useProfile } from 'hooks'
 import { Box, Button, Flex, Grid, Text } from 'components/primitives'
 import { Avatar } from 'components/primitives/Avatar'
-import ThemeSwitcher from './ThemeSwitcher'
 import Jazzicon from 'react-jazzicon/dist/Jazzicon'
 import { jsNumberForAddress } from 'react-jazzicon'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
@@ -16,16 +15,21 @@ import {
   faCopy,
   faHand,
   faList,
-  faRightFromBracket,
+  faGear,
   faStore,
 } from '@fortawesome/free-solid-svg-icons'
 import CopyText from 'components/common/CopyText'
 import Link from 'next/link'
 import Wallet from './Wallet'
 import { useRouter } from 'next/router'
+import {signOut} from "next-auth/react";
 
 export const AccountSidebar: FC = () => {
-  const { address } = useAccount()
+  const { address } = useAccount({
+    onDisconnect: async () => {
+      await signOut({ callbackUrl: '/' });
+    }
+  })
   const { disconnect } = useDisconnect()
   const router = useRouter()
   const {
@@ -34,6 +38,7 @@ export const AccountSidebar: FC = () => {
     shortName: shortEnsName,
   } = useENSResolver(address)
   const [open, setOpen] = useState(false)
+  const { data: profile } = useProfile(address)
 
   useEffect(() => {
     setOpen(false)
@@ -48,11 +53,13 @@ export const AccountSidebar: FC = () => {
       type="button"
       color="gray3"
     >
-      {ensAvatar ? (
+      {profile?.profileImage ? (
+        <img src={profile?.profileImage} style={{ width: 40, height: 40, borderRadius: '50%' }} />
+      ) : (ensAvatar ? (
         <Avatar size="medium" src={ensAvatar} />
       ) : (
-        <Jazzicon diameter={44} seed={jsNumberForAddress(address as string)} />
-      )}
+        <Jazzicon diameter={40} seed={jsNumberForAddress(address as string)} />
+      ))}
     </Button>
   )
 
@@ -103,7 +110,7 @@ export const AccountSidebar: FC = () => {
                   right: '-100%',
                 }}
               >
-                <Flex direction="column" css={{ py: '$4', px: '$4' }}>
+                <Flex direction="column" css={{ py: 42, px: '$4' }}>
                   <Button
                     color="ghost"
                     css={{ color: '$gray10', ml: 'auto', mr: 10 }}
@@ -114,14 +121,13 @@ export const AccountSidebar: FC = () => {
                     <FontAwesomeIcon icon={faClose} height={18} width={18} />
                   </Button>
                   <Flex align="center" css={{ gap: '$3', ml: '$3' }}>
-                    {ensAvatar ? (
-                      <Avatar size="large" src={ensAvatar} />
+                    {profile?.profileImage ? (
+                      <img src={profile?.profileImage} style={{ width: 44, height: 44, borderRadius: '50%' }} />
+                    ) : (ensAvatar ? (
+                      <Avatar size="medium" src={ensAvatar} />
                     ) : (
-                      <Jazzicon
-                        diameter={52}
-                        seed={jsNumberForAddress(address as string)}
-                      />
-                    )}
+                      <Jazzicon diameter={44} seed={jsNumberForAddress(address as string)} />
+                    ))}
                     <CopyText
                       text={address || ''}
                       css={{ width: 'max-content' }}
@@ -136,9 +142,9 @@ export const AccountSidebar: FC = () => {
                           }}
                         >
                           <Text style="body1">
-                            {shortEnsName ? shortEnsName : shortAddress}
+                            {profile?.username ||  shortEnsName || shortAddress}
                           </Text>
-                          {!shortEnsName ? (
+                          {!profile?.username && !shortEnsName ? (
                             <FontAwesomeIcon
                               icon={faCopy}
                               width={12}
@@ -146,7 +152,7 @@ export const AccountSidebar: FC = () => {
                             />
                           ) : null}
                         </Flex>
-                        {shortEnsName ? (
+                        {(shortEnsName || profile?.username) ? (
                           <Flex
                             align="center"
                             css={{
@@ -227,6 +233,20 @@ export const AccountSidebar: FC = () => {
                     </Link>
                   </Grid>
                   <Wallet />
+                  <Link href="/portfolio/settings">
+                    <Flex
+                      align="center"
+                      css={{
+                        gap: 6,
+                        p: '$3',
+                        color: '$gray10',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faGear} width={16} height={16} />
+                      <Text style="body1">Settings</Text>
+                    </Flex>
+                  </Link>
                   <Button
                     size="large"
                     css={{ my: '$4', justifyContent: 'center' }}

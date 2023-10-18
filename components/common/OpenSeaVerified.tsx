@@ -5,7 +5,7 @@ import { Tooltip, Text } from 'components/primitives'
 type Props = {
   openseaVerificationStatus: NonNullable<
     paths['/collections/v7']['get']['responses']['200']['schema']['collections']
-  >['0']['openseaVerificationStatus']
+  >[0]['openseaVerificationStatus']
 }
 
 export const OpenSeaVerified: FC<Props> = ({ openseaVerificationStatus }) => {

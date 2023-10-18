@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { CSS } from '@stitches/react'
 
-export const StyledInput = styled('input', {
+const StyledTextArea = styled('textarea', {
   all: 'unset',
   width: '100%',
   px: 16,
@@ -20,25 +20,12 @@ export const StyledInput = styled('input', {
   backgroundColor: '$gray3',
   $$focusColor: '$colors$primary8',
   '&::placeholder': { color: '$gray10' },
-  '&:focus': { boxShadow: 'inset 0 0 0 1px $$focusColor' },
-  '&:disabled': {
-    backgroundColor: '$gray2',
-    color: '$gray9',
-  },
-
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    '-webkit-appearance': 'none',
-    margin: 0,
-  },
-
-  '&[type=number]': {
-    '-moz-appearance': 'textfield',
-  },
+  '&:focus': { boxShadow: '0 0 0 2px $$focusColor' },
 })
 
-const Input = forwardRef<
-  ElementRef<typeof StyledInput>,
-  ComponentPropsWithoutRef<typeof StyledInput> & {
+const TextArea = forwardRef<
+  ElementRef<typeof StyledTextArea>,
+  ComponentPropsWithoutRef<typeof StyledTextArea> & {
     icon?: ReactNode
     containerCss?: CSS
   }
@@ -47,8 +34,8 @@ const Input = forwardRef<
     {icon && (
       <div style={{ position: 'absolute', top: 16, left: 16 }}>{icon}</div>
     )}
-    <StyledInput css={{ pl: icon ? 48 : 16 }} ref={forwardedRef} {...props} />
+    <StyledTextArea css={{ pl: icon ? 48 : 16 }} ref={forwardedRef} {...props} />
   </Flex>
 ))
 
-export default Input
+export default TextArea
