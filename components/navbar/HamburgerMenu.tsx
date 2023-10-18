@@ -1,22 +1,23 @@
-import { Anchor, Box, Button, Flex, Text } from 'components/primitives'
-import { Avatar } from 'components/primitives/Avatar'
 import * as RadixDialog from '@radix-ui/react-dialog'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBars,
   faXmark,
+  faGear,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount, useDisconnect } from 'wagmi'
-import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
+
+import { Anchor, Box, Button, Flex, Text } from 'components/primitives'
+import { ConnectWalletButton } from 'components/ConnectWalletButton'
+import { Avatar } from 'components/primitives/Avatar'
 import { FullscreenModal } from 'components/common/FullscreenModal'
-import { useENSResolver, useMarketplaceChain } from 'hooks'
-import ThemeSwitcher from 'components/navbar/ThemeSwitcher'
 import Wallet from 'components/navbar/Wallet'
+import { useENSResolver, useMarketplaceChain } from 'hooks'
 
 const HamburgerMenu = () => {
   const { address, isConnected } = useAccount()
@@ -131,20 +132,7 @@ const HamburgerMenu = () => {
                   pt: '24px',
                 }}
               >
-                Explore
-              </Text>
-            </Link>
-            <Link href="/ethereum/collection-rankings" legacyBehavior>
-              <Text
-                style="subtitle1"
-                css={{
-                  borderBottom: '1px solid $gray4',
-                  cursor: 'pointer',
-                  pb: '$4',
-                  pt: '24px',
-                }}
-              >
-                NFTs
+                Trending
               </Text>
             </Link>
             <Link href="/swap" legacyBehavior>
@@ -157,7 +145,7 @@ const HamburgerMenu = () => {
                   pt: '24px',
                 }}
               >
-                Buy Dream
+                Buy DREAM
               </Text>
             </Link>
             <Link href="/portfolio" legacyBehavior>
@@ -178,6 +166,31 @@ const HamburgerMenu = () => {
               </Flex>
             </Link>
             <Wallet />
+            <Link href="/portfolio/settings" legacyBehavior>
+              <Flex
+                align="center"
+                css={{
+                  gap: 20,
+                  borderBottom: '1px solid $gray4',
+                  cursor: 'pointer',
+                  pb: '$4',
+                  pt: '24px',
+                }}
+              >
+                <Box css={{ color: '$gray10' }}>
+                  <FontAwesomeIcon
+                    icon={faGear}
+                    width={16}
+                    height={16}
+                  />
+                </Box>
+                <Text
+                  style="subtitle1"
+                >
+                  Settings
+                </Text>
+              </Flex>
+            </Link>
             <Flex
               css={{
                 justifyContent: 'space-between',
@@ -272,7 +285,7 @@ const HamburgerMenu = () => {
             borderTop: '1px solid $gray4',
           }}
         >
-          <a href="https://twitter.com/reservoir0x" target="_blank">
+          <a href="https://twitter.com/DreamByt3" target="_blank">
             <Button
               css={{ justifyContent: 'center', width: '44px', height: '44px' }}
               type="button"
@@ -282,7 +295,16 @@ const HamburgerMenu = () => {
               <FontAwesomeIcon icon={faTwitter} width={20} height={20} />
             </Button>
           </a>
-          <ThemeSwitcher />
+          <a href="https://discord.gg/rt5VmK2pKK" target="_blank">
+            <Button
+              css={{ justifyContent: 'center', width: '44px', height: '44px' }}
+              type="button"
+              size="small"
+              color="primary"
+            >
+              <FontAwesomeIcon icon={faDiscord} width={20} height={20} />
+            </Button>
+          </a>
         </Flex>
       </Flex>
     </FullscreenModal>

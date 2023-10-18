@@ -704,21 +704,31 @@ const Home: NextPage<any> = ({ ssr }) => {
 
       <Flex
         direction="column"
-        align="center"
         justify="center"
+        align="center"
         css={{
+          maxWidth: 1200,
+          mx: 'auto',
           py: 80,
-          gap: 40,
           '@md': {
             py: 120
           }
         }}
       >
-        <Text style={{
-          '@initial': 'h6',
-          '@md': 'h4'
-        }}>Sustainable NFT Marketplace</Text>
-        <StyledImage src="/logo.png" height={95} width={450} css={{ maxWidth: '80%' }} />
+        <Text
+          style={{
+            '@initial': 'h6',
+            '@md': 'h4'
+          }}
+          css={{
+            mb: 40
+          }}
+        >Sustainable NFT Marketplace</Text>
+        <Flex
+          justify="center"
+        >
+          <StyledImage src="/logo.png" height={95} width={600} css={{ maxWidth: '80%' }} />
+        </Flex>
       </Flex>
       <Footer />
     </Layout>

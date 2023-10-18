@@ -112,9 +112,6 @@ const Navbar = () => {
             <Link href={`/${routePrefix}/collections/trending`}>
               <NavItem>Trending</NavItem>
             </Link>
-            <Link href="/swap">
-              <NavItem>Buy DREAM</NavItem>
-            </Link>
           </Flex>
           <Flex css={{ flex: 1, px: '$5', maxWidth: 600 }}>
             <GlobalSearch
@@ -126,6 +123,9 @@ const Navbar = () => {
           </Flex>
         </Flex>
         <Flex css={{ gap: '$5', mr: 12 }}>
+          <Link href="/swap">
+            <NavItem>Buy DREAM</NavItem>
+          </Link>
           {isConnected && (
             <Link href={`/portfolio`}>
               <Box css={{ mr: '$2' }}>
