@@ -6,9 +6,10 @@ import {
   Box,
   Button,
   FormatCryptoCurrency,
+  AnimatedBox,
 } from 'components/primitives'
 import Layout from 'components/Layout'
-import { motion, useViewportScroll, useTransform } from 'framer-motion'
+import { useViewportScroll, useTransform } from 'framer-motion'
 import { paths } from '@reservoir0x/reservoir-sdk'
 import { useContext, useEffect, useState } from 'react'
 import { Footer } from 'components/home/Footer'
@@ -103,9 +104,11 @@ const Home: NextPage<any> = ({ ssr }) => {
           },
         }}
       >
-        <motion.div
+        <AnimatedBox
           style={{
-            scale: scale,
+            scale,
+          }}
+          css={{
             position: 'absolute',
             top: 0,
             display: 'block',
@@ -118,9 +121,7 @@ const Home: NextPage<any> = ({ ssr }) => {
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
           }}
-        >
-
-        </motion.div>
+        />
         <Box
           css={{
             position: 'absolute',
@@ -355,176 +356,176 @@ const Home: NextPage<any> = ({ ssr }) => {
           }}
         >
           {topSellingCollectionsData?.collections &&
-            topSellingCollectionsData.collections.length &&
-            topSellingCollectionsData.collections
-              .slice(1, 13)
-              .map((collection) => {
-                return (
-                  <Link
-                    key={collection.id}
-                    href={`/${marketplaceChain.routePrefix}/collection/${collection.id}`}
-                    style={{ display: 'grid' }}
+          topSellingCollectionsData.collections.length &&
+          topSellingCollectionsData.collections
+            .slice(1, 13)
+            .map((collection) => {
+              return (
+                <Link
+                  key={collection.id}
+                  href={`/${marketplaceChain.routePrefix}/collection/${collection.id}`}
+                  style={{ display: 'grid' }}
+                >
+                  <Flex
+                    direction="column"
+                    css={{
+                      flex: 1,
+                      width: '100%',
+                      borderRadius: 12,
+                      cursor: 'pointer',
+                      height: '100%',
+                      background: '$neutralBgSubtle',
+                      border: '2px solid transparent',
+                      transition: 'border 0.5s',
+
+                      overflow: 'hidden',
+                      position: 'relative',
+                      p: '$3',
+                      '&:hover': {
+                        border: '2px solid $primary10',
+                      },
+                      '&:hover > div > div> img:nth-child(1)': {
+                        transform: 'scale(1.075)',
+                      },
+                    }}
                   >
                     <Flex
                       direction="column"
                       css={{
+                        zIndex: 2,
+                        position: 'relative',
                         flex: 1,
                         width: '100%',
-                        borderRadius: 12,
-                        cursor: 'pointer',
-                        height: '100%',
-                        background: '$neutralBgSubtle',
-                        border: '2px solid transparent',
-                        transition: 'border 0.5s',
-
-                        overflow: 'hidden',
-                        position: 'relative',
-                        p: '$3',
-                        '&:hover': {
-                          border: '2px solid $primary10',
-                        },
-                        '&:hover > div > div> img:nth-child(1)': {
-                          transform: 'scale(1.075)',
-                        },
                       }}
                     >
-                      <Flex
-                        direction="column"
+                      <Box
                         css={{
-                          zIndex: 2,
                           position: 'relative',
-                          flex: 1,
-                          width: '100%',
+                          overflow: 'hidden',
+                          borderRadius: 8,
                         }}
                       >
-                        <Box
+                        {collection?.banner?.length ||
+                        collection.recentSales?.[0]?.token?.image?.length ? (
+                          <img
+                            loading="lazy"
+                            src={optimizeImage(
+                              collection?.banner ??
+                              collection.recentSales?.[0]?.token?.image,
+                              800
+                            )}
+                            style={{
+                              transition: 'transform 300ms ease-in-out',
+                              width: '100%',
+                              borderRadius: 8,
+                              height: 200,
+                              objectFit: 'cover',
+                            }}
+                          />
+                        ) : (
+                          <Box
+                            css={{
+                              width: '100%',
+                              borderRadius: 8,
+                              height: 200,
+                              background: '$gray3',
+                            }}
+                          />
+                        )}
+                        <Img
+                          src={
+                            optimizeImage(collection?.image, 72 * 2) as string
+                          }
+                          alt={collection?.name as string}
+                          width={72}
+                          height={72}
                           css={{
-                            position: 'relative',
-                            overflow: 'hidden',
+                            width: 72,
+                            height: 72,
+                            border: '1px solid rgba(255,255,255,0.6)',
+                            position: 'absolute',
+                            bottom: '$3',
+                            left: '$3',
                             borderRadius: 8,
                           }}
-                        >
-                          {collection?.banner?.length ||
-                          collection.recentSales?.[0]?.token?.image?.length ? (
-                            <img
-                              loading="lazy"
-                              src={optimizeImage(
-                                collection?.banner ??
-                                  collection.recentSales?.[0]?.token?.image,
-                                800
-                              )}
-                              style={{
-                                transition: 'transform 300ms ease-in-out',
-                                width: '100%',
-                                borderRadius: 8,
-                                height: 200,
-                                objectFit: 'cover',
-                              }}
-                            />
-                          ) : (
-                            <Box
-                              css={{
-                                width: '100%',
-                                borderRadius: 8,
-                                height: 200,
-                                background: '$gray3',
-                              }}
-                            />
-                          )}
-                          <Img
-                            src={
-                              optimizeImage(collection?.image, 72 * 2) as string
-                            }
-                            alt={collection?.name as string}
-                            width={72}
-                            height={72}
-                            css={{
-                              width: 72,
-                              height: 72,
-                              border: '1px solid rgba(255,255,255,0.6)',
-                              position: 'absolute',
-                              bottom: '$3',
-                              left: '$3',
-                              borderRadius: 8,
-                            }}
-                          />
-                        </Box>
-                        <Flex
-                          css={{ my: '$4', mb: '$2' }}
-                          justify="between"
-                          align="center"
-                        >
-                          <Text style="h5" as="h5" ellipsify css={{ flex: 1 }}>
-                            {collection?.name}
-                          </Text>
-                        </Flex>
+                        />
+                      </Box>
+                      <Flex
+                        css={{ my: '$4', mb: '$2' }}
+                        justify="between"
+                        align="center"
+                      >
+                        <Text style="h5" as="h5" ellipsify css={{ flex: 1 }}>
+                          {collection?.name}
+                        </Text>
+                      </Flex>
 
-                        <Box
-                          css={{
-                            maxWidth: 720,
-                            lineHeight: 1.5,
-                            fontSize: 16,
-                            flex: 1,
-                            fontWeight: 400,
-                            display: '-webkit-box',
-                            color: '$gray12',
-                            fontFamily: '$body',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            '& a': {
-                              fontWeight: 500,
-                              cursor: 'pointer',
-                              textDecoration: 'underline',
-                            },
+                      <Box
+                        css={{
+                          maxWidth: 720,
+                          lineHeight: 1.5,
+                          fontSize: 16,
+                          flex: 1,
+                          fontWeight: 400,
+                          display: '-webkit-box',
+                          color: '$gray12',
+                          fontFamily: '$body',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          '& a': {
+                            fontWeight: 500,
+                            cursor: 'pointer',
+                            textDecoration: 'underline',
+                          },
+                        }}
+                      >
+                        <ReactMarkdown
+                          children={collection?.description || ''}
+                          components={{
+                            a: MarkdownLink,
+                            p: Text as any,
                           }}
-                        >
-                          <ReactMarkdown
-                            children={collection?.description || ''}
-                            components={{
-                              a: MarkdownLink,
-                              p: Text as any,
-                            }}
+                        />
+                      </Box>
+
+                      <Flex css={{ mt: '$4' }}>
+                        <Box css={{ mr: '$5' }}>
+                          <Text
+                            style="subtitle2"
+                            color="subtle"
+                            as="p"
+                            css={{ mb: 2 }}
+                          >
+                            FLOOR
+                          </Text>
+                          <FormatCryptoCurrency
+                            amount={
+                              collection?.floorAsk?.price?.amount?.native ?? 0
+                            }
+                            textStyle={'h6'}
+                            logoHeight={12}
+                            address={
+                              collection?.floorAsk?.price?.currency?.contract
+                            }
                           />
                         </Box>
 
-                        <Flex css={{ mt: '$4' }}>
-                          <Box css={{ mr: '$5' }}>
-                            <Text
-                              style="subtitle2"
-                              color="subtle"
-                              as="p"
-                              css={{ mb: 2 }}
-                            >
-                              FLOOR
-                            </Text>
-                            <FormatCryptoCurrency
-                              amount={
-                                collection?.floorAsk?.price?.amount?.native ?? 0
-                              }
-                              textStyle={'h6'}
-                              logoHeight={12}
-                              address={
-                                collection?.floorAsk?.price?.currency?.contract
-                              }
-                            />
-                          </Box>
-
-                          <Box css={{ mr: '$4' }}>
-                            <Text style="subtitle2" color="subtle" as="p">
-                              24H SALES
-                            </Text>
-                            <Text style="h6" as="h4" css={{ mt: 2 }}>
-                              {collection.count?.toLocaleString()}
-                            </Text>
-                          </Box>
-                        </Flex>
+                        <Box css={{ mr: '$4' }}>
+                          <Text style="subtitle2" color="subtle" as="p">
+                            24H SALES
+                          </Text>
+                          <Text style="h6" as="h4" css={{ mt: 2 }}>
+                            {collection.count?.toLocaleString()}
+                          </Text>
+                        </Box>
                       </Flex>
                     </Flex>
-                  </Link>
-                )
-              })}
+                  </Flex>
+                </Link>
+              )
+            })}
         </Box>
         <Flex justify="center" css={{ my: '$5' }}>
           <Link href={`/${marketplaceChain.routePrefix}/collections/trending`}>
