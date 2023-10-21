@@ -262,7 +262,7 @@ const AllSalesTableRow: FC<CollectionTableRowProps> = ({
 
   if (isSmallDevice) {
     return (
-      <Flex css={{ pt: '$4', borderBottom: '1px solid $gray3' }}>
+      <Flex css={{ pt: '$4', borderBottom: '1px solid $primary9' }}>
         <Text css={{ pt: '$1', mr: '$3', width: 15 }} style="subtitle3">
           {rank}
         </Text>
@@ -441,7 +441,7 @@ const SaleTableRow: FC<CollectionTableRowProps> = ({
 
   if (isSmallDevice) {
     return (
-      <Flex css={{ pt: '$4', borderBottom: '1px solid $gray3' }}>
+      <Flex css={{ pt: '$4', borderBottom: '1px solid $primary9' }}>
         <Text css={{ pt: '$1', mr: '$3', width: 15 }} style="subtitle3">
           {rank}
         </Text>
@@ -604,7 +604,7 @@ const MintTableRow: FC<CollectionTableRowProps> = ({
 
   if (isSmallDevice) {
     return (
-      <Flex css={{ pt: '$4', borderBottom: '1px solid $gray3' }}>
+      <Flex css={{ pt: '$4', borderBottom: '1px solid $primary9' }}>
         <Text css={{ pt: '$1', mr: '$3', width: 15 }} style="subtitle3">
           {rank}
         </Text>
@@ -818,7 +818,7 @@ const CollectionTableHeading: FC<CollectionTableHeadingProps> = ({
     >
       {headings.map((heading) => (
         <TableCell key={heading}>
-          <Text style="subtitle3" color="subtle">
+          <Text style="subtitle3" color="primary">
             {heading}
           </Text>
         </TableCell>

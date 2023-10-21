@@ -371,7 +371,6 @@ const Home: NextPage<any> = ({ ssr }) => {
             }}
           >
             {topCollections
-              .filter((c,i) => activeCollection ? activeCollection !== c.id : i !== 0)
               .map((collection) => {
                 return (
                   <Box
@@ -382,7 +381,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                       borderRadius: 8,
                       overflow: 'hidden',
                       position: 'relative',
-                      border: '1px solid $primary9',
+                      border: '1px solid $primary11',
                       cursor: 'pointer',
                       transition: 'transform 300ms ease-in-out',
                       '&:hover': {
@@ -559,16 +558,12 @@ const Home: NextPage<any> = ({ ssr }) => {
                       borderRadius: 12,
                       cursor: 'pointer',
                       height: '100%',
-                      background: '$neutralBgSubtle',
-                      border: '2px solid transparent',
+                      color: 'rgba(255,157,241,0.7)',
+                      backgroundImage: 'linear-gradient(hsla(325, 90.0%, 75.0%, 1) 0%, hsla(325, 90.0%, 75.0%, 0.4) 100%)',
                       transition: 'border 0.5s',
-
                       overflow: 'hidden',
                       position: 'relative',
                       p: '$3',
-                      '&:hover': {
-                        border: '2px solid $primary10',
-                      },
                       '&:hover > div > div> img:nth-child(1)': {
                         transform: 'scale(1.075)',
                       },
@@ -691,10 +686,8 @@ const Home: NextPage<any> = ({ ssr }) => {
         css={{
           maxWidth: 1200,
           mx: 'auto',
-          py: 80,
-          '@md': {
-            py: 120
-          }
+          pt: 40,
+          pb: 60
         }}
       >
         <Text
@@ -703,7 +696,7 @@ const Home: NextPage<any> = ({ ssr }) => {
             '@md': 'h4'
           }}
           css={{
-            mb: 40
+            mb: 16
           }}
         >Sustainable NFT Marketplace</Text>
         <Flex

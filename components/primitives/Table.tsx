@@ -15,7 +15,7 @@ export const HeaderRow = styled(Row, {})
 
 export const TableRow = styled(Row, {
   alignItems: 'center',
-  borderBottom: '1px solid $gray3',
+  borderBottom: '1px solid $primary11',
 })
 
 export const TableCell = styled('div', {
