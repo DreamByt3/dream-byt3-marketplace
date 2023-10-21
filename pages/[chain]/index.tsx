@@ -37,7 +37,7 @@ const StyledImage = styled('img', {})
 
 const Home: NextPage<any> = ({ ssr }) => {
   const isSSR = typeof window === 'undefined'
-  const router = useRouter()
+  const [activeCollection, setActiveCollection] = useState('')
   const isMounted = useMounted()
   const marketplaceChain = useMarketplaceChain()
   const { chain } = useContext(ChainContext)
@@ -86,7 +86,7 @@ const Home: NextPage<any> = ({ ssr }) => {
     }
   )
 
-  const topCollection = topCollections?.[0]
+  const topCollection = activeCollection ? topCollections.find(c => c.id === activeCollection) : topCollections?.[0]
 
   const {
     avatar: ensAvatar,
@@ -340,7 +340,6 @@ const Home: NextPage<any> = ({ ssr }) => {
       <Box
         css={{
           py: 16,
-          mt: 80,
           height: '100%',
           overflowX: 'auto',
           // '&::-webkit-scrollbar': {
@@ -367,12 +366,10 @@ const Home: NextPage<any> = ({ ssr }) => {
             }}
           >
             {topCollections
-              .slice(1, 13)
+              .filter((c,i) => activeCollection ? activeCollection !== c.id : i !== 0)
               .map((collection) => {
                 return (
                   <Box
-                    as={Link}
-                    href={`/${marketplaceChain.routePrefix}/collection/${collection.id}`}
                     key={`top-collection-${collection.id}`}
                     css={{
                       height: 200,
@@ -381,6 +378,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                       overflow: 'hidden',
                       position: 'relative',
                       border: '1px solid $primary9',
+                      cursor: 'pointer',
                       transition: 'transform 300ms ease-in-out',
                       '&:hover': {
                         transform: 'translateY(-16px)',
@@ -389,6 +387,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                         transform: 'scale(1.075)',
                       },
                     }}
+                    onClick={() => setActiveCollection(collection.id as string)}
                   >
                     <img
                       loading="lazy"
