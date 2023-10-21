@@ -97,35 +97,54 @@ const Navbar = () => {
       justify="between"
     >
       <Flex align="center" justify="between" css={{ flex: 1 }}>
-        <Flex align="center" css={{ flex: 1 }}>
+        <Flex align="center" >
           <Link href={`/${routePrefix}`}>
-            <Box css={{ width: 112, cursor: 'pointer' }}>
+            <Box css={{ width: 236, cursor: 'pointer' }}>
               <Image
-                src="/dreamByt3Logo.svg"
-                width={50}
-                height={50}
+                src="/logo-small.png"
+                width={189}
+                height={40}
                 alt="DreamByt3"
               />
             </Box>
           </Link>
-          <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
-            <Link href={`/${routePrefix}/collections/trending`}>
-              <NavItem>Trending</NavItem>
-            </Link>
-          </Flex>
-          <Flex css={{ flex: 1, px: '$5', maxWidth: 600 }}>
-            <GlobalSearch
-              ref={searchRef}
-              placeholder="Search NFTs..."
-              containerCss={{ width: '100%' }}
-              key={router.asPath}
-            />
-          </Flex>
+        </Flex>
+        <Flex justify="center" css={{ flex: 1, px: '$5'}}>
+          <GlobalSearch
+            ref={searchRef}
+            placeholder="Search NFTs..."
+            containerCss={{ width: '100%' }}
+            key={router.asPath}
+          />
         </Flex>
         <Flex css={{ gap: '$5', mr: 12 }}>
-          <Link href="/swap">
-            <NavItem>Buy DREAM</NavItem>
-          </Link>
+          <HoverCard.Root openDelay={200}>
+            <HoverCard.Trigger>
+              <NavItem>
+                More
+              </NavItem>
+            </HoverCard.Trigger>
+            <HoverCard.Content sideOffset={24} align="start">
+              <Card css={{ p: 24, width: 240 }}>
+                <Flex css={{ gap: '$4' }} direction="column">
+                  <Link href={`/swap`}>
+                    <NavItem
+                      active={router.pathname.includes('swap')}
+                    >
+                      Buy DREAM
+                    </NavItem>
+                  </Link>
+                  {/*<Link href={`/staking`}>*/}
+                  {/*  <NavItem*/}
+                  {/*    active={router.pathname.includes('staking')}*/}
+                  {/*  >*/}
+                  {/*    Staking*/}
+                  {/*  </NavItem>*/}
+                  {/*</Link>*/}
+                </Flex>
+              </Card>
+            </HoverCard.Content>
+          </HoverCard.Root>
           {isConnected && (
             <Link href={`/portfolio`}>
               <Box css={{ mr: '$2' }}>

@@ -14,22 +14,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
-  fillType: 'mint' | 'sale' | 'any'
-  setFillType: Dispatch<SetStateAction<'any' | 'mint' | 'sale'>>
+  fillType: 'sale' | 'any'
+  setFillType: Dispatch<SetStateAction<'any' | 'sale'>>
 }
 
 const fillTypesFilters = [
   {
     value: 'sale',
-    display: 'Trades',
-  },
-  {
-    value: 'mint',
-    display: 'Mints',
+    display: 'Top Sales',
   },
   {
     value: 'any',
-    display: 'All Sales',
+    display: 'Trending',
   },
 ]
 

@@ -129,7 +129,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             }}
           >
             <Text style="h4" as="h4">
-              Trending Collections
+              Explore
             </Text>
             <Flex align="center" css={{ gap: '$4' }}>
               <CollectionsTimeDropdown
@@ -154,7 +154,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             css={{
               display: isFetchingPage ? 'none' : 'block',
             }}
-          ></Box>
+          />
         </Flex>
         {(isFetchingPage || isValidating) && (
           <Flex align="center" justify="center" css={{ py: '$4' }}>
