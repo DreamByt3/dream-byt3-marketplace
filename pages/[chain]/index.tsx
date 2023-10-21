@@ -31,6 +31,7 @@ import {CollectionTopSellingTable} from "../../components/home/CollectionTopSell
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import {useCollections} from "@reservoir0x/reservoir-kit-ui";
 import {Avatar} from "../../components/primitives/Avatar";
+import {formatNumber} from "../../utils/numbers";
 
 const StyledImage = styled('img', {})
 
@@ -250,14 +251,14 @@ const Home: NextPage<any> = ({ ssr }) => {
                         </Box>
                       </Box>
 
-                      {/*<Box css={{ mr: '$4' }}>*/}
-                      {/*  <Text style="subtitle2" color="subtle">*/}
-                      {/*    24H SALES*/}
-                      {/*  </Text>*/}
-                      {/*  <Text style="h4" as="h4" css={{ mt: 2 }}>*/}
-                      {/*    {topCollection?.count?.toLocaleString()}*/}
-                      {/*  </Text>*/}
-                      {/*</Box>*/}
+                      <Box css={{ mr: '$4' }}>
+                        <Text style="subtitle2" color="subtle">
+                          1D Volume
+                        </Text>
+                        <Text style="h4" as="h4" css={{ mt: 2 }}>
+                          {formatNumber(topCollection?.volume?.["1day"], 2, true)}
+                        </Text>
+                      </Box>
                     </Flex>
                   </Flex>
                   <Flex
