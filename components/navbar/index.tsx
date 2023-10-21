@@ -118,15 +118,9 @@ const Navbar = () => {
           />
         </Flex>
         <Flex css={{ gap: '$5', mr: 12 }}>
-          <HoverCard.Root openDelay={200}>
-            <HoverCard.Trigger>
-              <NavItem>
-                More
-              </NavItem>
-            </HoverCard.Trigger>
-            <HoverCard.Content sideOffset={24} align="start">
-              <Card css={{ p: 24, width: 240 }}>
-                <Flex css={{ gap: '$4' }} direction="column">
+          
+            
+              
                   <Link href={`/swap`}>
                     <NavItem
                       active={router.pathname.includes('swap')}
@@ -141,10 +135,8 @@ const Navbar = () => {
                   {/*    Staking*/}
                   {/*  </NavItem>*/}
                   {/*</Link>*/}
-                </Flex>
-              </Card>
-            </HoverCard.Content>
-          </HoverCard.Root>
+              
+         
           {isConnected && (
             <Link href={`/portfolio`}>
               <Box css={{ mr: '$2' }}>

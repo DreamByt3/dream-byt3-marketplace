@@ -690,20 +690,24 @@ const Home: NextPage<any> = ({ ssr }) => {
           pb: 60
         }}
       >
+        <Flex
+          justify="center"
+        >
+          <StyledImage src="/logo.png" height={80} width={600} css={{ maxWidth: '80%' }} />
+        </Flex>
         <Text
           style={{
             '@initial': 'h6',
             '@md': 'h4'
           }}
           css={{
-            mb: 16
+            margin: '16px 0',
+            textAlign: 'center', 
           }}
-        >Sustainable NFT Marketplace</Text>
-        <Flex
-          justify="center"
-        >
-          <StyledImage src="/logo.png" height={95} width={600} css={{ maxWidth: '80%' }} />
-        </Flex>
+        >DREAMBYT3 is the Sustainable NFT Marketplace<br /> 
+        Powered by $DREAM and the Community
+        </Text>
+        
       </Flex>
       <Footer />
     </Layout>
