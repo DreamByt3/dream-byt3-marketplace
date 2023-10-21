@@ -704,8 +704,7 @@ const Home: NextPage<any> = ({ ssr }) => {
             margin: '16px 0',
             textAlign: 'center', 
           }}
-        >DREAMBYT3 is the Sustainable NFT Marketplace<br /> 
-        Powered by $DREAM and the Community
+        >Powered by $DREAM and the Community
         </Text>
         
       </Flex>

@@ -104,7 +104,7 @@ const Navbar = () => {
                 src="/logo-small.png"
                 width={189}
                 height={40}
-                alt="DreamByt3"
+                alt="DREAMBYT3"
               />
             </Box>
           </Link>
@@ -119,13 +119,17 @@ const Navbar = () => {
         </Flex>
         <Flex css={{ gap: '$5', mr: 12 }}>
           
-            
+        <Link href={`/collections`}>
+              <Box css={{ mr: '$2' }}>
+                <NavItem>Collections</NavItem>
+              </Box>
+            </Link>
               
                   <Link href={`/swap`}>
                     <NavItem
                       active={router.pathname.includes('swap')}
                     >
-                      Buy $DREAM
+                      Token
                     </NavItem>
                   </Link>
                   {/*<Link href={`/staking`}>*/}
