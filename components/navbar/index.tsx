@@ -65,7 +65,7 @@ const Navbar = () => {
                 src="/dreamByt3Logo.svg"
                 width={39}
                 height={39}
-                alt="DreamByt3"
+                alt="DREAMBYT3"
               />
             </Box>
           </Link>
@@ -131,7 +131,7 @@ const Navbar = () => {
                     <NavItem
                       active={router.pathname.includes('swap')}
                     >
-                      Buy DREAM
+                      Buy $DREAM
                     </NavItem>
                   </Link>
                   {/*<Link href={`/staking`}>*/}

@@ -48,7 +48,7 @@ const developerSectionLinks = [
 const companySectionLinks = [
   {
     name: '$DREAM Token',
-    href: 'https://coingecko.com',
+    href: 'https://etherscan.io/address/0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
   }, {
     name: 'Governance',
     href: 'https://snapshot.org/#/dreambyt3.eth',
@@ -115,7 +115,7 @@ export const Footer = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://discord.gg/rt5VmK2pKK"
+            href="https://discord.gg/ENKWhXFnHj"
             aria-label="Discord"
           >
             <Button
