@@ -188,6 +188,11 @@ const Home: NextPage<any> = ({ ssr }) => {
                     justify="between"
                     css={{
                       width: '100%',
+                      flexDirection: 'column',
+                      gap: 20,
+                      '@md': {
+                        flexDirection: 'row',
+                      }
                     }}
                   >
                     <Box css={{ flex: 1 }}>
