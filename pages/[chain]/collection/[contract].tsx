@@ -41,6 +41,7 @@ import LoadingCard from 'components/common/LoadingCard'
 import { useChainCurrency, useMounted } from 'hooks'
 import { NORMALIZE_ROYALTIES } from 'pages/_app'
 import {
+  faBroom,
   faCog,
   faCube,
   faGlobe,
@@ -521,27 +522,9 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                           align="center"
                           justify="center"
                         >
+                          <FontAwesomeIcon icon={faBroom} />
                           <Text style="h6" as="h6" css={{ color: '$bg' }}>
-                            Collect
-                          </Text>
-                          <Text
-                            style="h6"
-                            as="h6"
-                            css={{ color: '$bg', fontWeight: 900 }}
-                          >
-                            <Flex
-                              css={{
-                                gap: '$1',
-                              }}
-                            >
-                              <FormatCrypto
-                                amount={nativePrice}
-                                textStyle="h6"
-                                css={{ color: '$bg', fontWeight: 900 }}
-                                decimals={4}
-                              />
-                              {chainCurrency.symbol}
-                            </Flex>
+                            Sweep
                           </Text>
                         </Flex>
                       }
@@ -596,7 +579,12 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                   ) : null}
                   <CollectionOffer
                     collection={collection}
-                    buttonChildren={<FontAwesomeIcon icon={faHand} />}
+                    buttonChildren={(
+                      <>
+                        <FontAwesomeIcon icon={faHand} />
+                        <Text style="h6" as="h6" css={{ color: '$bg' }}>Collection Offer</Text>
+                      </>
+                    )}
                     buttonProps={{ color: mintData ? 'gray3' : 'primary' }}
                     buttonCss={{ px: '$4' }}
                     mutate={mutate}
