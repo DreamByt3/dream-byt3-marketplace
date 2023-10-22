@@ -132,7 +132,7 @@ const HamburgerMenu = () => {
                   pt: '24px',
                 }}
               >
-                Trending
+                Explore
               </Text>
             </Link>
             <Link href="/swap" legacyBehavior>
@@ -145,7 +145,7 @@ const HamburgerMenu = () => {
                   pt: '24px',
                 }}
               >
-                Buy DREAM
+                Token
               </Text>
             </Link>
             <Link href="/portfolio" legacyBehavior>
@@ -229,7 +229,7 @@ const HamburgerMenu = () => {
             }}
           >
             <Flex direction="column">
-              <Link href="/" legacyBehavior>
+              <Link href={`/${routePrefix}/collection-rankings`} legacyBehavior>
                 <Text
                   style="subtitle1"
                   css={{
@@ -267,7 +267,7 @@ const HamburgerMenu = () => {
                   width: '100%',
                 }}
               >
-                <Text style="subtitle1">Buy Dream</Text>
+                <Text style="subtitle1">Token</Text>
               </Anchor>
             </Flex>
             <Box>
