@@ -97,7 +97,7 @@ const Navbar = () => {
       justify="between"
     >
       <Flex align="center" justify="between" css={{ flex: 1 }}>
-        <Flex align="center" css={{ borderRight: '1px solid $pinkA6', pr: '$5'}} >
+        <Flex align="center" css={{ borderRight: '1px solid $pinkA6'}} >
           <Link href={`/${routePrefix}`}>
             <Box css={{ width: 236, cursor: 'pointer' }}>
               <Image
