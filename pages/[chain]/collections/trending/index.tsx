@@ -169,8 +169,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
               left: 0,
               right: 0,
               bottom: 0,
-              backdropFilter: 'blur(2px)',
-              backgroundColor: 'rgb(60,9,60, 0.4)',
+              backgroundColor: 'rgb(60,9,60, 0.2)',
               backgroundImage: 'linear-gradient(rgba(8, 4, 4, 0) 50%, rgb(8, 4, 4) 90.22%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
             }}
           />
