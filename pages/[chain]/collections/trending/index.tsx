@@ -34,7 +34,7 @@ import Link from "next/link";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
-const IndexPage: NextPage<Props> = ({ ssr }) => {
+const TrendingPage: NextPage<Props> = ({ ssr }) => {
   const router = useRouter()
   const isSSR = typeof window === 'undefined'
   const isMounted = useMounted()
@@ -472,4 +472,4 @@ export const getServerSideProps: GetServerSideProps<{
   }
 }
 
-export default IndexPage
+export default TrendingPage

@@ -10,7 +10,7 @@ import {
 import Layout from 'components/Layout'
 import { motion, useViewportScroll, useTransform } from 'framer-motion'
 import { paths } from '@reservoir0x/reservoir-sdk'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Footer } from 'components/home/Footer'
 import {useENSResolver, useMarketplaceChain, useMounted} from 'hooks'
 import supportedChains, { DefaultChain } from 'utils/chains'
@@ -25,7 +25,6 @@ import { styled } from 'stitches.config'
 import ChainToggle from 'components/common/ChainToggle'
 import optimizeImage from 'utils/optimizeImage'
 import { MarkdownLink } from 'components/primitives/MarkdownLink'
-import { useRouter } from 'next/router'
 import {FillTypeToggle} from "../../components/home/FillTypeToggle";
 import {CollectionTopSellingTable} from "../../components/home/CollectionTopSellingTable";
 import LoadingSpinner from "../../components/common/LoadingSpinner";

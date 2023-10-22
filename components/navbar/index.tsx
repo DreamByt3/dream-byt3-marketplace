@@ -118,7 +118,7 @@ const Navbar = () => {
         >
           <Flex
             as={Link}
-            href={`/${routePrefix}/collections/trending`}
+            href={`/${routePrefix}/collection-rankings`}
             align="center"
             css={{
               height: 44,

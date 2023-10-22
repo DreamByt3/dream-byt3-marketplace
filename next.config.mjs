@@ -49,13 +49,12 @@ const nextConfig = {
       {
         source: '/collection-rankings',
         destination: `/${DefaultChain.routePrefix}/collection-rankings`,
-        permanent: true,
+        permanent: false,
       },
-
       {
         source: '/:chain/collection-rankings',
         destination: `/:chain/collections/trending`,
-        permanent: false,
+        permanent: true,
       },
     ]
   },
