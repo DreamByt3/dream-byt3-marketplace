@@ -689,7 +689,7 @@ const Home: NextPage<any> = ({ ssr }) => {
         <Flex
           justify="center"
         >
-          <StyledImage src="/logo.png" height={80} width={600} css={{ maxWidth: '80%' }} />
+          <StyledImage src="/logo.svg" height={80} width={600} css={{ maxWidth: '80%' }} />
         </Flex>
         <Text
           style={{

@@ -62,7 +62,7 @@ const Navbar = () => {
           <Link href={`/${routePrefix}`}>
             <Box css={{ width: 34, cursor: 'pointer' }}>
               <Image
-                src="/dreamByt3Logo.svg"
+                src="/logo-compact.svg"
                 width={39}
                 height={39}
                 alt="DREAMBYT3"
