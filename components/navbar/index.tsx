@@ -65,7 +65,7 @@ const Navbar = () => {
                 src="/dreamByt3Logo.svg"
                 width={39}
                 height={39}
-                alt="DreamByt3"
+                alt="DREAMBYT3"
               />
             </Box>
           </Link>
@@ -104,7 +104,7 @@ const Navbar = () => {
                 src="/logo-small.png"
                 width={189}
                 height={40}
-                alt="DreamByt3"
+                alt="DREAMBYT3"
               />
             </Box>
           </Link>

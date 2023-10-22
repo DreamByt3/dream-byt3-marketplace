@@ -35,11 +35,11 @@ class MyDocument extends Document {
         <link
           rel="shortcut icon"
           type="image/png"
-          href="https://i.ibb.co/WxLZMjj/DB-Token-Logo-1.png"
+          href="https://i.ibb.co/T2W2pbC/40-40.png"
         />
 
         {/* DreamByt3 meta tags */}
-        <meta property="reservoir:title" content="DreamByt3" />
+        <meta property="reservoir:title" content="DREAMBYT3" />
         <meta property="reservoir:icon" content="/dreambyt3-source-icon.png" />
         <meta
           property="reservoir:token-url-mainnet"
