@@ -1,4 +1,4 @@
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
+import {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import {
   Text,
   Flex,
@@ -11,34 +11,35 @@ import {
   useDynamicTokens,
   useAttributes,
 } from '@reservoir0x/reservoir-kit-ui'
-import { paths } from '@reservoir0x/reservoir-sdk'
+import {paths} from '@reservoir0x/reservoir-sdk'
 import Layout from 'components/Layout'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { truncateAddress } from 'utils/truncate'
+import {useEffect, useMemo, useRef, useState} from 'react'
+import {truncateAddress} from 'utils/truncate'
+import StatHeader from 'components/collections/StatHeader'
 import TokenCard from 'components/collections/TokenCard'
-import { AttributeFilters } from 'components/collections/filters/AttributeFilters'
-import { FilterButton } from 'components/common/FilterButton'
+import {AttributeFilters} from 'components/collections/filters/AttributeFilters'
+import {FilterButton} from 'components/common/FilterButton'
 import SelectedAttributes from 'components/collections/filters/SelectedAttributes'
-import { CollectionOffer } from 'components/buttons'
-import { Grid } from 'components/primitives/Grid'
-import { useIntersectionObserver } from 'usehooks-ts'
+import {CollectionOffer} from 'components/buttons'
+import {Grid} from 'components/primitives/Grid'
+import {useIntersectionObserver} from 'usehooks-ts'
 import fetcher from 'utils/fetcher'
-import { useRouter } from 'next/router'
-import { SortTokens } from 'components/collections/SortTokens'
-import { useMediaQuery } from 'react-responsive'
-import { TabsList, TabsTrigger, TabsContent } from 'components/primitives/Tab'
+import {useRouter} from 'next/router'
+import {SortTokens} from 'components/collections/SortTokens'
+import {useMediaQuery} from 'react-responsive'
+import {TabsList, TabsTrigger, TabsContent} from 'components/primitives/Tab'
 import * as Tabs from '@radix-ui/react-tabs'
-import { useDebounce } from 'usehooks-ts'
+import {useDebounce} from 'usehooks-ts'
 
-import { NAVBAR_HEIGHT } from 'components/navbar'
-import { CollectionActivityTable } from 'components/collections/CollectionActivityTable'
-import { ActivityFilters } from 'components/common/ActivityFilters'
-import { MobileAttributeFilters } from 'components/collections/filters/MobileAttributeFilters'
-import { MobileActivityFilters } from 'components/common/MobileActivityFilters'
+import {NAVBAR_HEIGHT} from 'components/navbar'
+import {CollectionActivityTable} from 'components/collections/CollectionActivityTable'
+import {ActivityFilters} from 'components/common/ActivityFilters'
+import {MobileAttributeFilters} from 'components/collections/filters/MobileAttributeFilters'
+import {MobileActivityFilters} from 'components/common/MobileActivityFilters'
 import titleCase from 'utils/titleCase'
 import LoadingCard from 'components/common/LoadingCard'
-import { useChainCurrency, useMounted } from 'hooks'
-import { NORMALIZE_ROYALTIES } from 'pages/_app'
+import {useChainCurrency, useMounted} from 'hooks'
+import {NORMALIZE_ROYALTIES} from 'pages/_app'
 import {
   faBroom,
   faCog,
@@ -48,34 +49,31 @@ import {
   faMagnifyingGlass,
   faSeedling,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import supportedChains, { DefaultChain } from 'utils/chains'
-import { Head } from 'components/Head'
-import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
-import { Address, useAccount } from 'wagmi'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import supportedChains, {DefaultChain} from 'utils/chains'
+import {Head} from 'components/Head'
+import {OpenSeaVerified} from 'components/common/OpenSeaVerified'
+import {Address, useAccount} from 'wagmi'
 import Img from 'components/primitives/Img'
 import Sweep from 'components/buttons/Sweep'
 import Mint from 'components/buttons/Mint'
 import optimizeImage from 'utils/optimizeImage'
 import CopyText from 'components/common/CopyText'
-import { CollectionDetails } from 'components/collections/CollectionDetails'
 import useTokenUpdateStream from 'hooks/useTokenUpdateStream'
 import LiveState from 'components/common/LiveState'
+import ReactMarkdown from "react-markdown";
+import dayjs from "dayjs";
+import CollectionActions from "../../../components/collections/CollectionActions";
+import {formatNumber} from "../../../utils/numbers";
 
-type ActivityTypes = Exclude<
-  NonNullable<
-    NonNullable<
-      Exclude<Parameters<typeof useCollectionActivity>['0'], boolean>
-    >['types']
-  >,
-  string
->
+type ActivityTypes = Exclude<NonNullable<NonNullable<Exclude<Parameters<typeof useCollectionActivity>['0'], boolean>>['types']>,
+  string>
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
-const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
+const CollectionPage: NextPage<Props> = ({id, ssr}) => {
   const router = useRouter()
-  const { address } = useAccount()
+  const {address} = useAccount()
   const [attributeFiltersOpen, setAttributeFiltersOpen] = useState(false)
   const [activityFiltersOpen, setActivityFiltersOpen] = useState(true)
   const [tokenSearchQuery, setTokenSearchQuery] = useState<string>('')
@@ -86,12 +84,14 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
     'sale',
     'mint',
   ])
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false)
+  const [isOverflowed, setIsOverflowed] = useState(false)
+
+  const descriptionRef = useRef(null as any)
   const [initialTokenFallbackData, setInitialTokenFallbackData] = useState(true)
   const isMounted = useMounted()
-  const isSmallDevice = useMediaQuery({ maxWidth: 905 }) && isMounted
-  const [playingElement, setPlayingElement] = useState<
-    HTMLAudioElement | HTMLVideoElement | null
-  >()
+  const isSmallDevice = useMediaQuery({maxWidth: 905}) && isMounted
+  const [playingElement, setPlayingElement] = useState<HTMLAudioElement | HTMLVideoElement | null>()
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const loadMoreObserver = useIntersectionObserver(loadMoreRef, {})
   const [path, _] = router.asPath.split('?')
@@ -109,7 +109,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
 
   const scrollToTop = () => {
     let top = (scrollRef.current?.offsetTop || 0) - (NAVBAR_HEIGHT + 16)
-    window.scrollTo({ top: top })
+    window.scrollTo({top: top})
   }
 
   let chain = titleCase(router.query.chain as string)
@@ -120,7 +120,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
     includeMintStages: true,
   }
 
-  const { data: collections } = useCollections(collectionQuery, {
+  const {data: collections} = useCollections(collectionQuery, {
     fallbackData: [ssr.collection],
   })
 
@@ -134,8 +134,8 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
     mintData?.price?.amount?.decimal === 0
       ? 'Free'
       : `${
-          mintData?.price?.amount?.decimal
-        } ${mintData?.price?.currency?.symbol?.toUpperCase()}`
+        mintData?.price?.amount?.decimal
+      } ${mintData?.price?.currency?.symbol?.toUpperCase()}`
 
   let tokenQuery: Parameters<typeof useDynamicTokens>['0'] = {
     limit: 20,
@@ -156,7 +156,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
   if (sortDirection === 'desc') tokenQuery.sortDirection = 'desc'
 
   // Extract all queries of attribute type
-  Object.keys({ ...router.query }).map((key) => {
+  Object.keys({...router.query}).map((key) => {
     if (
       key.startsWith('attributes[') &&
       key.endsWith(']') &&
@@ -180,12 +180,19 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
     fallbackData: initialTokenFallbackData ? [ssr.tokens] : undefined,
   })
 
+  useEffect(() => {
+    setIsOverflowed(
+      descriptionRef?.current?.scrollHeight >
+      descriptionRef?.current?.clientHeight
+    )
+  }, [isOverflowed, descriptionRef])
+
   useTokenUpdateStream(id as string, collectionChain.id, {
     onClose: () => setSocketState(0),
     onOpen: () => setSocketState(1),
     onMessage: ({
-      data: reservoirEvent,
-    }: MessageEvent<ReservoirWebsocketIncomingEvent>) => {
+                  data: reservoirEvent,
+                }: MessageEvent<ReservoirWebsocketIncomingEvent>) => {
       if (Object.keys(router.query).some((key) => key.includes('attribute')))
         return
 
@@ -260,17 +267,17 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
             sortBy === 'rarity'
               ? tokenIndex
               : tokens.findIndex((token) => {
-                  let currentTokenPrice =
-                    token.market?.floorAsk?.price?.amount?.native
-                  if (currentTokenPrice !== undefined) {
-                    return sortDirection === 'desc'
-                      ? updatedToken.market.floorAsk.price.amount.native >=
-                          currentTokenPrice
-                      : updatedToken.market.floorAsk.price.amount.native <=
-                          currentTokenPrice
-                  }
-                  return true
-                })
+                let currentTokenPrice =
+                  token.market?.floorAsk?.price?.amount?.native
+                if (currentTokenPrice !== undefined) {
+                  return sortDirection === 'desc'
+                    ? updatedToken.market.floorAsk.price.amount.native >=
+                    currentTokenPrice
+                    : updatedToken.market.floorAsk.price.amount.native <=
+                    currentTokenPrice
+                }
+                return true
+              })
           if (updatedTokenPosition <= -1) {
             return
           }
@@ -318,9 +325,9 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
 
   const rarityEnabledCollection = Boolean(
     collection?.tokenCount &&
-      +collection.tokenCount >= 2 &&
-      attributes &&
-      attributes?.length >= 2
+    +collection.tokenCount >= 2 &&
+    attributes &&
+    attributes?.length >= 2
   )
 
   const contractKind = collection?.contractKind?.toUpperCase()
@@ -348,254 +355,315 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
         title={ssr?.collection?.collections?.[0]?.name}
         description={ssr?.collection?.collections?.[0]?.description as string}
       />
-      <Tabs.Root
-        defaultValue="items"
-        onValueChange={(value) => {
-          if (value === 'items') {
-            resetCache()
-            setSize(1)
-            mutate()
-          }
-        }}
-      >
-        {collection ? (
+
+      {collection ? (
+        <Flex
+          direction="column"
+          css={{
+            px: '$4',
+            pt: '$4',
+            pb: 0,
+            '@md': {
+              px: '$5',
+            },
+
+            '@xl': {
+              px: '$6',
+            },
+          }}
+        >
+          <Flex
+            justify="between"
+            wrap="wrap"
+            align="end"
+            css={{
+              mb: '$4',
+              gap: '$4',
+              height: 300,
+              position: 'relative',
+              backgroundSize: 'cover',
+              backgroundImage: `url(${optimizeImage(collection?.banner, 1820)})`,
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+              borderRadius: 16,
+              overflow: 'hidden'
+            }}
+          >
+            <Box
+              css={{
+                position: 'absolute',
+                top: 0,
+                display: 'block',
+                zIndex: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0,0,0,0.6)',
+              }}
+            />
+            <Flex
+              direction="column"
+              css={{
+                gap: '$4',
+                minWidth: 0,
+                zIndex: 1,
+                p: 16,
+                //flex: 1,
+                width: '100%',
+                '@lg': {width: 'unset'},
+              }}
+            >
+              <Flex css={{gap: '$4', flex: 1}} align="center">
+                <Img
+                  src={optimizeImage(collection.image!, 72 * 2)}
+                  width={72}
+                  height={72}
+                  css={{
+                    width: 72,
+                    height: 72,
+                    borderRadius: 8,
+                    objectFit: 'cover'
+                  }}
+                  alt="Collection Page Image"
+                />
+                <Box css={{minWidth: 0}}>
+                  <Flex align="center" css={{gap: '$1', mb: 0}}>
+                    <Text style="h4" as="h6" ellipsify>
+                      {collection.name}
+                    </Text>
+                    <OpenSeaVerified
+                      openseaVerificationStatus={
+                        collection?.openseaVerificationStatus
+                      }
+                    />
+                  </Flex>
+                  <Flex css={{gap: '$3'}} align="center">
+                    <CopyText
+                      text={collection.id as string}
+                      css={{
+                        width: 'max-content',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '$1',
+                      }}
+                    >
+                      <Box css={{color: '$gray9'}}>
+                        <FontAwesomeIcon icon={faCube} size="xs" color="#f4a7bb"/>
+                      </Box>
+                      <Text as="p" style="body3">
+                        {truncateAddress(collection?.primaryContract || '')}
+                      </Text>
+                    </CopyText>
+                    <Flex
+                      align="center"
+                      css={{
+                        gap: '$1',
+                      }}
+                    >
+                      <Flex
+                        css={{
+                          color: '$gray9',
+                        }}
+                      >
+                        <FontAwesomeIcon size="xs" icon={faCog} color="#f4a7bb"/>
+                      </Flex>
+                      <Text style="body3">{contractKind}</Text>
+                    </Flex>
+
+                    <Flex
+                      align="center"
+                      css={{
+                        gap: '$1',
+                      }}
+                    >
+                      <Flex
+                        css={{
+                          color: '$gray9',
+                        }}
+                      >
+                        <FontAwesomeIcon size="xs" icon={faGlobe} color="#f4a7bb"/>
+                      </Flex>
+                      <Text style="body3">{chain}</Text>
+                    </Flex>
+
+                    {mintData && (
+                      <Flex
+                        align="center"
+                        css={{
+                          gap: '$1',
+                        }}
+                      >
+                        <Flex
+                          css={{
+                            color: '$green9',
+                          }}
+                        >
+                          <FontAwesomeIcon size="xs" icon={faSeedling} color="#f4a7bb"/>
+                        </Flex>
+                        <Text style="body3">Minting Now</Text>
+                      </Flex>
+                    )}
+                  </Flex>
+                </Box>
+              </Flex>
+            </Flex>
+            <Flex align="center" css={{zIndex: 1, p: 16}}>
+              <CollectionActions collection={collection} />
+            </Flex>
+          </Flex>
+
+          <Flex
+            css={{
+              gap: 16,
+              mb: 16
+            }}
+          >
+            <Text>{`Items`} <Text style="subtitle1">{`${formatNumber(collection?.tokenCount)}`}</Text></Text>
+            <Text style="subtitle1">{` · `}</Text>
+            <Text>{`Created`} <Text style="subtitle1">{`${dayjs(collection?.createdAt).format('MMM YYYY')}`}</Text></Text>
+            <Text style="subtitle1">{` · `}</Text>
+            <Text>{`Creator earnings`} <Text style="subtitle1">{`${(collection?.royalties?.bps || 0) * 0.01}%`}</Text></Text>
+          </Flex>
+
           <Flex
             direction="column"
             css={{
-              px: '$4',
-              pt: '$4',
-              pb: 0,
               '@md': {
-                px: '$5',
-              },
-
-              '@xl': {
-                px: '$6',
-              },
+                maxWidth: '75%'
+              }
             }}
           >
-            <Flex
-              justify="between"
-              wrap="wrap"
-              align="end"
+            <Text
+              style="body1"
+              as="p"
+              ref={(ref: any) => {
+                if (!ref) return
+                descriptionRef.current = ref
+              }}
               css={{
-                mb: '$4',
-                gap: '$4',
-                height: 300,
-                position: 'relative',
-                backgroundSize: 'cover',
-                backgroundImage: `url(${optimizeImage(collection?.banner, 1820)})`,
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-                borderRadius: 16,
-                overflow: 'hidden'
+                lineHeight: 1.5,
+                display: '-webkit-box',
+                WebkitLineClamp: descriptionExpanded ? 'reset' : 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
             >
-              <Box
+              <ReactMarkdown children={collection?.description || ''} />
+            </Text>
+            {isOverflowed && (
+              <Text
+                onClick={() => setDescriptionExpanded(!descriptionExpanded)}
+                style="body1"
+                as="p"
                 css={{
-                  position: 'absolute',
-                  top: 0,
-                  display: 'block',
-                  zIndex: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: 'rgba(0,0,0,0.6)',
-                }}
-              />
-              <Flex
-                direction="column"
-                css={{
-                  gap: '$4',
-                  minWidth: 0,
-                  zIndex: 1,
-                  p: 32,
-                  //flex: 1,
-                  width: '100%',
-                  '@lg': { width: 'unset' },
+                  cursor: 'pointer',
+                  mt: '$2',
+                  fontWeight: 600,
+                  textDecoration: 'underline',
+                  mb: 16,
                 }}
               >
-                <Flex css={{ gap: '$4', flex: 1 }} align="center">
-                  <Img
-                    src={optimizeImage(collection.image!, 72 * 2)}
-                    width={72}
-                    height={72}
-                    css={{
-                      width: 72,
-                      height: 72,
-                      borderRadius: 8,
-                      objectFit: 'cover'
-                    }}
-                    alt="Collection Page Image"
-                  />
-                  <Box css={{ minWidth: 0 }}>
-                    <Flex align="center" css={{ gap: '$1', mb: 0 }}>
-                      <Text style="h4" as="h6" ellipsify>
-                        {collection.name}
-                      </Text>
-                      <OpenSeaVerified
-                        openseaVerificationStatus={
-                          collection?.openseaVerificationStatus
-                        }
-                      />
-                    </Flex>
-                    <Flex css={{ gap: '$3' }} align="center">
-                      <CopyText
-                        text={collection.id as string}
-                        css={{
-                          width: 'max-content',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '$1',
-                        }}
+                {descriptionExpanded ? 'Close' : 'Expand'}
+              </Text>
+            )}
+          </Flex>
+
+          <StatHeader collection={collection}/>
+
+          <Tabs.Root
+            defaultValue="items"
+            onValueChange={(value) => {
+              if (value === 'items') {
+                resetCache()
+                setSize(1)
+                mutate()
+              }
+            }}
+          >
+            <TabsList>
+              <TabsTrigger value="items">Items</TabsTrigger>
+              <TabsTrigger value="activity">Activity</TabsTrigger>
+
+              <Flex align="center" justify="end" css={{ flex: 1, gap: '$3', mb: 8 }}>
+                {nativePrice ? (
+                  <Sweep
+                    collectionId={collection.id}
+                    openState={isSweepRoute ? sweepOpenState : undefined}
+                    buttonChildren={
+                      <Flex
+                        css={{gap: '$2'}}
+                        align="center"
+                        justify="center"
                       >
-                        <Box css={{ color: '$gray9' }}>
-                          <FontAwesomeIcon icon={faCube} size="xs" color="#f4a7bb" />
-                        </Box>
-                        <Text as="p" style="body3">
-                          {truncateAddress(collection?.primaryContract || '')}
+                        <FontAwesomeIcon icon={faBroom}/>
+                        <Text style="h6" as="h6" css={{color: '$bg'}}>
+                          Sweep
                         </Text>
-                      </CopyText>
-                      <Flex
-                        align="center"
-                        css={{
-                          gap: '$1',
-                        }}
-                      >
-                        <Flex
-                          css={{
-                            color: '$gray9',
-                          }}
-                        >
-                          <FontAwesomeIcon size="xs" icon={faCog} color="#f4a7bb" />
-                        </Flex>
-                        <Text style="body3">{contractKind}</Text>
                       </Flex>
-
-                      <Flex
-                        align="center"
-                        css={{
-                          gap: '$1',
-                        }}
-                      >
-                        <Flex
-                          css={{
-                            color: '$gray9',
-                          }}
-                        >
-                          <FontAwesomeIcon size="xs" icon={faGlobe} color="#f4a7bb" />
-                        </Flex>
-                        <Text style="body3">{chain}</Text>
-                      </Flex>
-
-                      {mintData && (
-                        <Flex
-                          align="center"
-                          css={{
-                            gap: '$1',
-                          }}
-                        >
-                          <Flex
-                            css={{
-                              color: '$green9',
-                            }}
-                          >
-                            <FontAwesomeIcon size="xs" icon={faSeedling} color="#f4a7bb" />
-                          </Flex>
-                          <Text style="body3">Minting Now</Text>
-                        </Flex>
-                      )}
-                    </Flex>
-                  </Box>
-                </Flex>
-              </Flex>
-              <Flex align="center" css={{ zIndex: 1, p: 16 }}>
-                <Flex css={{ alignItems: 'center', gap: '$3' }}>
-                  {nativePrice ? (
-                    <Sweep
-                      collectionId={collection.id}
-                      openState={isSweepRoute ? sweepOpenState : undefined}
-                      buttonChildren={
-                        <Flex
-                          css={{ gap: '$2' }}
-                          align="center"
-                          justify="center"
-                        >
-                          <FontAwesomeIcon icon={faBroom} />
-                          <Text style="h6" as="h6" css={{ color: '$bg' }}>
-                            Sweep
-                          </Text>
-                        </Flex>
-                      }
-                      buttonCss={{ '@lg': { order: 2 } }}
-                      mutate={mutate}
-                    />
-                  ) : null}
-                  {/* Collection Mint */}
-                  {mintData ? (
-                    <Mint
-                      collectionId={collection.id}
-                      openState={isMintRoute ? mintOpenState : undefined}
-                      buttonChildren={
-                        <Flex
-                          css={{ gap: '$2', px: '$4' }}
-                          align="center"
-                          justify="center"
-                        >
-                          {isSmallDevice && (
-                            <FontAwesomeIcon icon={faSeedling} />
-                          )}
-                          <Text style="h6" as="h6" css={{ color: '$bg' }}>
-                            Mint
-                          </Text>
-
-                          {!isSmallDevice && (
-                            <Text
-                              style="h6"
-                              as="h6"
-                              css={{ color: '$bg', fontWeight: 900 }}
-                            >
-                              {`${mintPrice}`}
-                            </Text>
-                          )}
-                        </Flex>
-                      }
-                      buttonCss={{
-                        minWidth: 'max-content',
-                        whiteSpace: 'nowrap',
-                        flexShrink: 0,
-                        flexGrow: 1,
-                        justifyContent: 'center',
-                        px: '$2',
-                        maxWidth: '220px',
-                        '@md': {
-                          order: 1,
-                          px: '$5',
-                        },
-                      }}
-                      mutate={mutate}
-                    />
-                  ) : null}
-                  <CollectionOffer
-                    collection={collection}
-                    buttonChildren={(
-                      <>
-                        <FontAwesomeIcon icon={faHand} />
-                        <Text style="h6" as="h6" css={{ color: '$bg' }}>Collection Offer</Text>
-                      </>
-                    )}
-                    buttonProps={{ color: mintData ? 'gray3' : 'primary' }}
-                    buttonCss={{ px: '$4' }}
+                    }
+                    buttonCss={{'@lg': {order: 2}}}
                     mutate={mutate}
                   />
-                </Flex>
-              </Flex>
-            </Flex>
+                ) : null}
+                {/* Collection Mint */}
+                {mintData ? (
+                  <Mint
+                    collectionId={collection.id}
+                    openState={isMintRoute ? mintOpenState : undefined}
+                    buttonChildren={
+                      <Flex
+                        css={{gap: '$2', px: '$4'}}
+                        align="center"
+                        justify="center"
+                      >
+                        {isSmallDevice && (
+                          <FontAwesomeIcon icon={faSeedling}/>
+                        )}
+                        <Text style="h6" as="h6" css={{color: '$bg'}}>
+                          Mint
+                        </Text>
 
-            <TabsList css={{ mt: 0 }}>
-              <TabsTrigger value="items">Items</TabsTrigger>
-              <TabsTrigger value="details">Details</TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
+                        {!isSmallDevice && (
+                          <Text
+                            style="h6"
+                            as="h6"
+                            css={{color: '$bg', fontWeight: 900}}
+                          >
+                            {`${mintPrice}`}
+                          </Text>
+                        )}
+                      </Flex>
+                    }
+                    buttonCss={{
+                      minWidth: 'max-content',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      flexGrow: 1,
+                      justifyContent: 'center',
+                      px: '$2',
+                      maxWidth: '220px',
+                      '@md': {
+                        order: 1,
+                        px: '$5',
+                      },
+                    }}
+                    mutate={mutate}
+                  />
+                ) : null}
+                <CollectionOffer
+                  collection={collection}
+                  buttonChildren={(
+                    <>
+                      <FontAwesomeIcon icon={faHand}/>
+                      <Text style="h6" as="h6" css={{color: '$bg'}}>Collection Offer</Text>
+                    </>
+                  )}
+                  buttonProps={{color: mintData ? 'gray3' : 'primary'}}
+                  buttonCss={{px: '$4'}}
+                  mutate={mutate}
+                />
+              </Flex>
             </TabsList>
 
             <TabsContent value="items">
@@ -627,19 +695,19 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                     width: '100%',
                   }}
                 >
-                  <Flex css={{ marginBottom: '$4', gap: '$3' }} align="center">
-                    <Flex align="center" css={{ gap: '$3', flex: 1 }}>
+                  <Flex css={{marginBottom: '$4', gap: '$3'}} align="center">
+                    <Flex align="center" css={{gap: '$3', flex: 1}}>
                       {attributes &&
-                        attributes.length > 0 &&
-                        !isSmallDevice && (
-                          <FilterButton
-                            open={attributeFiltersOpen}
-                            setOpen={setAttributeFiltersOpen}
-                          />
-                        )}
+                      attributes.length > 0 &&
+                      !isSmallDevice && (
+                        <FilterButton
+                          open={attributeFiltersOpen}
+                          setOpen={setAttributeFiltersOpen}
+                        />
+                      )}
                       {!isSmallDevice && (
                         <Box
-                          css={{ position: 'relative', flex: 1, maxWidth: 420 }}
+                          css={{position: 'relative', flex: 1, maxWidth: 420}}
                         >
                           <Box
                             css={{
@@ -651,10 +719,10 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                               color: '$gray11',
                             }}
                           >
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            <FontAwesomeIcon icon={faMagnifyingGlass}/>
                           </Box>
                           <Input
-                            css={{ pl: 42 }}
+                            css={{pl: 42}}
                             placeholder="Search by token name"
                             onChange={(e) => {
                               setTokenSearchQuery(e.target.value)
@@ -664,7 +732,7 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                         </Box>
                       )}
                     </Flex>
-                    {socketState !== null && <LiveState />}
+                    {socketState !== null && <LiveState/>}
                     <Flex
                       justify={'end'}
                       css={{
@@ -710,33 +778,33 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                       display: 'flex',
                     }}
                   >
-                    <Flex css={{ gap: '$1' }}>
+                    <Flex css={{gap: '$1'}}>
                       <Text style="body1" as="p" color="subtle">
                         Floor
                       </Text>
-                      <Text style="body1" as="p" css={{ fontWeight: '700' }}>
+                      <Text style="body1" as="p" css={{fontWeight: '700'}}>
                         {nativePrice
                           ? `${nativePrice?.toFixed(2)} ${chainCurrency.symbol}`
                           : '-'}
                       </Text>
                     </Flex>
-                    <Flex css={{ gap: '$1' }}>
+                    <Flex css={{gap: '$1'}}>
                       <Text style="body1" as="p" color="subtle">
                         Top Bid
                       </Text>
-                      <Text style="body1" as="p" css={{ fontWeight: '700' }}>
+                      <Text style="body1" as="p" css={{fontWeight: '700'}}>
                         {topBidPrice
                           ? `${topBidPrice?.toFixed(2) || 0} ${
-                              chainCurrency.symbol
-                            }`
+                            chainCurrency.symbol
+                          }`
                           : '-'}
                       </Text>
                     </Flex>
-                    <Flex css={{ gap: '$1' }}>
+                    <Flex css={{gap: '$1'}}>
                       <Text style="body1" as="p" color="subtle">
                         Count
                       </Text>
-                      <Text style="body1" as="p" css={{ fontWeight: '700' }}>
+                      <Text style="body1" as="p" css={{fontWeight: '700'}}>
                         {Number(collection?.tokenCount)?.toLocaleString()}
                       </Text>
                     </Flex>
@@ -755,37 +823,37 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                   >
                     {isFetchingInitialData
                       ? Array(10)
-                          .fill(null)
-                          .map((_, index) => (
-                            <LoadingCard key={`loading-card-${index}`} />
-                          ))
+                        .fill(null)
+                        .map((_, index) => (
+                          <LoadingCard key={`loading-card-${index}`}/>
+                        ))
                       : tokens.map((token, i) => (
-                          <TokenCard
-                            key={i}
-                            token={token}
-                            address={address as Address}
-                            mutate={mutate}
-                            rarityEnabled={rarityEnabledCollection}
-                            onMediaPlayed={(e) => {
-                              if (
-                                playingElement &&
-                                playingElement !== e.nativeEvent.target
-                              ) {
-                                playingElement.pause()
-                              }
-                              const element =
-                                (e.nativeEvent.target as HTMLAudioElement) ||
-                                (e.nativeEvent.target as HTMLVideoElement)
-                              if (element) {
-                                setPlayingElement(element)
-                              }
-                            }}
-                            addToCartEnabled={
-                              token.market?.floorAsk?.maker?.toLowerCase() !==
-                              address?.toLowerCase()
+                        <TokenCard
+                          key={i}
+                          token={token}
+                          address={address as Address}
+                          mutate={mutate}
+                          rarityEnabled={rarityEnabledCollection}
+                          onMediaPlayed={(e) => {
+                            if (
+                              playingElement &&
+                              playingElement !== e.nativeEvent.target
+                            ) {
+                              playingElement.pause()
                             }
-                          />
-                        ))}
+                            const element =
+                              (e.nativeEvent.target as HTMLAudioElement) ||
+                              (e.nativeEvent.target as HTMLVideoElement)
+                            if (element) {
+                              setPlayingElement(element)
+                            }
+                          }}
+                          addToCartEnabled={
+                            token.market?.floorAsk?.maker?.toLowerCase() !==
+                            address?.toLowerCase()
+                          }
+                        />
+                      ))}
                     <Box
                       ref={loadMoreRef}
                       css={{
@@ -793,40 +861,33 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                       }}
                     >
                       {(hasNextPage || isFetchingPage) &&
-                        !isFetchingInitialData && <LoadingCard />}
+                      !isFetchingInitialData && <LoadingCard/>}
                     </Box>
                     {(hasNextPage || isFetchingPage) &&
-                      !isFetchingInitialData && (
-                        <>
-                          {Array(6)
-                            .fill(null)
-                            .map((_, index) => (
-                              <LoadingCard key={`loading-card-${index}`} />
-                            ))}
-                        </>
-                      )}
+                    !isFetchingInitialData && (
+                      <>
+                        {Array(6)
+                          .fill(null)
+                          .map((_, index) => (
+                            <LoadingCard key={`loading-card-${index}`}/>
+                          ))}
+                      </>
+                    )}
                   </Grid>
                   {tokens.length == 0 && !isFetchingPage && (
                     <Flex
                       direction="column"
                       align="center"
-                      css={{ py: '$6', gap: '$4' }}
+                      css={{py: '$6', gap: '$4'}}
                     >
-                      <Text css={{ color: '$gray11' }}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" />
+                      <Text css={{color: '$gray11'}}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl"/>
                       </Text>
-                      <Text css={{ color: '$gray11' }}>No items found</Text>
+                      <Text css={{color: '$gray11'}}>No items found</Text>
                     </Flex>
                   )}
                 </Box>
               </Flex>
-            </TabsContent>
-            <TabsContent value="details">
-              <CollectionDetails
-                collection={collection}
-                collectionId={id}
-                tokens={tokens}
-              />
             </TabsContent>
             <TabsContent value="activity">
               <Flex
@@ -868,11 +929,11 @@ const CollectionPage: NextPage<Props> = ({ id, ssr }) => {
                 </Box>
               </Flex>
             </TabsContent>
-          </Flex>
-        ) : (
-          <Box />
-        )}
-      </Tabs.Root>
+          </Tabs.Root>
+        </Flex>
+      ) : (
+        <Box/>
+      )}
     </Layout>
   )
 }
@@ -884,11 +945,11 @@ export const getServerSideProps: GetServerSideProps<{
     hasAttributes: boolean
   }
   id: string | undefined
-}> = async ({ params, res }) => {
+}> = async ({params, res}) => {
   const id = params?.contract?.toString()
-  const { reservoirBaseUrl } =
-    supportedChains.find((chain) => params?.chain === chain.routePrefix) ||
-    DefaultChain
+  const {reservoirBaseUrl} =
+  supportedChains.find((chain) => params?.chain === chain.routePrefix) ||
+  DefaultChain
   const headers: RequestInit = {
     headers: {
       'x-api-key': process.env.RESERVOIR_API_KEY || '',
@@ -929,7 +990,8 @@ export const getServerSideProps: GetServerSideProps<{
   const promises: any = await Promise.allSettled([
     collectionsPromise,
     tokensPromise,
-  ]).catch(() => {})
+  ]).catch(() => {
+  })
   const collection: Props['ssr']['collection'] =
     promises?.[0].status === 'fulfilled' && promises[0].value.data
       ? (promises[0].value.data as Props['ssr']['collection'])
@@ -950,7 +1012,7 @@ export const getServerSideProps: GetServerSideProps<{
   )
 
   return {
-    props: { ssr: { collection, tokens, hasAttributes }, id },
+    props: {ssr: {collection, tokens, hasAttributes}, id},
   }
 }
 

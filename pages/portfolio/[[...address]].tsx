@@ -258,7 +258,7 @@ const IndexPage: NextPage = () => {
                     }}>
                       <Flex direction="column" css={{ gap: 20 }}>
                         {avatar ? (
-                          <Avatar size="xxxl" corners="rounded" src={avatar} />
+                          <Avatar size="xxxl" corners="rounded" src={avatar} containerCSS={{ borderRadius: 16, border: '10px solid #000'}}/>
                         ) : (
                           <Jazzicon
                             diameter={150}

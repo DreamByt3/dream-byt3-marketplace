@@ -9,30 +9,28 @@ import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import { styled } from '../../stitches.config'
 import { Box, Flex } from 'components/primitives'
 import { ComponentPropsWithoutRef, FC, useContext, useState } from 'react'
-import { useMarketplaceChain, useMounted } from 'hooks'
-import { useTheme } from 'next-themes'
+import { useMarketplaceChain } from 'hooks'
 import { Dropdown } from 'components/primitives/Dropdown'
-import { useMediaQuery } from 'react-responsive'
 import fetcher from 'utils/fetcher'
 import { ToastContext } from 'context/ToastContextProvider'
 import { spin } from 'components/common/LoadingSpinner'
 import { DATE_REGEX, timeTill } from 'utils/till'
 
 type CollectionActionsProps = {
-  collection: NonNullable<ReturnType<typeof useCollections>['data']>['0']
+  collection: NonNullable<ReturnType<typeof useCollections>['data']>[0]
 }
 
 const CollectionAction = styled(Flex, {
   px: '$4',
   py: '$4',
   color: '$gray12',
-  background: '$gray2',
+  background: '$pinkA5',
   cursor: 'pointer',
   transition: 'background 0.25s ease-in',
   height: 48,
   alignItems: 'center',
   '&:hover': {
-    background: '$gray4',
+    background: '$pinkA7',
   },
 })
 
@@ -45,24 +43,17 @@ const CollectionActionDropdownItem = styled(Flex, {
   py: 20,
   transition: 'background 0.25s ease-in',
   '&:hover': {
-    background: '$gray4',
+    background: '$pinkA7',
   },
 })
 
 const CollectionActions: FC<CollectionActionsProps> = ({ collection }) => {
   const { addToast } = useContext(ToastContext)
-  const isMounted = useMounted()
-  const isMobile = useMediaQuery({ maxWidth: 600 }) && isMounted
   const [isRefreshing, setIsRefreshing] = useState(false)
   const marketplaceChain = useMarketplaceChain()
-  const { theme } = useTheme()
   const etherscanImage = (
     <img
-      src={
-        isMounted && theme === 'dark'
-          ? '/icons/etherscan-logo-light-circle.svg'
-          : '/icons/etherscan-logo-circle.svg'
-      }
+      src={'/icons/etherscan-logo-light-circle.svg'}
       alt={marketplaceChain.blockExplorers?.default.name || 'Etherscan'}
       style={{
         height: 16,

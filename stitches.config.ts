@@ -89,7 +89,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         neutralBgSubtle: '#111',
         neutralBg: '$blackA12',
 
-        panelBg: '$pink10',
+        panelBg: '$pinkA7',
         panelBorder: '$pink10',
         panelShadow: 'transparent',
         dropdownBg: '#000',

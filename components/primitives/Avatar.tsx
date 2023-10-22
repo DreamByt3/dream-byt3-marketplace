@@ -6,6 +6,7 @@ import {
   ElementRef,
   forwardRef,
 } from 'react'
+import {CSS} from "@stitches/react";
 
 type AvatarRootProps = ComponentProps<typeof AvatarRoot>
 
@@ -77,10 +78,11 @@ export const Avatar = forwardRef<
   ComponentPropsWithoutRef<typeof AvatarImage> & {
     fallback?: string
     size?: AvatarRootProps['size']
-    corners?: AvatarRootProps['corners']
+    corners?: AvatarRootProps['corners'],
+    containerCSS?: CSS
   }
->(({ size, corners, fallback, ...props }, forwardedRef) => (
-  <AvatarRoot size={size} corners={corners}>
+>(({ size, corners, containerCSS, fallback, ...props }, forwardedRef) => (
+  <AvatarRoot size={size} corners={corners} css={containerCSS}>
     <AvatarImage ref={forwardedRef} {...props} />
     <AvatarFallback delayMs={600}>{fallback}</AvatarFallback>
   </AvatarRoot>

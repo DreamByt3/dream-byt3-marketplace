@@ -14,8 +14,7 @@ const StatBox: FC<Props> = ({ label, children }) => (
   <Box
     css={{
       p: '$4',
-      minWidth: 120,
-      background: '$panelBg',
+      minWidth: 120
     }}
   >
     <Text style="subtitle3" css={{ color: '$gray12' }} as="p">
@@ -26,7 +25,7 @@ const StatBox: FC<Props> = ({ label, children }) => (
 )
 
 type StatHeaderProps = {
-  collection: NonNullable<ReturnType<typeof useCollections>['data']>['0']
+  collection: NonNullable<ReturnType<typeof useCollections>['data']>[0]
 }
 
 const StatHeader: FC<StatHeaderProps> = ({ collection }) => {
@@ -34,6 +33,10 @@ const StatHeader: FC<StatHeaderProps> = ({ collection }) => {
   const isSmallDevice = useMediaQuery({ maxWidth: 600 }) && isMounted
   const listedPercentage =
     ((collection?.onSaleCount ? +collection.onSaleCount : 0) /
+      (collection?.tokenCount ? +collection.tokenCount : 0)) *
+    100
+  const uniqueOwnersPercentage =
+    ((collection?.ownerCount ? +collection.ownerCount : 0) /
       (collection?.tokenCount ? +collection.tokenCount : 0)) *
     100
 
@@ -45,11 +48,20 @@ const StatHeader: FC<StatHeaderProps> = ({ collection }) => {
         gap: 1,
         gridTemplateColumns: '1fr 1fr',
         '@sm': {
-          gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+          gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
           marginRight: 'auto',
         },
       }}
     >
+      <StatBox label="Total Volume">
+        <FormatCryptoCurrency
+          amount={collection.volume?.allTime}
+          logoHeight={18}
+          textStyle={'h6'}
+          maximumFractionDigits={4}
+        />
+      </StatBox>
+
       <StatBox label="Floor">
         <FormatCryptoCurrency
           amount={collection?.floorAsk?.price?.amount?.decimal}
@@ -74,21 +86,16 @@ const StatHeader: FC<StatHeaderProps> = ({ collection }) => {
 
       {!isSmallDevice && (
         <StatBox label="Listed">
-          <Text style="h6">{formatNumber(listedPercentage)}%</Text>
+          <Text style="h6">{formatNumber(listedPercentage, 2)}%</Text>
         </StatBox>
       )}
 
-      <StatBox label="Total Volume">
-        <FormatCryptoCurrency
-          amount={collection.volume?.allTime}
-          logoHeight={18}
-          textStyle={'h6'}
-          maximumFractionDigits={4}
-        />
+      <StatBox label="Owners">
+        <Text style="h6">{formatNumber(collection?.ownerCount)}</Text>
       </StatBox>
 
-      <StatBox label="Count">
-        <Text style="h6">{formatNumber(collection?.tokenCount)}</Text>
+      <StatBox label="Unique Owners">
+        <Text style="h6">{formatNumber(uniqueOwnersPercentage)}%</Text>
       </StatBox>
     </Grid>
   )
