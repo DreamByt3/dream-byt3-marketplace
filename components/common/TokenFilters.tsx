@@ -58,13 +58,12 @@ export const TokenFilters: FC<Props> = ({
       <CollapsibleContent
         css={{
           position: 'sticky',
-          top: 16 + 80,
-          height: `calc(100vh - ${NAVBAR_HEIGHT}px - ${isOwner ? 90 : 32})`,
+          top: 16 + NAVBAR_HEIGHT,
+          height: `calc(100vh - ${NAVBAR_HEIGHT - (isOwner ? 90 : 32)}px)`,
           overflow: 'auto',
         }}
       >
         <Flex direction="column">
-          <Text style="subtitle1" css={{ mb: '$2', ml: '$3' }}></Text>
           {collections?.map((collection) => {
             let selected = collection?.collection?.id == filterCollection
 
@@ -121,7 +120,15 @@ export const TokenFilters: FC<Props> = ({
                     >
                       {collection?.collection?.name}
                     </Text>
+                    <OpenSeaVerified
+                      openseaVerificationStatus={
+                        collection?.collection?.openseaVerificationStatus
+                      }
+                    />
                   </Flex>
+                  <Text style="subtitle3" css={{ color: '$gray10' }}>
+                    Owned: {formatNumber(collection?.ownership?.tokenCount)}
+                  </Text>
                 </Flex>
                 <Flex
                   direction="column"
@@ -141,9 +148,25 @@ export const TokenFilters: FC<Props> = ({
                       address={
                         collection.collection?.floorAskPrice?.currency?.contract
                       }
-                      textStyle="h6"
+                      textStyle="subtitle2"
                     />
                   </Flex>
+                  <Tooltip
+                    sideOffset={2}
+                    side="top"
+                    content={
+                      <Text style="body3" css={{ display: 'block' }}>
+                        24h Floor Price Change
+                      </Text>
+                    }
+                  >
+                    <div>
+                      <PercentChange
+                        value={collection.collection?.volumeChange?.['1day']}
+                        decimals={1}
+                      />
+                    </div>
+                  </Tooltip>
                 </Flex>
               </Flex>
             )
