@@ -88,7 +88,7 @@ const TrendingPage: NextPage<Props> = ({ ssr }) => {
 
   useEffect(() => {
     let isVisible = !!loadMoreObserver?.isIntersecting
-    if (isVisible) {
+    if (isVisible && collections.length < 100) {
       fetchNextPage()
     }
   }, [loadMoreObserver?.isIntersecting])

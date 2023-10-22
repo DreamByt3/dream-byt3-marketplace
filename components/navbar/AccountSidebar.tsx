@@ -203,20 +203,6 @@ export const AccountSidebar: FC = () => {
                         <Text style="body1">Listings</Text>
                       </Flex>
                     </Link>
-                    <Link href="/portfolio?tab=offers" replace={true}>
-                      <Flex
-                        align="center"
-                        css={{
-                          gap: 6,
-                          p: '$3',
-                          color: '#F4A7BB',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <FontAwesomeIcon icon={faHand} />
-                        <Text style="body1">Offers Made</Text>
-                      </Flex>
-                    </Link>
                     <Link href="/portfolio?tab=activity" replace={true}>
                       <Flex
                         align="center"
@@ -231,29 +217,30 @@ export const AccountSidebar: FC = () => {
                         <Text style="body1">Activity</Text>
                       </Flex>
                     </Link>
+
+                    <Link href="/portfolio/settings">
+                      <Flex
+                        align="center"
+                        css={{
+                          gap: 6,
+                          p: '$3',
+                          color: '$gray10',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faGear} width={16} height={16} color="#F4A7BB" />
+                        <Text style="body1">Settings</Text>
+                      </Flex>
+                    </Link>
                   </Grid>
                   <Wallet />
-                  <Link href="/portfolio/settings">
-                    <Flex
-                      align="center"
-                      css={{
-                        gap: 6,
-                        p: '$3',
-                        color: '$gray10',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faGear} width={16} height={16} />
-                      <Text style="body1">Settings</Text>
-                    </Flex>
-                  </Link>
                   <Button
                     size="large"
                     css={{ my: '$4', justifyContent: 'center' }}
                     color="gray3"
                     onClick={() => disconnect()}
                   >
-                    Disconnect Wallet
+                    Logout
                   </Button>
                 </Flex>
               </motion.div>

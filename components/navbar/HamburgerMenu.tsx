@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBars,
   faXmark,
-  faGear,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons'
@@ -17,7 +16,7 @@ import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import { Avatar } from 'components/primitives/Avatar'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import Wallet from 'components/navbar/Wallet'
-import { useENSResolver, useMarketplaceChain } from 'hooks'
+import {useENSResolver, useMarketplaceChain, useProfile} from 'hooks'
 
 const HamburgerMenu = () => {
   const { address, isConnected } = useAccount()
@@ -26,6 +25,7 @@ const HamburgerMenu = () => {
     shortAddress,
     shortName: shortEnsName,
   } = useENSResolver(address)
+  const { data: profile } = useProfile(address)
   const { disconnect } = useDisconnect()
   const { routePrefix } = useMarketplaceChain()
 
@@ -42,9 +42,9 @@ const HamburgerMenu = () => {
 
   return (
     <FullscreenModal trigger={trigger}>
-      {' '}
       <Flex
         css={{
+          backgroundColor: '$gray3',
           flexDirection: 'column',
           justifyContent: 'space-between',
         }}
@@ -54,7 +54,7 @@ const HamburgerMenu = () => {
             py: '$4',
             px: '$4',
             width: '100%',
-            borderBottom: '1px solid $gray4',
+            borderBottom: '1px solid #F4A7BB',
           }}
           align="center"
           justify="between"
@@ -62,7 +62,7 @@ const HamburgerMenu = () => {
           <Link href="/">
             <Box css={{ width: 46, cursor: 'pointer' }}>
               <Image
-                src="/dreamByt3Logo.svg"
+                src="/logo-compact.svg"
                 width={36}
                 height={36}
                 alt="DreamByt3"
@@ -108,14 +108,16 @@ const HamburgerMenu = () => {
                 }}
               >
                 <Flex css={{ alignItems: 'center' }}>
-                  {ensAvatar ? (
+                  {profile?.profileImage ? (
+                    <img src={profile?.profileImage} style={{ width: 40, height: 40, borderRadius: '50%' }} />
+                  ) : (ensAvatar ? (
                     <Avatar size="medium" src={ensAvatar} />
                   ) : (
                     <Jazzicon
                       diameter={36}
                       seed={jsNumberForAddress(address as string)}
                     />
-                  )}
+                  ))}
                   <Text style="subtitle1" css={{ ml: '$2' }}>
                     {shortEnsName ? shortEnsName : shortAddress}
                   </Text>
@@ -126,7 +128,7 @@ const HamburgerMenu = () => {
               <Text
                 style="subtitle1"
                 css={{
-                  borderBottom: '1px solid $gray4',
+                  borderBottom: '1px solid #F4A7BB',
                   cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
@@ -139,7 +141,7 @@ const HamburgerMenu = () => {
               <Text
                 style="subtitle1"
                 css={{
-                  borderBottom: '1px solid $gray4',
+                  borderBottom: '1px solid #F4A7BB',
                   cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
@@ -152,7 +154,6 @@ const HamburgerMenu = () => {
               <Flex
                 direction="column"
                 css={{
-                  borderBottom: '1px solid #F4A7BB',
                   cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
@@ -166,24 +167,18 @@ const HamburgerMenu = () => {
               </Flex>
             </Link>
             <Wallet />
+
             <Link href="/portfolio/settings" legacyBehavior>
               <Flex
                 align="center"
                 css={{
                   gap: 20,
-                  borderBottom: '1px solid $gray4',
+                  borderBottom: '1px solid #F4A7BB',
                   cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
                 }}
               >
-                <Box css={{ color: '$gray10' }}>
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    width={16}
-                    height={16}
-                  />
-                </Box>
                 <Text
                   style="subtitle1"
                 >
@@ -195,8 +190,7 @@ const HamburgerMenu = () => {
               css={{
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                alignItems: 'center',
-                borderBottom: '1px solid #F4A7BB',
+                alignItems: 'center'
               }}
               onClick={() => disconnect()}
             >
@@ -260,7 +254,7 @@ const HamburgerMenu = () => {
               <Anchor
                 href="/swap"
                 css={{
-                  borderBottom: '1px solid $gray4',
+                  borderBottom: '1px solid #F4A7BB',
                   cursor: 'pointer',
                   pb: '$4',
                   pt: '24px',
@@ -282,7 +276,7 @@ const HamburgerMenu = () => {
             px: '$4',
             gap: '$4',
             width: '100%',
-            borderTop: '1px solid $gray4',
+            borderTop: '1px solid #F4A7BB',
           }}
         >
           <a href="https://twitter.com/DreamByt3" target="_blank">
