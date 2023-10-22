@@ -30,7 +30,6 @@ import { OpenSeaVerified } from 'components/common/OpenSeaVerified'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { SearchCollection } from 'pages/api/globalSearch'
 import { formatNumber } from 'utils/numbers'
-import { useTheme } from 'next-themes'
 import Img from 'components/primitives/Img'
 import optimizeImage from 'utils/optimizeImage'
 import { SearchChainSwitcher } from './SearchChainSwitcher'
@@ -43,7 +42,6 @@ type Props = {
 }
 
 const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
-  const { theme } = useTheme()
 
   const tokenCount = useMemo(
     () => formatNumber(collection.tokenCount),
@@ -94,9 +92,7 @@ const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
             <Box css={{ height: 12, minWidth: 'max-content' }}>
               <img
                 src={
-                  theme === 'dark'
-                    ? collection.darkChainIcon
-                    : collection.lightChainIcon
+                  collection.darkChainIcon
                 }
                 style={{ height: 12 }}
               />
@@ -192,7 +188,7 @@ const SearchResult: FC<SearchResultProps> = ({
 const GlobalSearch = forwardRef<
   ElementRef<typeof Input>,
   ComponentPropsWithoutRef<typeof Input>
->(({ children, ...props }, forwardedRef) => {
+>(({ children, containerCss, ...props }, forwardedRef) => {
   const { chain } = useContext(ChainContext)
 
   const [searching, setSearching] = useState(false)
@@ -274,7 +270,7 @@ const GlobalSearch = forwardRef<
       onClick={(e) => {
         e.stopPropagation()
       }}
-      css={{ position: 'relative', width: '100%' }}
+      css={{ position: 'relative', width: '100%', ...containerCss }}
       onFocus={() => setShowSearchBox(true)}
     >
       {!isMobile && (
@@ -288,7 +284,7 @@ const GlobalSearch = forwardRef<
             color: '$gray11',
           }}
         >
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} width={20} height={20} />
         </Box>
       )}
 
@@ -394,12 +390,15 @@ const GlobalSearch = forwardRef<
             {results &&
               results
                 .slice(0, 6)
-                .map((result) => (
-                  <SearchResult
-                    result={result}
-                    handleSelectResult={handleSelectResult}
-                  />
-                ))}
+                .map((result: any, i: number) => {
+                  return (
+                    <SearchResult
+                      key={`result-${searchChain}-${result.type}-${result.data.collectionId || result.data.address || i}`}
+                      result={result}
+                      handleSelectResult={handleSelectResult}
+                    />
+                  )
+                })}
 
             {results.length === 0 &&
             fallbackResults.length > 0 &&

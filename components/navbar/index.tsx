@@ -46,7 +46,7 @@ const Navbar = () => {
         height: NAVBAR_HEIGHT_MOBILE,
         px: '$4',
         width: '100%',
-        borderBottom: '1px solid $gray4',
+        borderBottom: '1px solid $pinkA11',
         zIndex: 999,
         background: '$slate1',
         position: 'fixed',
@@ -85,7 +85,7 @@ const Navbar = () => {
         width: '100%',
         maxWidth: 1920,
         mx: 'auto',
-        borderBottom: '1px solid $gray4',
+        borderBottom: '1px solid $pinkA7',
         zIndex: 999,
         background: '$neutralBg',
         position: 'fixed',
@@ -97,7 +97,7 @@ const Navbar = () => {
       justify="between"
     >
       <Flex align="center" justify="between" css={{ flex: 1 }}>
-        <Flex align="center" >
+        <Flex align="center" css={{ borderRight: '1px solid $pinkA6', pr: '$5'}} >
           <Link href={`/${routePrefix}`}>
             <Box css={{ width: 236, cursor: 'pointer' }}>
               <Image
@@ -109,48 +109,93 @@ const Navbar = () => {
             </Box>
           </Link>
         </Flex>
-        <Flex justify="center" css={{ flex: 1, px: '$5'}}>
+        <Flex
+          align="center"
+          css={{
+            gap: '$5',
+            ml: '$2',
+          }}
+        >
+          <Flex
+            as={Link}
+            href={`/${routePrefix}/collections/trending`}
+            align="center"
+            css={{
+              height: 44,
+              px: 24,
+              borderRadius: 8,
+              '&:hover': {
+                backgroundColor: '$pinkA5'
+              }
+            }}
+          >
+            <NavItem>Explore</NavItem>
+          </Flex>
+        </Flex>
+        <Flex justify="center" align="center" css={{ flex: 1, px: '$5'}}>
           <GlobalSearch
             ref={searchRef}
             placeholder="Search NFTs..."
-            containerCss={{ width: '100%' }}
+            containerCss={{ width: '100%', maxWidth: 480, margin: 'auto', position: 'relative' }}
             key={router.asPath}
           />
         </Flex>
-        <Flex css={{ gap: '$5', mr: 12 }}>
+        <Flex css={{ gap: '$2', mr: 12 }}>
           <HoverCard.Root openDelay={200}>
             <HoverCard.Trigger>
-              <NavItem>
-                More
-              </NavItem>
+              <Flex align="center" css={{ height: 44, px: 24, borderRadius: 8, '&:hover': { backgroundColor: '$pinkA5' }}}>
+                <NavItem>
+                  More
+                </NavItem>
+              </Flex>
             </HoverCard.Trigger>
-            <HoverCard.Content sideOffset={24} align="start">
-              <Card css={{ p: 24, width: 240 }}>
-                <Flex css={{ gap: '$4' }} direction="column">
-                  <Link href={`/swap`}>
-                    <NavItem
-                      active={router.pathname.includes('swap')}
-                    >
-                      Buy DREAM
-                    </NavItem>
-                  </Link>
-                  {/*<Link href={`/staking`}>*/}
-                  {/*  <NavItem*/}
-                  {/*    active={router.pathname.includes('staking')}*/}
-                  {/*  >*/}
-                  {/*    Staking*/}
-                  {/*  </NavItem>*/}
-                  {/*</Link>*/}
+            <HoverCard.Content sideOffset={19} align="center">
+              <Card css={{
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+                borderRadius: 0,
+                backgroundColor: '$blackA12',
+                border: '1px solid $pinkA5'
+              }}>
+                <Flex
+                  as={Link}
+                  href={`/swap`}
+                  align="center"
+                  css={{
+                    px: 16,
+                    height: 44,
+                    borderBottom: '1px solid $pinkA5',
+                    '&:hover': {
+                      backgroundColor: '$pinkA5'
+                    }
+                  }}
+                >
+                  <NavItem
+                    active={router.pathname.includes('swap')}
+                  >
+                    Buy DREAM
+                  </NavItem>
                 </Flex>
               </Card>
             </HoverCard.Content>
           </HoverCard.Root>
           {isConnected && (
-            <Link href={`/portfolio`}>
-              <Box css={{ mr: '$2' }}>
-                <NavItem>My Assets</NavItem>
-              </Box>
-            </Link>
+            <Flex
+              as={Link}
+              href="/portfolio"
+              align="center"
+              css={{
+                height: 44,
+                px: 16,
+                borderRadius: 8,
+                '&:hover': {
+                  backgroundColor: '$pinkA5'
+                }
+              }}
+            >
+              <NavItem>My Assets</NavItem>
+            </Flex>
           )}
         </Flex>
       </Flex>

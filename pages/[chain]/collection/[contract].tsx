@@ -4,7 +4,6 @@ import {
   Flex,
   Box,
   Input,
-  FormatCrypto,
 } from '../../../components/primitives'
 import {
   useCollections,

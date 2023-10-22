@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
-import { Text, Flex, Box } from 'components/primitives'
+import {Text, Flex, Box, MarkdownLink, FormatCryptoCurrency, Button} from 'components/primitives'
 import Layout from 'components/Layout'
 import {
   ComponentPropsWithoutRef,
@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { useMounted } from 'hooks'
+import {useENSResolver, useMounted} from 'hooks'
 import { paths } from '@reservoir0x/reservoir-sdk'
 import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import fetcher from 'utils/fetcher'
@@ -25,6 +25,12 @@ import ChainToggle from 'components/common/ChainToggle'
 import { Head } from 'components/Head'
 import { ChainContext } from 'context/ChainContextProvider'
 import { useRouter } from 'next/router'
+import {motion, useTransform, useViewportScroll} from "framer-motion";
+import optimizeImage from "../../../../utils/optimizeImage";
+import {Avatar} from "../../../../components/primitives/Avatar";
+import ReactMarkdown from "react-markdown";
+import {formatNumber} from "../../../../utils/numbers";
+import Link from "next/link";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
@@ -33,6 +39,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
   const isSSR = typeof window === 'undefined'
   const isMounted = useMounted()
   const compactToggleNames = useMediaQuery({ query: '(max-width: 800px)' })
+  const [bannerIndex, setBannerIndex] = useState(Math.round(Math.random() * ssr.collection?.collections?.length))
   const [sortByTime, setSortByTime] =
     useState<CollectionsSortingOption>('1DayVolume')
 
@@ -70,6 +77,10 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
     }
   )
 
+  useEffect(() => {
+    setBannerIndex(Math.round(Math.random() * ssr.collection?.collections?.length))
+  }, [ssr.collection])
+
   let collections = data || []
 
   const loadMoreRef = useRef<HTMLDivElement>(null)
@@ -98,9 +109,261 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
       break
   }
 
+
+  const topCollection = collections?.[bannerIndex]
+
+  const {
+    avatar: ensAvatar,
+    shortAddress,
+    shortName: shortEnsName,
+  } = useENSResolver(topCollection?.creator)
+
+  const { scrollY } = useViewportScroll();
+
+  const scale = useTransform(scrollY, [0, 500], [1, 1.2]);
+
   return (
     <Layout>
       <Head />
+      {isMounted && (
+        <Box
+          css={{
+            p: 24,
+            mt: -80,
+            pt: 104,
+            height: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+            '@bp800': {
+              px: '$5',
+            },
+            '@xl': {
+              px: '$6',
+            },
+          }}
+        >
+          <motion.div
+            style={{
+              scale: scale,
+              position: 'absolute',
+              top: 0,
+              display: 'block',
+              zIndex: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundSize: 'cover',
+              backgroundImage: `url(${optimizeImage(topCollection?.banner, 1820)})`,
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
+
+          </motion.div>
+          <Box
+            css={{
+              position: 'absolute',
+              top: 0,
+              display: 'block',
+              zIndex: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backdropFilter: 'blur(2px)',
+              backgroundColor: 'rgb(60,9,60, 0.4)',
+              backgroundImage: 'linear-gradient(rgba(8, 4, 4, 0) 50%, rgb(8, 4, 4) 90.22%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
+            }}
+          />
+          <Flex
+            align="end"
+            css={{
+              minHeight: 540,
+              flex: 1,
+              overflow: 'hidden',
+              position: 'relative',
+              gap: '$5',
+              p: '$4',
+              '@md': {
+                p: '$5',
+                gap: '$4',
+                flexDirection: 'column',
+                display: 'flex',
+              },
+              '@lg': {
+                flexDirection: 'row',
+                p: '$5',
+                gap: '$5',
+                mt: '$4',
+              },
+              '@xl': {
+                p: '$6',
+                gap: '$6',
+              },
+              maxWidth: 1820,
+              mx: 'auto',
+            }}
+          >
+            {collections && (
+              <Box css={{ flex: 2, zIndex: 4 }}>
+                <Flex direction="column" css={{ height: '100%', gap: 40 }}>
+                  <Flex
+                    justify="between"
+                    css={{
+                      width: '100%',
+                      flexDirection: 'column',
+                      gap: 20,
+                      '@md': {
+                        flexDirection: 'row',
+                      }
+                    }}
+                  >
+                    <Box css={{ flex: 1 }}>
+                      <Avatar size="large" src={topCollection?.image} />
+                      <Text style="h3" css={{ mt: '$3' }} as="h3">
+                        {topCollection?.name}
+                      </Text>
+                      <Flex css={{ mb: '$2', gap: 10 }}>
+                        <Text style="subtitle1">
+                          {`By`}
+                        </Text>
+                        <Text style="subtitle1">
+                          {shortEnsName || shortAddress}
+                        </Text>
+                      </Flex>
+
+                      <Box
+                        css={{
+                          maxWidth: 450,
+                          lineHeight: 1.5,
+                          fontSize: 16,
+                          fontWeight: 400,
+                          display: '-webkit-box',
+                          color: '$gray12',
+                          fontFamily: '$body',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        <ReactMarkdown
+                          children={topCollection?.description || ''}
+                          components={{
+                            a: MarkdownLink,
+                            p: Text as any,
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                    <Flex
+                      align="end"
+                    >
+                      <Box css={{ mr: '$5' }}>
+                        <Text style="subtitle2" color="subtle">
+                          FLOOR
+                        </Text>
+                        <Box css={{ mt: 2 }}>
+                          <FormatCryptoCurrency
+                            amount={
+                              topCollection?.floorAsk?.price?.amount
+                                ?.native ?? 0
+                            }
+                            textStyle={'h4'}
+                            logoHeight={20}
+                            address={
+                              topCollection?.floorAsk?.price?.currency
+                                ?.contract
+                            }
+                          />
+                        </Box>
+                      </Box>
+
+                      <Box css={{ mr: '$4' }}>
+                        <Text style="subtitle2" color="subtle">
+                          1D Volume
+                        </Text>
+                        <Text style="h4" as="h4" css={{ mt: 2 }}>
+                          {formatNumber(topCollection?.volume?.["1day"], 2, true)}
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Flex>
+                  <Flex
+                    align="end"
+                    justify="between"
+                    css={{ gap: '$4' }}
+                  >
+                    <Button as={Link} color="primary" size="large" href={`/${chain.routePrefix}/collection/${topCollection?.id}`}>
+                      View Collection
+                    </Button>
+                    {/*<Box*/}
+                    {/*  css={{*/}
+                    {/*    display: 'none',*/}
+                    {/*    '@lg': {*/}
+                    {/*      display: 'block',*/}
+                    {/*    },*/}
+                    {/*  }}*/}
+                    {/*>*/}
+                    {/*  <Text*/}
+                    {/*    style="subtitle2"*/}
+                    {/*    color="subtle"*/}
+                    {/*    as="p"*/}
+                    {/*    css={{ mt: '$4' }}*/}
+                    {/*  >*/}
+                    {/*    RECENT SALES*/}
+                    {/*  </Text>*/}
+                    {/*  <Flex*/}
+                    {/*    css={{*/}
+                    {/*      mt: '$2',*/}
+                    {/*      gap: '$3',*/}
+                    {/*    }}*/}
+                    {/*  >*/}
+                    {/*    {topCollection?.recentSales*/}
+                    {/*      ?.slice(0, 4)*/}
+                    {/*      ?.map((sale: any, i) => (*/}
+                    {/*        <Box*/}
+                    {/*          css={{*/}
+                    {/*            aspectRatio: '1/1',*/}
+                    {/*            maxWidth: 80,*/}
+                    {/*          }}*/}
+                    {/*          key={sale.token.id + sale.contract + i}*/}
+                    {/*          onClick={(e) => {*/}
+                    {/*            e.stopPropagation()*/}
+                    {/*            e.preventDefault()*/}
+                    {/*            router.push(*/}
+                    {/*              `/${chain.routePrefix}/asset/${topCollection.primaryContract}:${sale.token.id}`*/}
+                    {/*            )*/}
+                    {/*          }}*/}
+                    {/*        >*/}
+                    {/*          <img*/}
+                    {/*            style={{ borderRadius: 4 }}*/}
+                    {/*            src={optimizeImage(*/}
+                    {/*              sale?.token?.image ||*/}
+                    {/*              topCollection?.image,*/}
+                    {/*              250*/}
+                    {/*            )}*/}
+                    {/*          />*/}
+                    {/*          <Box css={{ mt: '$1' }}>*/}
+                    {/*            <FormatCryptoCurrency*/}
+                    {/*              amount={sale?.price?.amount?.decimal ?? 0}*/}
+                    {/*              textStyle={'h6'}*/}
+                    {/*              logoHeight={16}*/}
+                    {/*              address={sale?.price?.currency?.contract}*/}
+                    {/*            />*/}
+                    {/*          </Box>*/}
+                    {/*        </Box>*/}
+                    {/*      ))}*/}
+                    {/*    <Box css={{ flex: 1 }} />*/}
+                    {/*    <Box css={{ flex: 1 }} />*/}
+                    {/*  </Flex>*/}
+                    {/*</Box>*/}
+                  </Flex>
+                </Flex>
+              </Box>
+            )}
+          </Flex>
+        </Box>
+      )}
       <Box
         css={{
           p: 24,

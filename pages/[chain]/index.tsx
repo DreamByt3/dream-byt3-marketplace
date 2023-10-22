@@ -149,197 +149,193 @@ const Home: NextPage<any> = ({ ssr }) => {
             backgroundImage: 'linear-gradient(rgba(8, 4, 4, 0) 50%, rgb(8, 4, 4) 90.22%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
           }}
         />
-        <Flex>
-          <Flex
-            align="end"
-            css={{
-              minHeight: 540,
-              flex: 1,
-              overflow: 'hidden',
-              position: 'relative',
+        <Flex
+          align="end"
+          css={{
+            minHeight: 540,
+            flex: 1,
+            overflow: 'hidden',
+            position: 'relative',
+            gap: '$5',
+            p: '$4',
+            '@md': {
+              p: '$5',
+              gap: '$4',
+              flexDirection: 'column',
+              display: 'flex',
+            },
+            '@lg': {
+              flexDirection: 'row',
+              p: '$5',
               gap: '$5',
-              p: '$4',
-              '@md': {
-                p: '$5',
-                gap: '$4',
-                flexDirection: 'column',
-                display: 'flex',
-              },
-              '@lg': {
-                flexDirection: 'row',
-                p: '$5',
-                gap: '$5',
-                mt: '$4',
-              },
-              '@xl': {
-                p: '$6',
-                gap: '$6',
-              },
-
-              mb: '$6',
-              maxWidth: 1820,
-              mx: 'auto',
-            }}
-          >
-            {topCollections && (
-              <Box css={{ flex: 2, zIndex: 4 }}>
-                <Flex direction="column" css={{ height: '100%', gap: 40 }}>
-                  <Flex
-                    justify="between"
-                    css={{
-                      width: '100%',
-                      flexDirection: 'column',
-                      gap: 20,
-                      '@md': {
-                        flexDirection: 'row',
-                      }
-                    }}
-                  >
-                    <Box css={{ flex: 1 }}>
-                      <Avatar size="large" src={topCollection?.image} />
-                      <Text style="h3" css={{ mt: '$3' }} as="h3">
-                        {topCollection?.name}
+              mt: '$4',
+            },
+            '@xl': {
+              p: '$6',
+              gap: '$6',
+            },
+            maxWidth: 1820,
+            mx: 'auto',
+          }}
+        >
+          {topCollections && (
+            <Box css={{ flex: 2, zIndex: 4 }}>
+              <Flex direction="column" css={{ height: '100%', gap: 40 }}>
+                <Flex
+                  justify="between"
+                  css={{
+                    width: '100%',
+                    flexDirection: 'column',
+                    gap: 20,
+                    '@md': {
+                      flexDirection: 'row',
+                    }
+                  }}
+                >
+                  <Box css={{ flex: 1 }}>
+                    <Avatar size="large" src={topCollection?.image} />
+                    <Text style="h3" css={{ mt: '$3' }} as="h3">
+                      {topCollection?.name}
+                    </Text>
+                    <Flex css={{ mb: '$2', gap: 10 }}>
+                      <Text style="subtitle1">
+                        {`By`}
                       </Text>
-                      <Flex css={{ mb: '$2', gap: 10 }}>
-                        <Text style="subtitle1">
-                          {`By`}
-                        </Text>
-                        <Text style="subtitle1">
-                          {shortEnsName || shortAddress}
-                        </Text>
-                      </Flex>
+                      <Text style="subtitle1">
+                        {shortEnsName || shortAddress}
+                      </Text>
+                    </Flex>
 
-                      <Box
-                        css={{
-                          maxWidth: 450,
-                          lineHeight: 1.5,
-                          fontSize: 16,
-                          fontWeight: 400,
-                          display: '-webkit-box',
-                          color: '$gray12',
-                          fontFamily: '$body',
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
+                    <Box
+                      css={{
+                        maxWidth: 450,
+                        lineHeight: 1.5,
+                        fontSize: 16,
+                        fontWeight: 400,
+                        display: '-webkit-box',
+                        color: '$gray12',
+                        fontFamily: '$body',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      <ReactMarkdown
+                        children={topCollection?.description || ''}
+                        components={{
+                          a: MarkdownLink,
+                          p: Text as any,
                         }}
-                      >
-                        <ReactMarkdown
-                          children={topCollection?.description || ''}
-                          components={{
-                            a: MarkdownLink,
-                            p: Text as any,
-                          }}
+                      />
+                    </Box>
+                  </Box>
+                  <Flex
+                    align="end"
+                  >
+                    <Box css={{ mr: '$5' }}>
+                      <Text style="subtitle2" color="subtle">
+                        FLOOR
+                      </Text>
+                      <Box css={{ mt: 2 }}>
+                        <FormatCryptoCurrency
+                          amount={
+                            topCollection?.floorAsk?.price?.amount
+                              ?.native ?? 0
+                          }
+                          textStyle={'h4'}
+                          logoHeight={20}
+                          address={
+                            topCollection?.floorAsk?.price?.currency
+                              ?.contract
+                          }
                         />
                       </Box>
                     </Box>
-                    <Flex
-                      align="end"
-                    >
-                      <Box css={{ mr: '$5' }}>
-                        <Text style="subtitle2" color="subtle">
-                          FLOOR
-                        </Text>
-                        <Box css={{ mt: 2 }}>
-                          <FormatCryptoCurrency
-                            amount={
-                              topCollection?.floorAsk?.price?.amount
-                                ?.native ?? 0
-                            }
-                            textStyle={'h4'}
-                            logoHeight={20}
-                            address={
-                              topCollection?.floorAsk?.price?.currency
-                                ?.contract
-                            }
-                          />
-                        </Box>
-                      </Box>
 
-                      <Box css={{ mr: '$4' }}>
-                        <Text style="subtitle2" color="subtle">
-                          1D Volume
-                        </Text>
-                        <Text style="h4" as="h4" css={{ mt: 2 }}>
-                          {formatNumber(topCollection?.volume?.["1day"], 2, true)}
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Flex>
-                  <Flex
-                    align="end"
-                    justify="between"
-                    css={{ gap: '$4' }}
-                  >
-                    <Button as={Link} color="primary" size="large" href={`/${chain.routePrefix}/collection/${topCollection?.id}`}>
-                      View Collection
-                    </Button>
-                    {/*<Box*/}
-                    {/*  css={{*/}
-                    {/*    display: 'none',*/}
-                    {/*    '@lg': {*/}
-                    {/*      display: 'block',*/}
-                    {/*    },*/}
-                    {/*  }}*/}
-                    {/*>*/}
-                    {/*  <Text*/}
-                    {/*    style="subtitle2"*/}
-                    {/*    color="subtle"*/}
-                    {/*    as="p"*/}
-                    {/*    css={{ mt: '$4' }}*/}
-                    {/*  >*/}
-                    {/*    RECENT SALES*/}
-                    {/*  </Text>*/}
-                    {/*  <Flex*/}
-                    {/*    css={{*/}
-                    {/*      mt: '$2',*/}
-                    {/*      gap: '$3',*/}
-                    {/*    }}*/}
-                    {/*  >*/}
-                    {/*    {topCollection?.recentSales*/}
-                    {/*      ?.slice(0, 4)*/}
-                    {/*      ?.map((sale: any, i) => (*/}
-                    {/*        <Box*/}
-                    {/*          css={{*/}
-                    {/*            aspectRatio: '1/1',*/}
-                    {/*            maxWidth: 80,*/}
-                    {/*          }}*/}
-                    {/*          key={sale.token.id + sale.contract + i}*/}
-                    {/*          onClick={(e) => {*/}
-                    {/*            e.stopPropagation()*/}
-                    {/*            e.preventDefault()*/}
-                    {/*            router.push(*/}
-                    {/*              `/${chain.routePrefix}/asset/${topCollection.primaryContract}:${sale.token.id}`*/}
-                    {/*            )*/}
-                    {/*          }}*/}
-                    {/*        >*/}
-                    {/*          <img*/}
-                    {/*            style={{ borderRadius: 4 }}*/}
-                    {/*            src={optimizeImage(*/}
-                    {/*              sale?.token?.image ||*/}
-                    {/*              topCollection?.image,*/}
-                    {/*              250*/}
-                    {/*            )}*/}
-                    {/*          />*/}
-                    {/*          <Box css={{ mt: '$1' }}>*/}
-                    {/*            <FormatCryptoCurrency*/}
-                    {/*              amount={sale?.price?.amount?.decimal ?? 0}*/}
-                    {/*              textStyle={'h6'}*/}
-                    {/*              logoHeight={16}*/}
-                    {/*              address={sale?.price?.currency?.contract}*/}
-                    {/*            />*/}
-                    {/*          </Box>*/}
-                    {/*        </Box>*/}
-                    {/*      ))}*/}
-                    {/*    <Box css={{ flex: 1 }} />*/}
-                    {/*    <Box css={{ flex: 1 }} />*/}
-                    {/*  </Flex>*/}
-                    {/*</Box>*/}
+                    <Box css={{ mr: '$4' }}>
+                      <Text style="subtitle2" color="subtle">
+                        1D Volume
+                      </Text>
+                      <Text style="h4" as="h4" css={{ mt: 2 }}>
+                        {formatNumber(topCollection?.volume?.["1day"], 2, true)}
+                      </Text>
+                    </Box>
                   </Flex>
                 </Flex>
-              </Box>
-            )}
-          </Flex>
+                <Flex
+                  align="end"
+                  justify="between"
+                  css={{ gap: '$4' }}
+                >
+                  <Button as={Link} color="primary" size="large" href={`/${chain.routePrefix}/collection/${topCollection?.id}`}>
+                    View Collection
+                  </Button>
+                  {/*<Box*/}
+                  {/*  css={{*/}
+                  {/*    display: 'none',*/}
+                  {/*    '@lg': {*/}
+                  {/*      display: 'block',*/}
+                  {/*    },*/}
+                  {/*  }}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style="subtitle2"*/}
+                  {/*    color="subtle"*/}
+                  {/*    as="p"*/}
+                  {/*    css={{ mt: '$4' }}*/}
+                  {/*  >*/}
+                  {/*    RECENT SALES*/}
+                  {/*  </Text>*/}
+                  {/*  <Flex*/}
+                  {/*    css={{*/}
+                  {/*      mt: '$2',*/}
+                  {/*      gap: '$3',*/}
+                  {/*    }}*/}
+                  {/*  >*/}
+                  {/*    {topCollection?.recentSales*/}
+                  {/*      ?.slice(0, 4)*/}
+                  {/*      ?.map((sale: any, i) => (*/}
+                  {/*        <Box*/}
+                  {/*          css={{*/}
+                  {/*            aspectRatio: '1/1',*/}
+                  {/*            maxWidth: 80,*/}
+                  {/*          }}*/}
+                  {/*          key={sale.token.id + sale.contract + i}*/}
+                  {/*          onClick={(e) => {*/}
+                  {/*            e.stopPropagation()*/}
+                  {/*            e.preventDefault()*/}
+                  {/*            router.push(*/}
+                  {/*              `/${chain.routePrefix}/asset/${topCollection.primaryContract}:${sale.token.id}`*/}
+                  {/*            )*/}
+                  {/*          }}*/}
+                  {/*        >*/}
+                  {/*          <img*/}
+                  {/*            style={{ borderRadius: 4 }}*/}
+                  {/*            src={optimizeImage(*/}
+                  {/*              sale?.token?.image ||*/}
+                  {/*              topCollection?.image,*/}
+                  {/*              250*/}
+                  {/*            )}*/}
+                  {/*          />*/}
+                  {/*          <Box css={{ mt: '$1' }}>*/}
+                  {/*            <FormatCryptoCurrency*/}
+                  {/*              amount={sale?.price?.amount?.decimal ?? 0}*/}
+                  {/*              textStyle={'h6'}*/}
+                  {/*              logoHeight={16}*/}
+                  {/*              address={sale?.price?.currency?.contract}*/}
+                  {/*            />*/}
+                  {/*          </Box>*/}
+                  {/*        </Box>*/}
+                  {/*      ))}*/}
+                  {/*    <Box css={{ flex: 1 }} />*/}
+                  {/*    <Box css={{ flex: 1 }} />*/}
+                  {/*  </Flex>*/}
+                  {/*</Box>*/}
+                </Flex>
+              </Flex>
+            </Box>
+          )}
         </Flex>
       </Box>
       <Box
@@ -363,7 +359,7 @@ const Home: NextPage<any> = ({ ssr }) => {
           // }
         }}
       >
-        {(topCollections && topCollections.length) && (
+        {(topCollections && !!topCollections.length) && (
           <Flex
             css={{
               gap: 20,
@@ -540,8 +536,8 @@ const Home: NextPage<any> = ({ ssr }) => {
             },
           }}
         >
-          {topMintingCollectionsData?.collections &&
-          topMintingCollectionsData.collections.length &&
+          {(topMintingCollectionsData?.collections &&
+            topMintingCollectionsData.collections.length) &&
           topMintingCollectionsData.collections
             .map((collection) => {
               return (
@@ -585,8 +581,8 @@ const Home: NextPage<any> = ({ ssr }) => {
                           borderRadius: 8,
                         }}
                       >
-                        {collection?.banner?.length ||
-                        collection.recentSales?.[0]?.token?.image?.length ? (
+                        {(collection?.banner?.length ||
+                          collection.recentSales?.[0]?.token?.image?.length) ? (
                           <img
                             loading="lazy"
                             src={optimizeImage(
