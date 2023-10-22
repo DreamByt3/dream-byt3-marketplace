@@ -39,7 +39,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
   const isSSR = typeof window === 'undefined'
   const isMounted = useMounted()
   const compactToggleNames = useMediaQuery({ query: '(max-width: 800px)' })
-  const [bannerIndex, setBannerIndex] = useState(Math.round(Math.random() * ssr.collection?.collections?.length))
+  const [bannerIndex, setBannerIndex] = useState(Math.round(Math.random() * (ssr?.collection?.collections?.length || 0)))
   const [sortByTime, setSortByTime] =
     useState<CollectionsSortingOption>('1DayVolume')
 
@@ -73,12 +73,12 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
   const { data, fetchNextPage, isFetchingPage, isValidating } = useCollections(
     collectionQuery,
     {
-      fallbackData: [ssr.collection],
+      fallbackData: [ssr?.collection],
     }
   )
 
   useEffect(() => {
-    setBannerIndex(Math.round(Math.random() * ssr.collection?.collections?.length))
+    setBannerIndex(Math.round(Math.random() * (ssr?.collection?.collections?.length || 0)))
   }, [ssr.collection])
 
   let collections = data || []
