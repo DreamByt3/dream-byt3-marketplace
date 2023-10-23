@@ -29,6 +29,8 @@ import useMarketplaceFees from 'hooks/useOpenseaFees'
 import { ToastContext } from 'context/ToastContextProvider'
 import { BatchListing, Marketplace } from './BatchListings'
 import optimizeImage from 'utils/optimizeImage'
+import {useMediaQuery} from "react-responsive";
+import {Table} from "react-feather";
 
 type BatchListingsTableRowProps = {
   listing: BatchListing
@@ -76,6 +78,7 @@ export const BatchListingsTableRow: FC<BatchListingsTableRowProps> = ({
   const [quantity, setQuantity] = useState<number | undefined>(1)
   const [marketplaceFee, setMarketplaceFee] = useState<number>(0)
   const [marketplaceFeePercent, setMarketplaceFeePercent] = useState<number>(0)
+  const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
 
   const tokenImage = useMemo(() => {
     return optimizeImage(listing.token.token?.image, 250)
@@ -223,6 +226,211 @@ export const BatchListingsTableRow: FC<BatchListingsTableRowProps> = ({
     },
     [listing, updateListing]
   )
+
+  if (isMobile) {
+    return (
+      <>
+        <Flex
+          direction="column"
+          css={{
+            py: '$2',
+            gap: 16,
+          }}
+        >
+          <Flex align="center" css={{ gap: '$3' }}>
+            <img
+              src={marketplace?.imageUrl}
+              alt={marketplace?.name}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 4,
+                aspectRatio: '1/1',
+                visibility: marketplace?.imageUrl ? 'visible' : 'hidden',
+              }}
+            />
+            <img
+              src={tokenImage}
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 4,
+                aspectRatio: '1/1',
+              }}
+            />
+            <Flex direction="column" css={{ minWidth: 0 }}>
+              <Text style="subtitle3" color="subtle" ellipsify>
+                {listing?.token?.token?.collection?.name}
+              </Text>
+              <Text ellipsify>#{listing?.token?.token?.tokenId}</Text>
+            </Flex>
+          </Flex>
+          {displayQuantity ? (
+            <Flex
+              direction="column"
+              align="start"
+              css={{ gap: '$2', minWidth: 0, overflow: 'hidden' }}
+            >
+              <Input
+                type="number"
+                value={quantity}
+                onChange={(e) => {
+                  const inputValue = Number(e.target.value)
+                  const max = Number(listing.token.ownership?.tokenCount)
+
+                  if (e.target.value === '') {
+                    setQuantity(undefined)
+                  } else if (inputValue > max) {
+                    handleQuantityChange(max)
+                  } else {
+                    handleQuantityChange(inputValue)
+                  }
+                }}
+                onBlur={() => {
+                  if (quantity === undefined || quantity <= 0) {
+                    handleQuantityChange(1)
+                  }
+                }}
+                css={{ maxWidth: 45 }}
+                disabled={
+                  listing.token.token?.kind !== 'erc1155' ||
+                  Number(listing?.token?.ownership?.tokenCount) <= 1
+                }
+              />
+              <Text
+                style="subtitle3"
+                color="subtle"
+                ellipsify
+                css={{ width: '100%' }}
+              >
+                {listing.token.ownership?.tokenCount} available
+              </Text>
+            </Flex>
+          ) : null}
+          <Flex align="start" css={{ gap: '$3' }}>
+            <Flex align="start" css={{ gap: '$3' }}>
+              <Flex align="center" css={{ mt: 12 }}>
+                <CryptoCurrencyIcon
+                  address={currency.contract}
+                  css={{ height: 18 }}
+                />
+                <Text style="subtitle1" color="subtle" css={{ ml: '$1' }}>
+                  {currency.symbol}
+                </Text>
+              </Flex>
+              <Flex direction="column" align="center" css={{ gap: '$2' }}>
+                <Input
+                  placeholder="Price"
+                  type="number"
+                  value={price}
+                  onChange={(e) => {
+                    handlePriceChange(e.target.value)
+                  }}
+                  css={{ width: 100, '@bp1500': { width: 150 } }}
+                />
+                {price !== undefined &&
+                price !== '' &&
+                Number(price) !== 0 &&
+                Number(price) < MINIMUM_AMOUNT && (
+                  <Text style="subtitle3" color="error">
+                    Must exceed {MINIMUM_AMOUNT}
+                  </Text>
+                )}
+              </Flex>
+            </Flex>
+            <Select
+              css={{
+                flex: 1,
+                width: '100%',
+                whiteSpace: 'nowrap',
+              }}
+              value={expirationOption?.text || ''}
+              onValueChange={handleExpirationChange}
+            >
+              {expirationOptions.map((option) => (
+                <Select.Item key={option.text} value={option.value}>
+                  <Select.ItemText css={{ whiteSpace: 'nowrap' }}>
+                    {option.text}
+                  </Select.ItemText>
+                </Select.Item>
+              ))}
+            </Select>
+          </Flex>
+        </Flex>
+        <Flex
+          justify="between"
+          css={{
+            py: '$2',
+            borderBottom: '1px solid  $primary11',
+            mb: 16
+          }}
+        >
+          <Flex direction="column" css={{ minWidth: 0, overflow: 'hidden' }}>
+            <Text style="body3">Creator earnings</Text>
+            <Flex
+              align="center"
+              css={{
+                gap: '$2',
+                minWidth: 0,
+                width: '100%',
+                boxSizing: 'border-box',
+                mt: '$3',
+              }}
+            >
+              <FormatCryptoCurrency
+                amount={creatorRoyalties * Number(price)}
+                logoHeight={14}
+                textStyle="body1"
+                css={{
+                  width: '100%',
+                }}
+              />
+              <Text style="body1" color="subtle" ellipsify>
+                ({creatorRoyalties * 100}%)
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex direction="column" css={{ minWidth: 0, overflow: 'hidden' }}>
+            <Text style="body3">Market Fee</Text>
+            <Flex align="center" css={{ gap: '$2', mt: '$3' }}>
+              <FormatCryptoCurrency
+                amount={marketplaceFee}
+                logoHeight={14}
+                textStyle="body1"
+              />
+              <Text style="body1" color="subtle" ellipsify>
+                ({marketplaceFeePercent || 0}%)
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex direction="column" css={{ minWidth: 0, overflow: 'hidden' }}>
+            <Text style="body3">Profit</Text>
+            <Flex css={{ mt: '$3' }}>
+              <FormatCryptoCurrency
+                amount={profit}
+                logoHeight={14}
+                textStyle="body1"
+              />
+            </Flex>
+          </Flex>
+          <Button
+            color="gray3"
+            size="small"
+            css={{ justifyContent: 'center', width: '44px', height: '44px' }}
+            onClick={() =>
+              removeListing(
+                `${listing.token.token?.contract}:${listing.token.token?.tokenId}`,
+                listing.orderbook as string
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        </Flex>
+      </>
+    )
+  }
+
   return (
     <TableRow
       css={{

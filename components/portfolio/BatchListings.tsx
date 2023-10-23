@@ -67,8 +67,8 @@ const MINIMUM_AMOUNT = 0.000001
 
 const marketplaces = [
   {
-    name: 'Reservoir',
-    imageUrl: 'https://api.reservoir.tools/redirect/sources/reservoir/logo/v2',
+    name: 'DREAMBYT3',
+    imageUrl: 'https://dreambyt3.com/logo-compact.svg',
     orderbook: 'reservoir',
     orderKind: 'seaport-v1.4',
   },
@@ -100,6 +100,7 @@ const BatchListings: FC<Props> = ({
   const [listButtonDisabled, setListButtonDisabled] = useState<boolean>(true)
 
   const isLargeDevice = useMediaQuery({ minWidth: 1400 })
+  const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
 
   const chain = useMarketplaceChain()
 
@@ -381,7 +382,16 @@ const BatchListings: FC<Props> = ({
       </Flex>
       <Flex
         justify="between"
-        css={{ border: '1px solid $gray6', borderRadius: 8, p: 24 }}
+        css={{
+          border: '1px solid $primary11',
+          borderRadius: 8,
+          p: 24,
+          gap: '$3',
+          flexDirection: 'column',
+          '@md': {
+            flexDirection: 'row'
+          }
+        }}
       >
         <Flex direction="column" css={{ gap: '$3' }}>
           <Text style="h6">Select Marketplaces</Text>
@@ -411,7 +421,7 @@ const BatchListings: FC<Props> = ({
                     alt={marketplace.name}
                     style={{ width: 32, height: 32 }}
                   />
-                  <Text style="subtitle2">{marketplace.name}</Text>
+                  {!isMobile && (<Text style="subtitle2">{marketplace.name}</Text>)}
                 </Flex>
               )
             })}
@@ -419,7 +429,7 @@ const BatchListings: FC<Props> = ({
         </Flex>
         <Flex direction="column" css={{ gap: '$3' }}>
           <Text style="h6">Apply to All</Text>
-          <Flex align="center" css={{ gap: '$5' }}>
+          <Flex align="center" css={{ gap: '$5', flexDirection: 'column', '@md': { flexDirection: 'row' } }}>
             {isLargeDevice ? (
               <Flex align="center" css={{ gap: '$3' }}>
                 <Button

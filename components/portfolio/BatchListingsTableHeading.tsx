@@ -1,6 +1,7 @@
 import { NAVBAR_HEIGHT } from 'components/navbar'
 import { HeaderRow, TableCell, Text } from 'components/primitives'
 import { FC } from 'react'
+import {useMediaQuery} from "react-responsive";
 
 type TableHeadingProps = {
   displayQuantity: boolean
@@ -11,6 +12,12 @@ export const BatchListingsTableHeading: FC<TableHeadingProps> = ({
   displayQuantity,
   gridTemplateColumns,
 }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+
+  if (isMobile) {
+    return null
+  }
+
   return (
     <HeaderRow
       css={{
@@ -59,7 +66,7 @@ export const BatchListingsTableHeading: FC<TableHeadingProps> = ({
           Profit
         </Text>
       </TableCell>
-      <TableCell css={{ marginLeft: 'auto' }}></TableCell>
+      <TableCell css={{ marginLeft: 'auto' }}/>
     </HeaderRow>
   )
 }

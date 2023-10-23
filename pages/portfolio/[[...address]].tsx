@@ -172,193 +172,219 @@ const IndexPage: NextPage = () => {
   }
 
   return (
-    <>
+    <Layout>
       <Head title={`Profile - ${profile?.username || shortAddress}`}/>
-      <Layout>
-        <Flex
-          direction="column"
-          css={{
-            px: '$4',
-            py: 40,
-            '@sm': {
-              px: '$5',
-            },
+      <Flex
+        direction="column"
+        css={{
+          px: '$4',
+          py: 40,
+          '@sm': {
+            px: '$5',
+          },
 
-            '@xl': {
-              px: '$6',
-            },
-          }}
-        >
-          {!isOwner || isConnected ? (
-            <>
-              {showListingPage && !isSmallDevice ? (
-                <BatchListings
-                  selectedItems={selectedItems}
-                  setSelectedItems={setSelectedItems}
-                  setShowListingPage={setShowListingPage}
-                />
-              ) : (
-                <>
+          '@xl': {
+            px: '$6',
+          },
+        }}
+      >
+        {!isOwner || isConnected ? (
+          <>
+            {showListingPage ? (
+              <BatchListings
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+                setShowListingPage={setShowListingPage}
+              />
+            ) : (
+              <>
+                <Flex
+                  direction="column"
+                  align="end"
+                  justify="end"
+                  css={{
+                    p: '$4',
+                    backgroundColor: '$secondary8',
+                    ...(banner ? {
+                      backgroundImage: `url(${banner})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    } : {}),
+                    borderRadius: 10,
+                    content: '',
+                    height: 350
+                  }}
+                >
+                  <Flex justify="center" css={{ gap: 24, zIndex: 2 }}>
+                    {profile?.twitter_id && (
+                      <Link target="_blank" href={`https://twitter.com/${profile?.twitter_username}`}>
+                        <FontAwesomeIcon icon={faTwitter} width={40} height={40}  style={{
+                          padding: 5,
+                          border: '1px #fff solid',
+                          borderRadius: 5,
+                        }} />
+                      </Link>
+                    )}
+                    {profile?.discord_id && (
+                      <Link target="_blank" href={`https://discord.com/users/${profile?.discord_id}`}>
+                        <FontAwesomeIcon icon={faDiscord} width={40} height={40} style={{
+                          padding: 5,
+                          border: '1px #fff solid',
+                          borderRadius: 5,
+                        }} />
+                      </Link>
+                    )}
+                    {profile?.website && (
+                      <Link target="_blank" href={profile.website}>
+                        <FontAwesomeIcon icon={faGlobe} width={40} height={40} style={{
+                          padding: 5,
+                          border: '1px #fff solid',
+                          borderRadius: 5,
+                        }} />
+                      </Link>
+                    )}
+                  </Flex>
+                </Flex>
+                <Flex direction="column" css={{ marginTop: -135, p: '$5' }}>
+                  <Flex justify="between"  css={{
+                    '@xs': {
+                      flexDirection: 'column'
+                    },
+                    '@lg': {
+                      flexDirection: 'row'
+                    },
+                    gap: 20
+                  }}>
+                    <Flex direction="column" css={{ gap: 20 }}>
+                      {avatar ? (
+                        <Avatar size="xxxl" corners="rounded" src={avatar} containerCSS={{ borderRadius: 16, border: '10px solid #000'}}/>
+                      ) : (
+                        <Jazzicon
+                          diameter={150}
+                          paperStyles={{ borderRadius: '10px' }}
+                          seed={jsNumberForAddress(address as string)}
+                        />
+                      )}
+                      <Flex align="center" justify="center" css={{ flex: 1, alignContent: 'space-between' }}>
+                        <Flex direction="column">
+                          <Text style="h5">
+                            {profile?.username || shortAddress}
+                          </Text>
+                          <CopyText text={address as string}>
+                            <Flex align="center" css={{ cursor: 'pointer' }}>
+                              <Text
+                                style="subtitle1"
+                                color="subtle"
+                                css={{ mr: '$3' }}
+                              >
+                                {shortAddress}
+                              </Text>
+                              <Box css={{ color: '$gray10' }}>
+                                <FontAwesomeIcon
+                                  icon={faCopy}
+                                  width={16}
+                                  height={16}
+                                />
+                              </Box>
+                            </Flex>
+                          </CopyText>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                    <Flex justify="end" align="end" css={{ flex: 1}}>
+                      <Flex direction="column" align="end" css={{ gap: 20 }}>
+                        <ChainToggle />
+                      </Flex>
+                    </Flex>
+                  </Flex>
+                </Flex>
+                <Tabs.Root
+                  defaultValue="items"
+                  value={tabValue}
+                  onValueChange={(value) => setTabValue(value)}
+                >
                   <Flex
-                    direction="column"
-                    align="end"
-                    justify="end"
                     css={{
-                      p: '$4',
-                      backgroundColor: '$secondary8',
-                      ...(banner ? {
-                        backgroundImage: `url(${banner})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                      } : {}),
-                      borderRadius: 10,
-                      content: '',
-                      height: 350
+                      overflowX: 'scroll',
+                      '@sm': { overflowX: 'auto' },
                     }}
                   >
-                    <Flex justify="center" css={{ gap: 24, zIndex: 2 }}>
-                      {profile?.twitter_id && (
-                        <Link target="_blank" href={`https://twitter.com/${profile?.twitter_username}`}>
-                          <FontAwesomeIcon icon={faTwitter} width={40} height={40}  style={{
-                            padding: 5,
-                            border: '1px #fff solid',
-                            borderRadius: 5,
-                          }} />
-                        </Link>
-                      )}
-                      {profile?.discord_id && (
-                        <Link target="_blank" href={`https://discord.com/users/${profile?.discord_id}`}>
-                          <FontAwesomeIcon icon={faDiscord} width={40} height={40} style={{
-                            padding: 5,
-                            border: '1px #fff solid',
-                            borderRadius: 5,
-                          }} />
-                        </Link>
-                      )}
-                      {profile?.website && (
-                        <Link target="_blank" href={profile.website}>
-                          <FontAwesomeIcon icon={faGlobe} width={40} height={40} style={{
-                            padding: 5,
-                            border: '1px #fff solid',
-                            borderRadius: 5,
-                          }} />
-                        </Link>
-                      )}
-                    </Flex>
-                  </Flex>
-                  <Flex direction="column" css={{ marginTop: -135, p: '$5' }}>
-                    <Flex justify="between"  css={{
-                      '@xs': {
-                        flexDirection: 'column'
-                      },
-                      '@lg': {
-                        flexDirection: 'row'
-                      },
-                      gap: 20
-                    }}>
-                      <Flex direction="column" css={{ gap: 20 }}>
-                        {avatar ? (
-                          <Avatar size="xxxl" corners="rounded" src={avatar} containerCSS={{ borderRadius: 16, border: '10px solid #000'}}/>
-                        ) : (
-                          <Jazzicon
-                            diameter={150}
-                            paperStyles={{ borderRadius: '10px' }}
-                            seed={jsNumberForAddress(address as string)}
-                          />
-                        )}
-                        <Flex align="center" justify="center" css={{ flex: 1, alignContent: 'space-between' }}>
-                          <Flex direction="column">
-                            <Text style="h5">
-                              {profile?.username || shortAddress}
-                            </Text>
-                            <CopyText text={address as string}>
-                              <Flex align="center" css={{ cursor: 'pointer' }}>
-                                <Text
-                                  style="subtitle1"
-                                  color="subtle"
-                                  css={{ mr: '$3' }}
-                                >
-                                  {shortAddress}
-                                </Text>
-                                <Box css={{ color: '$gray10' }}>
-                                  <FontAwesomeIcon
-                                    icon={faCopy}
-                                    width={16}
-                                    height={16}
-                                  />
-                                </Box>
-                              </Flex>
-                            </CopyText>
-                          </Flex>
-                        </Flex>
-                      </Flex>
-                      <Flex justify="end" align="end" css={{ flex: 1}}>
-                        <Flex direction="column" align="end" css={{ gap: 20 }}>
-                          <ChainToggle />
-                        </Flex>
-                      </Flex>
-                    </Flex>
-                  </Flex>
-                  <Tabs.Root
-                    defaultValue="items"
-                    value={tabValue}
-                    onValueChange={(value) => setTabValue(value)}
-                  >
-                    <Flex
-                      css={{
-                        overflowX: 'scroll',
-                        '@sm': { overflowX: 'auto' },
+                    <TabsList
+                      style={{
+                        whiteSpace: 'nowrap',
+                        width: '100%',
                       }}
                     >
-                      <TabsList
-                        style={{
-                          whiteSpace: 'nowrap',
-                          width: '100%',
-                        }}
-                      >
-                        <TabsTrigger value="items">Items</TabsTrigger>
-                        <TabsTrigger value="listings">Listings</TabsTrigger>
-                        <TabsTrigger value="offers">Offers Made</TabsTrigger>
-                        <TabsTrigger value="activity">Activity</TabsTrigger>
-                      </TabsList>
-                    </Flex>
+                      <TabsTrigger value="items">Items</TabsTrigger>
+                      <TabsTrigger value="listings">Listings</TabsTrigger>
+                      <TabsTrigger value="offers">Offers Made</TabsTrigger>
+                      <TabsTrigger value="activity">Activity</TabsTrigger>
+                    </TabsList>
+                  </Flex>
 
-                    <TabsContent value="items">
-                      <Flex
+                  <TabsContent value="items">
+                    <Flex
+                      css={{
+                        gap: tokenFiltersOpen ? '$5' : '0',
+                        position: 'relative',
+                        pb: 37,
+                      }}
+                    >
+                      {isSmallDevice ? (
+                        <MobileTokenFilters
+                          collections={collections}
+                          filterCollection={filterCollection}
+                          setFilterCollection={setFilterCollection}
+                          loadMoreCollections={fetchNextPage}
+                          isLoading={collectionsLoading}
+                        />
+                      ) : (
+                        <TokenFilters
+                          isLoading={collectionsLoading}
+                          isOwner={isOwner}
+                          open={tokenFiltersOpen}
+                          setOpen={setTokenFiltersOpen}
+                          collections={collections}
+                          filterCollection={filterCollection}
+                          setFilterCollection={setFilterCollection}
+                          loadMoreCollections={fetchNextPage}
+                        />
+                      )}
+                      <Box
                         css={{
-                          gap: tokenFiltersOpen ? '$5' : '0',
-                          position: 'relative',
-                          pb: 37,
+                          flex: 1,
+                          maxWidth: '100%',
                         }}
                       >
-                        {isSmallDevice ? (
-                          <MobileTokenFilters
-                            collections={collections}
-                            filterCollection={filterCollection}
-                            setFilterCollection={setFilterCollection}
-                            loadMoreCollections={fetchNextPage}
-                            isLoading={collectionsLoading}
-                          />
-                        ) : (
-                          <TokenFilters
-                            isLoading={collectionsLoading}
-                            isOwner={isOwner}
-                            open={tokenFiltersOpen}
-                            setOpen={setTokenFiltersOpen}
-                            collections={collections}
-                            filterCollection={filterCollection}
-                            setFilterCollection={setFilterCollection}
-                            loadMoreCollections={fetchNextPage}
-                          />
+                        {isSmallDevice && (
+                          <Flex justify="between" css={{ gap: '$3' }}>
+                            <PortfolioSortDropdown
+                              option={sortByType}
+                              onOptionSelected={(option) => {
+                                setSortByType(option)
+                              }}
+                            />
+                            <ViewToggle
+                              itemView={itemView}
+                              setItemView={setItemView}
+                            />
+                          </Flex>
                         )}
-                        <Box
-                          css={{
-                            flex: 1,
-                            maxWidth: '100%',
-                          }}
-                        >
-                          {isSmallDevice && (
-                            <Flex justify="between" css={{ gap: '$3' }}>
+                        <Flex justify="between" css={{ marginBottom: '$4' }}>
+                          {!isSmallDevice &&
+                          !collectionsLoading &&
+                          collections.length > 0 && (
+                            <FilterButton
+                              open={tokenFiltersOpen}
+                              setOpen={setTokenFiltersOpen}
+                            />
+                          )}
+                          {!isSmallDevice && !collectionsLoading && (
+                            <Flex
+                              align="center"
+                              justify="between"
+                              css={{ gap: '$3' }}
+                            >
                               <PortfolioSortDropdown
                                 option={sortByType}
                                 onOptionSelected={(option) => {
@@ -371,164 +397,134 @@ const IndexPage: NextPage = () => {
                               />
                             </Flex>
                           )}
-                          <Flex justify="between" css={{ marginBottom: '$4' }}>
-                            {!isSmallDevice &&
-                              !collectionsLoading &&
-                              collections.length > 0 && (
-                                <FilterButton
-                                  open={tokenFiltersOpen}
-                                  setOpen={setTokenFiltersOpen}
-                                />
-                              )}
-                            {!isSmallDevice && !collectionsLoading && (
-                              <Flex
-                                align="center"
-                                justify="between"
-                                css={{ gap: '$3' }}
-                              >
-                                <PortfolioSortDropdown
-                                  option={sortByType}
-                                  onOptionSelected={(option) => {
-                                    setSortByType(option)
-                                  }}
-                                />
-                                <ViewToggle
-                                  itemView={itemView}
-                                  setItemView={setItemView}
-                                />
-                              </Flex>
-                            )}
-                          </Flex>
-                          <TokenTable
-                            ref={tokenTableRef}
-                            isLoading={collectionsLoading}
-                            address={address}
-                            filterCollection={filterCollection}
-                            sortBy={sortByType}
-                            selectedItems={selectedItems}
-                            setSelectedItems={setSelectedItems}
-                            isOwner={isOwner}
-                            itemView={itemView}
-                            refetch={mutate}
-                          />
-                        </Box>
-                        {!isSmallDevice && (
-                          <BatchActionsFooter
-                            selectedItems={selectedItems}
-                            setSelectedItems={setSelectedItems}
-                            setShowListingPage={setShowListingPage}
-                            setOpenAcceptBidModal={setBatchAcceptBidModalOpen}
-                            isOwner={isOwner}
-                          />
-                        )}
-                      </Flex>
-                    </TabsContent>
-                    <TabsContent value="listings">
-                      <ListingsTable address={address} isOwner={isOwner} />
-                    </TabsContent>
-                    <TabsContent value="offers">
-                      <OffersTable address={address} isOwner={isOwner} />
-                    </TabsContent>
-                    <TabsContent value="activity">
-                      <Flex
+                        </Flex>
+                        <TokenTable
+                          ref={tokenTableRef}
+                          isLoading={collectionsLoading}
+                          address={address}
+                          filterCollection={filterCollection}
+                          sortBy={sortByType}
+                          selectedItems={selectedItems}
+                          setSelectedItems={setSelectedItems}
+                          isOwner={isOwner}
+                          itemView={itemView}
+                          refetch={mutate}
+                        />
+                      </Box>
+                      <BatchActionsFooter
+                        selectedItems={selectedItems}
+                        setSelectedItems={setSelectedItems}
+                        setShowListingPage={setShowListingPage}
+                        setOpenAcceptBidModal={setBatchAcceptBidModalOpen}
+                        isOwner={isOwner}
+                      />
+                    </Flex>
+                  </TabsContent>
+                  <TabsContent value="listings">
+                    <ListingsTable address={address} isOwner={isOwner} />
+                  </TabsContent>
+                  <TabsContent value="offers">
+                    <OffersTable address={address} isOwner={isOwner} />
+                  </TabsContent>
+                  <TabsContent value="activity">
+                    <Flex
+                      css={{
+                        gap: activityFiltersOpen ? '$5' : '',
+                        position: 'relative',
+                      }}
+                    >
+                      {!isSmallDevice && (
+                        <ActivityFilters
+                          open={activityFiltersOpen}
+                          setOpen={setActivityFiltersOpen}
+                          activityTypes={activityTypes}
+                          setActivityTypes={setActivityTypes}
+                        />
+                      )}
+                      <Box
                         css={{
-                          gap: activityFiltersOpen ? '$5' : '',
-                          position: 'relative',
+                          flex: 1,
+                          gap: '$4',
+                          pb: '$5',
                         }}
                       >
-                        {!isSmallDevice && (
-                          <ActivityFilters
-                            open={activityFiltersOpen}
-                            setOpen={setActivityFiltersOpen}
+                        {isSmallDevice ? (
+                          <MobileActivityFilters
                             activityTypes={activityTypes}
                             setActivityTypes={setActivityTypes}
                           />
-                        )}
-                        <Box
-                          css={{
-                            flex: 1,
-                            gap: '$4',
-                            pb: '$5',
-                          }}
-                        >
-                          {isSmallDevice ? (
-                            <MobileActivityFilters
-                              activityTypes={activityTypes}
-                              setActivityTypes={setActivityTypes}
-                            />
-                          ) : (
-                            <FilterButton
-                              open={activityFiltersOpen}
-                              setOpen={setActivityFiltersOpen}
-                            />
-                          )}
-                          <UserActivityTable
-                            user={address}
-                            activityTypes={activityTypes}
+                        ) : (
+                          <FilterButton
+                            open={activityFiltersOpen}
+                            setOpen={setActivityFiltersOpen}
                           />
-                        </Box>
-                      </Flex>
-                    </TabsContent>
-                  </Tabs.Root>
-                </>
-              )}
-            </>
-          ) : (
-            <Flex
-              direction="column"
-              align="center"
-              css={{ mx: 'auto', py: '120px', maxWidth: '350px', gap: '$4' }}
+                        )}
+                        <UserActivityTable
+                          user={address}
+                          activityTypes={activityTypes}
+                        />
+                      </Box>
+                    </Flex>
+                  </TabsContent>
+                </Tabs.Root>
+              </>
+            )}
+          </>
+        ) : (
+          <Flex
+            direction="column"
+            align="center"
+            css={{ mx: 'auto', py: '120px', maxWidth: '350px', gap: '$4' }}
+          >
+            <Text style="h4" css={{ mb: '$3' }}>
+              Sell your NFTs
+            </Text>
+            <Text css={{ color: '#ffffff' }}>
+              <FontAwesomeIcon icon={faWallet} size="2xl" />
+            </Text>
+            <Text
+              style="body1"
+              css={{ color: '$gray11', textAlign: 'center', mb: '$4' }}
             >
-              <Text style="h4" css={{ mb: '$3' }}>
-                Sell your NFTs
-              </Text>
-              <Text css={{ color: '#ffffff' }}>
-                <FontAwesomeIcon icon={faWallet} size="2xl" />
-              </Text>
-              <Text
-                style="body1"
-                css={{ color: '$gray11', textAlign: 'center', mb: '$4' }}
-              >
-                Connect to DreamByt3 to trade NFTs
-              </Text>
-              <ConnectWalletButton />
-            </Flex>
-          )}
-        </Flex>
-        <AcceptBidModal
-          trigger={null}
-          openState={[batchAcceptBidModalOpen, setBatchAcceptBidModalOpen]}
-          tokens={sellableItems}
-          onClose={(data, stepData, currentStep) => {
-            if (tokenTableRef && currentStep == AcceptBidStep.Complete) {
-              tokenTableRef.current?.mutate()
-              setSelectedItems([])
-            }
-          }}
-          onBidAcceptError={(error: any) => {
-            if (error?.type === 'price mismatch') {
-              addToast?.({
-                title: 'Could not accept offer',
-                description: 'Offer Was Not Accepted',
-              })
-              return
-            }
-            // Handle user rejection
-            if (error?.code === 4001) {
-              addToast?.({
-                title: 'User canceled transaction',
-                description: 'Tx Cancelled',
-              })
-              return
-            }
+              Connect to DreamByt3 to trade NFTs
+            </Text>
+            <ConnectWalletButton />
+          </Flex>
+        )}
+      </Flex>
+      <AcceptBidModal
+        trigger={null}
+        openState={[batchAcceptBidModalOpen, setBatchAcceptBidModalOpen]}
+        tokens={sellableItems}
+        onClose={(data, stepData, currentStep) => {
+          if (tokenTableRef && currentStep == AcceptBidStep.Complete) {
+            tokenTableRef.current?.mutate()
+            setSelectedItems([])
+          }
+        }}
+        onBidAcceptError={(error: any) => {
+          if (error?.type === 'price mismatch') {
             addToast?.({
               title: 'Could not accept offer',
-              description: 'Tx Not Completed',
+              description: 'Offer Was Not Accepted',
             })
-          }}
-        />
-      </Layout>
-    </>
+            return
+          }
+          // Handle user rejection
+          if (error?.code === 4001) {
+            addToast?.({
+              title: 'User canceled transaction',
+              description: 'Tx Cancelled',
+            })
+            return
+          }
+          addToast?.({
+            title: 'Could not accept offer',
+            description: 'Tx Not Completed',
+          })
+        }}
+      />
+    </Layout>
   )
 }
 

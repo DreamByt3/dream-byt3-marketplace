@@ -46,6 +46,10 @@ const BatchActionsFooter: FC<Props> = ({
         borderTop: '1px solid $gray7',
         backgroundColor: '$neutralBg',
         zIndex: 999,
+        flexDirection: 'column',
+        '@md': {
+          flexDirection: 'row',
+        }
       }}
     >
       <Flex align="center" css={{ gap: 24 }}>
@@ -63,6 +67,7 @@ const BatchActionsFooter: FC<Props> = ({
 
       <Flex align="center" css={{ gap: '$4' }}>
         <Button
+          size="small"
           onClick={() => setShowListingPage(true)}
           disabled={selectedItems.length < 1}
           color={sellableItems.length > 0 ? 'gray3' : 'primary'}
@@ -73,6 +78,7 @@ const BatchActionsFooter: FC<Props> = ({
         </Button>
         {sellableItems.length > 0 ? (
           <Button
+            size="small"
             onClick={() => setOpenAcceptBidModal(true)}
             disabled={sellableItems.length < 1}
           >

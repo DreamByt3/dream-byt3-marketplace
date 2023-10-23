@@ -7,7 +7,7 @@ import {
 } from '@radix-ui/react-dialog'
 
 type Props = {
-  trigger: ReactNode
+  trigger?: ReactNode
   children: ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void

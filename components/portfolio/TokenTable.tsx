@@ -351,49 +351,64 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
         align="start"
         css={{
           gap: '$3',
-          borderBottom: '1px solid $gray3',
+          borderBottom: '1px solid $primary7',
           py: '$3',
           width: '100%',
           overflow: 'hidden',
           flex: 1,
         }}
       >
-        <Link
-          href={`/${routePrefix}/asset/${token?.token?.contract}:${token?.token?.tokenId}`}
-        >
-          <Flex align="center">
-            {imageSrc && (
-              <Image
-                style={{
-                  borderRadius: '4px',
-                  objectFit: 'cover',
-                  aspectRatio: '1/1',
+
+          <Flex align="center" css={{ gap: 16}}>
+            {isOwner ? (
+              <Checkbox
+                checked={isSelectedItem(token)}
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    addSelectedItem(token)
+                  } else {
+                    removeSelectedItem(token)
+                  }
                 }}
-                unoptimized
-                loader={({ src }) => src}
-                src={imageSrc}
-                alt={`${token?.token?.name}`}
-                width={36}
-                height={36}
               />
-            )}
-            <Flex
-              direction="column"
-              css={{
-                ml: '$2',
-                overflow: 'hidden',
-                minWidth: 0,
-              }}
+            ) : null}
+            <Flex align="center" as={Link}
+              href={`/${routePrefix}/asset/${token?.token?.contract}:${token?.token?.tokenId}`}
             >
-              <Text style="subtitle3" ellipsify color="subtle">
-                {token?.token?.collection?.name}
-              </Text>
-              <Text style="subtitle2" ellipsify>
-                {token?.token?.name || `#${token?.token?.tokenId}`}
-              </Text>
+              <>
+                {imageSrc && (
+                  <Image
+                    style={{
+                      borderRadius: '4px',
+                      objectFit: 'cover',
+                      aspectRatio: '1/1',
+                    }}
+                    unoptimized
+                    loader={({ src }) => src}
+                    src={imageSrc}
+                    alt={`${token?.token?.name}`}
+                    width={36}
+                    height={36}
+                  />
+                )}
+                <Flex
+                  direction="column"
+                  css={{
+                    ml: '$2',
+                    overflow: 'hidden',
+                    minWidth: 0,
+                  }}
+                >
+                  <Text style="subtitle3" ellipsify color="subtle">
+                    {token?.token?.collection?.name}
+                  </Text>
+                  <Text style="subtitle2" ellipsify>
+                    {token?.token?.name || `#${token?.token?.tokenId}`}
+                  </Text>
+                </Flex>
+              </>
             </Flex>
           </Flex>
-        </Link>
         <Flex justify="between" css={{ width: '100%', gap: '$3' }}>
           <Flex direction="column" align="start" css={{ width: '100%' }}>
             <Text style="subtitle3" color="subtle">
