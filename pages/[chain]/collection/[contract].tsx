@@ -560,8 +560,8 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                   cursor: 'pointer',
                   mt: '$2',
                   fontWeight: 600,
-                  textDecoration: 'underline',
                   mb: 16,
+                  color: '$primary11'
                 }}
               >
                 {descriptionExpanded ? 'See less' : 'See more'}
