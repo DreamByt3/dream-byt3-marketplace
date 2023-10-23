@@ -850,48 +850,6 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                       mutate={mutate}
                     />
                   )}
-                  <Flex
-                    css={{
-                      gap: '$4',
-                      mb: '$3',
-                      flexWrap: 'wrap',
-                      '@bp800': {
-                        display: 'flex',
-                      },
-                      display: 'flex',
-                    }}
-                  >
-                    <Flex css={{gap: '$1'}}>
-                      <Text style="body1" as="p" color="subtle">
-                        Floor
-                      </Text>
-                      <Text style="body1" as="p" css={{fontWeight: '700'}}>
-                        {nativePrice
-                          ? `${nativePrice?.toFixed(2)} ${chainCurrency.symbol}`
-                          : '-'}
-                      </Text>
-                    </Flex>
-                    <Flex css={{gap: '$1'}}>
-                      <Text style="body1" as="p" color="subtle">
-                        Top Bid
-                      </Text>
-                      <Text style="body1" as="p" css={{fontWeight: '700'}}>
-                        {topBidPrice
-                          ? `${topBidPrice?.toFixed(2) || 0} ${
-                            chainCurrency.symbol
-                          }`
-                          : '-'}
-                      </Text>
-                    </Flex>
-                    <Flex css={{gap: '$1'}}>
-                      <Text style="body1" as="p" color="subtle">
-                        Count
-                      </Text>
-                      <Text style="body1" as="p" css={{fontWeight: '700'}}>
-                        {Number(collection?.tokenCount)?.toLocaleString()}
-                      </Text>
-                    </Flex>
-                  </Flex>
                   <Grid
                     css={{
                       gap: '$4',
