@@ -377,7 +377,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                   css={{
                     borderRadius: 8,
                     height: 100,
-                    width: 180,
+                    width: 150,
                     overflow: 'hidden',
                     position: 'relative',
                     border: '1px solid $primary11',
@@ -385,7 +385,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                     transition: 'transform 300ms ease-in-out',
                     '@md': {
                       height: 200,
-                      width: 360,
+                      width: 335,
                       '&:hover': {
                         transform: 'translateY(-16px)',
                       },
@@ -401,7 +401,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                     src={optimizeImage(collection?.banner, 800)}
                     css={{
                       height: 100,
-                      width: 180,
+                      width: 150,
                       transition: 'transform 300ms ease-in-out',
                       objectFit: 'cover',
                       position: 'absolute',
@@ -410,7 +410,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                       zIndex: 0,
                       '@md': {
                         height: 200,
-                        width: 360,
+                        width: 335,
                       }
                     }}
                     alt={collection?.name || '-'}
