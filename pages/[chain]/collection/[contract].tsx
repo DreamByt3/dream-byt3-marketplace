@@ -564,7 +564,7 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                   mb: 16,
                 }}
               >
-                {descriptionExpanded ? 'Close' : 'Expand'}
+                {descriptionExpanded ? 'See less' : 'See more'}
               </Text>
             )}
           </Flex>
