@@ -10,7 +10,7 @@ export const ReferralContext = createContext<{
 })
 
 const REFERRER_CACHE_KEY = 'reservoir.referrer'
-const REFERRAL_FEE_USD = 1000000
+const REFERRAL_FEE_BPS = 100
 
 const ReferralContextProvider: FC<any> = ({ children }) => {
   const [feesOnTop, setFeesOnTop] = useState<string[] | undefined>()
@@ -70,7 +70,7 @@ const ReferralContextProvider: FC<any> = ({ children }) => {
       }
       setFeesOnTop(
         recipients.map(
-          (recipient) => `${recipient}:${REFERRAL_FEE_USD / recipients.length}`
+          (recipient) => `${recipient}:${REFERRAL_FEE_BPS / recipients.length}`
         )
       )
     }

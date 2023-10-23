@@ -4,6 +4,10 @@ import { useMounted } from 'hooks'
 import { FC, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { formatNumber } from 'utils/numbers'
+import {erc20ABI, useContractRead, useContractReads} from "wagmi";
+import ERC721Abi from "../../artifacts/ERC721Abi";
+import ERC1155Abi from "../../artifacts/ERC1155Abi";
+import {zeroAddress} from "viem";
 
 type Props = {
   label: string
@@ -35,6 +39,14 @@ const StatHeader: FC<StatHeaderProps> = ({ collection }) => {
     ((collection?.onSaleCount ? +collection.onSaleCount : 0) /
       (collection?.tokenCount ? +collection.tokenCount : 0)) *
     100
+  // const { data: nonNativeBalances } = useContractRead({
+  //   enabled: !!collection?.primaryContract,
+  //   abi: collection?.contractKind === 'erc721' ? ERC721Abi : ERC1155Abi,
+  //   address: collection?.primaryContract,
+  //   functionName: 'total',
+  //   args: [zeroAddress],
+  //   allowFailure: true
+  // })
   const uniqueOwnersPercentage =
     ((collection?.ownerCount ? +collection.ownerCount : 0) /
       (collection?.tokenCount ? +collection.tokenCount : 0)) *

@@ -247,7 +247,7 @@ const OfferTableRow: FC<OfferTableRowProps> = ({
               collectionId={offer.criteria?.data?.collection?.id || contract}
               tokenId={offer.criteria?.data?.token?.tokenId || tokenId}
               buttonChildren={
-                <Text style="subtitle2" css={{ color: 'white' }}>
+                <Text style="subtitle2" color="dark">
                   Accept
                 </Text>
               }

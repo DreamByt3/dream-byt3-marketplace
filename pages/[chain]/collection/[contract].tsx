@@ -659,7 +659,7 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                       <Text style="h6" as="h6" css={{color: '$bg'}}>Collection Offer</Text>
                     </>
                   )}
-                  buttonProps={{color: mintData ? 'gray3' : 'primary'}}
+                  buttonProps={{color: mintData ? 'secondary' : 'primary'}}
                   buttonCss={{px: '$4'}}
                   mutate={mutate}
                 />

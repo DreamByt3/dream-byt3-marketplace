@@ -26,9 +26,6 @@ type Props = {
 
 type BiddingCurrencies = ComponentPropsWithoutRef<typeof BidModal>['currencies']
 
-const orderFee = process.env.NEXT_PUBLIC_MARKETPLACE_FEE
-const orderFees = orderFee ? [orderFee] : []
-
 const Bid: FC<Props> = ({
   tokenId,
   collectionId,
@@ -84,7 +81,6 @@ const Bid: FC<Props> = ({
         collectionId={collectionId}
         trigger={trigger}
         openState={openState}
-        feesBps={orderFees}
         currencies={bidCurrencies}
         oracleEnabled={marketplaceChain.oracleBidsEnabled}
         chainId={marketplaceChain.id}

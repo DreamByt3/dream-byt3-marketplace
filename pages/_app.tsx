@@ -149,7 +149,7 @@ function MyApp({
         }}
         theme={reservoirDarkTheme(reservoirKitThemeOverrides)}
       >
-        <CartProvider feesOnTopUsd={feesOnTop}>
+        <CartProvider feesOnTopBps={feesOnTop}>
           <WebsocketContextProvider>
             <Tooltip.Provider>
               <RainbowKitProvider
