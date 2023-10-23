@@ -4,6 +4,7 @@ import {
   Flex,
   Box,
   Input,
+  Anchor,
 } from '../../../components/primitives'
 import {
   useCollections,
@@ -549,7 +550,13 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                 textOverflow: 'ellipsis',
               }}
             >
-              <ReactMarkdown children={collection?.description || ''} />
+              <ReactMarkdown children={collection?.description || ''} components={{
+                a(props) {
+                  const {node, ...rest} = props
+                  // @ts-ignore
+                  return <Anchor color="primary" target="_blank" {...rest} />
+                }
+              }} />
             </Text>
             {isOverflowed && (
               <Text
