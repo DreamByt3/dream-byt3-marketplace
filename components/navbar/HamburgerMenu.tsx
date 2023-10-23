@@ -264,7 +264,7 @@ const HamburgerMenu = () => {
                 <Text style="subtitle1">Token</Text>
               </Anchor>
             </Flex>
-            <Box>
+            <Box css={{ pt: 24 }}>
               <ConnectWalletButton />
             </Box>
           </Flex>

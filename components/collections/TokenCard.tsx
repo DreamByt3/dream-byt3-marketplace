@@ -76,7 +76,7 @@ export default ({
         border: '2px solid transparent',
         minHeight: 350,
         '&:hover': {
-          border: '2px solid $primary10'
+          border: '2px solid $primary11'
         },
         '&:hover > a > div > img': {
           transform: 'scale(1.1)',
