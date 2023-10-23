@@ -437,7 +437,7 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                       }
                     />
                   </Flex>
-                  <Flex css={{gap: '$3'}} align="center">
+                  <Flex css={{gap: '$2', flexWrap: 'wrap' }} align="center">
                     <CopyText
                       text={collection.id as string}
                       css={{
@@ -571,42 +571,16 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
 
           <StatHeader collection={collection}/>
 
-          <Tabs.Root
-            defaultValue="items"
-            onValueChange={(value) => {
-              if (value === 'items') {
-                resetCache()
-                setSize(1)
-                mutate()
-              }
-            }}
-          >
-            <TabsList>
-              <TabsTrigger value="items">Items</TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
-
-              <Flex align="center" justify="end" css={{ flex: 1, gap: '$3', mb: 8 }}>
-                {nativePrice ? (
-                  <Sweep
-                    collectionId={collection.id}
-                    openState={isSweepRoute ? sweepOpenState : undefined}
-                    buttonChildren={
-                      <Flex
-                        css={{gap: '$2'}}
-                        align="center"
-                        justify="center"
-                      >
-                        <FontAwesomeIcon icon={faBroom}/>
-                        <Text style="h6" as="h6" css={{color: '$bg'}}>
-                          Sweep
-                        </Text>
-                      </Flex>
-                    }
-                    buttonCss={{'@lg': {order: 2}}}
-                    mutate={mutate}
-                  />
-                ) : null}
-                {/* Collection Mint */}
+          {isSmallDevice && (
+            <Flex
+              direction="column"
+              css={{
+                px: '$4',
+                pt: '$4',
+                pb: '$4',
+              }}
+            >
+              <Flex align="center" justify="end" css={{ flex: 1, gap: '$3' }}>
                 {mintData ? (
                   <Mint
                     collectionId={collection.id}
@@ -651,19 +625,128 @@ const CollectionPage: NextPage<Props> = ({id, ssr}) => {
                     mutate={mutate}
                   />
                 ) : null}
+                {nativePrice ? (
+                  <Sweep
+                    collectionId={collection.id}
+                    openState={isSweepRoute ? sweepOpenState : undefined}
+                    buttonChildren={
+                      <Flex
+                        css={{gap: '$2'}}
+                        align="center"
+                        justify="center"
+                      >
+                        <FontAwesomeIcon icon={faBroom}/>
+                      </Flex>
+                    }
+                    buttonCss={{'@lg': {order: 2}}}
+                    mutate={mutate}
+                  />
+                ) : null}
                 <CollectionOffer
                   collection={collection}
-                  buttonChildren={(
-                    <>
-                      <FontAwesomeIcon icon={faHand}/>
-                      <Text style="h6" as="h6" css={{color: '$bg'}}>Collection Offer</Text>
-                    </>
-                  )}
+                  buttonChildren={<FontAwesomeIcon icon={faHand}/>}
                   buttonProps={{color: mintData ? 'secondary' : 'primary'}}
                   buttonCss={{px: '$4'}}
                   mutate={mutate}
                 />
               </Flex>
+            </Flex>
+          )}
+
+          <Tabs.Root
+            defaultValue="items"
+            onValueChange={(value) => {
+              if (value === 'items') {
+                resetCache()
+                setSize(1)
+                mutate()
+              }
+            }}
+          >
+            <TabsList>
+              <TabsTrigger value="items">Items</TabsTrigger>
+              <TabsTrigger value="activity">Activity</TabsTrigger>
+
+              {!isSmallDevice && (
+                <Flex align="center" justify="end" css={{ flex: 1, gap: '$3', mb: 8 }}>
+                  {mintData ? (
+                    <Mint
+                      collectionId={collection.id}
+                      openState={isMintRoute ? mintOpenState : undefined}
+                      buttonChildren={
+                        <Flex
+                          css={{gap: '$2', px: '$4'}}
+                          align="center"
+                          justify="center"
+                        >
+                          {isSmallDevice && (
+                            <FontAwesomeIcon icon={faSeedling}/>
+                          )}
+                          <Text style="h6" as="h6" css={{color: '$bg'}}>
+                            Mint
+                          </Text>
+
+                          {!isSmallDevice && (
+                            <Text
+                              style="h6"
+                              as="h6"
+                              css={{color: '$bg', fontWeight: 900}}
+                            >
+                              {`${mintPrice}`}
+                            </Text>
+                          )}
+                        </Flex>
+                      }
+                      buttonCss={{
+                        minWidth: 'max-content',
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        justifyContent: 'center',
+                        px: '$2',
+                        maxWidth: '220px',
+                        '@md': {
+                          order: 1,
+                          px: '$5',
+                        },
+                      }}
+                      mutate={mutate}
+                    />
+                  ) : null}
+                  {nativePrice ? (
+                    <Sweep
+                      collectionId={collection.id}
+                      openState={isSweepRoute ? sweepOpenState : undefined}
+                      buttonChildren={
+                        <Flex
+                          css={{gap: '$2'}}
+                          align="center"
+                          justify="center"
+                        >
+                          <FontAwesomeIcon icon={faBroom}/>
+                          <Text style="h6" as="h6" css={{color: '$bg'}}>
+                            Sweep
+                          </Text>
+                        </Flex>
+                      }
+                      buttonCss={{'@lg': {order: 2}}}
+                      mutate={mutate}
+                    />
+                  ) : null}
+                  <CollectionOffer
+                    collection={collection}
+                    buttonChildren={(
+                      <>
+                        <FontAwesomeIcon icon={faHand}/>
+                        <Text style="h6" as="h6" css={{color: '$bg'}}>Collection Offer</Text>
+                      </>
+                    )}
+                    buttonProps={{color: mintData ? 'secondary' : 'primary'}}
+                    buttonCss={{px: '$4'}}
+                    mutate={mutate}
+                  />
+                </Flex>
+              )}
             </TabsList>
 
             <TabsContent value="items">
