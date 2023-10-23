@@ -5,12 +5,12 @@ import {
   Flex,
   Box,
   Button,
-  FormatCryptoCurrency,
+  FormatCryptoCurrency, Carousel, CarouselSlideList, CarouselSlide, CarouselNext, CarouselPrevious, CarouselArrowButton,
 } from 'components/primitives'
 import Layout from 'components/Layout'
 import { motion, useViewportScroll, useTransform } from 'framer-motion'
 import { paths } from '@reservoir0x/reservoir-sdk'
-import { useContext, useState } from 'react'
+import { useContext, useState} from 'react'
 import { Footer } from 'components/home/Footer'
 import {useENSResolver, useMarketplaceChain, useMounted} from 'hooks'
 import supportedChains, { DefaultChain } from 'utils/chains'
@@ -31,6 +31,9 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 import {useCollections} from "@reservoir0x/reservoir-kit-ui";
 import {Avatar} from "../../components/primitives/Avatar";
 import {formatNumber} from "../../utils/numbers";
+import HiddenScroll from "../../components/primitives/HiddenScroll";
+import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const StyledImage = styled('img', {})
 
@@ -338,116 +341,178 @@ const Home: NextPage<any> = ({ ssr }) => {
       </Box>
       <Box
         css={{
-          py: 16,
-          height: '100%',
-          overflowX: 'auto',
-          // '&::-webkit-scrollbar': {
-          //   height: 2
-          // },
-          // '&::-webkit-scrollbar-track': {
-          //   boxShadow: 'inset 0 0 1px grey',
-          //   borderRadius: 1
-          // },
-          // '&::-webkit-scrollbar-thumb': {
-          //   background: '$primary8',
-          //   borderRadius: 1
-          // },
-          // '&::-webkit-scrollbar-thumb:hover': {
-          //   background: '$primary9'
-          // }
+          position: 'relative',
+          maxWidth: 1400 + 64 + 16,
+          mx: 'auto',
         }}
       >
         {(topCollections && !!topCollections.length) && (
-          <Flex
-            css={{
-              gap: 20,
-              width: 300 * topCollections.length
-            }}
-          >
-            {topCollections
-              .map((collection) => {
-                return (
-                  <Box
-                    key={`top-collection-${collection.id}`}
-                    css={{
+          <Carousel>
+            <CarouselSlideList
+              as={HiddenScroll}
+              css={{
+                display: 'grid',
+                gridAutoFlow: 'column',
+                gridAutoColumns: 'min-content',
+                WebkitOverflowScrolling: 'touch',
+                position: 'relative',
+                gap: 10,
+                pt: 20,
+
+                // Remove the actual margin
+                '--margin-left-override': 0,
+
+                // Move the responsive margin here
+                marginLeft: 'max(40px, calc(50% - 1400px / 2))',
+                marginRight: 'max(40px, calc(50% - 1400px / 2))',
+                '@md': {
+                  gap: 20
+                }
+              }}
+            >
+              {topCollections.map(collection => (
+                <CarouselSlide
+                  as={Flex}
+                  key={`top-collection-${collection.id}`}
+                  css={{
+                    borderRadius: 8,
+                    height: 100,
+                    width: 180,
+                    overflow: 'hidden',
+                    position: 'relative',
+                    border: '1px solid $primary11',
+                    cursor: 'pointer',
+                    transition: 'transform 300ms ease-in-out',
+                    '@md': {
                       height: 200,
                       width: 360,
-                      borderRadius: 8,
-                      overflow: 'hidden',
-                      position: 'relative',
-                      border: '1px solid $primary11',
-                      cursor: 'pointer',
-                      transition: 'transform 300ms ease-in-out',
                       '&:hover': {
                         transform: 'translateY(-16px)',
                       },
                       '&:hover > img:nth-child(1)': {
                         transform: 'scale(1.075)',
                       },
-                    }}
-                    onClick={() => setActiveCollection(collection.id as string)}
-                  >
-                    <img
-                      loading="lazy"
-                      src={optimizeImage(collection?.banner, 800)}
-                      style={{
+                    }
+                  }}
+                  onClick={() => setActiveCollection(collection.id as string)}
+                >
+                  <StyledImage
+                    loading="lazy"
+                    src={optimizeImage(collection?.banner, 800)}
+                    css={{
+                      height: 100,
+                      width: 180,
+                      transition: 'transform 300ms ease-in-out',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      zIndex: 0,
+                      '@md': {
                         height: 200,
                         width: 360,
-                        transition: 'transform 300ms ease-in-out',
-                        objectFit: 'cover',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        zIndex: 0
-                      }}
-                      alt={collection?.name || '-'}
-                    />
-                    <Box
-                      css={{
-                        position: 'absolute',
-                        top: 0,
-                        display: 'block',
-                        zIndex: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgb(60,9,60, 0.2)',
-                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%)',
-                      }}
-                    />
-                    <Flex
-                      direction="column"
-                      justify="between"
-                      align="start"
-                      css={{
-                        p: 16,
+                      }
+                    }}
+                    alt={collection?.name || '-'}
+                  />
+                  <Box
+                    css={{
+                      position: 'absolute',
+                      top: 0,
+                      display: 'block',
+                      zIndex: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: 'rgb(60,9,60, 0.2)',
+                      backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%)',
+                    }}
+                  />
+                  <Flex
+                    direction="column"
+                    justify="between"
+                    align="start"
+                    css={{
+                      p: 16,
+                      height: 100,
+                      width: '100%',
+                      zIndex: 1,
+                      position: 'relative',
+                      '@md': {
                         height: 200,
-                        zIndex: 1,
-                        position: 'relative'
-                      }}
-                    >
-                      <Img
-                        src={
-                          optimizeImage(collection?.image, 50 * 2) as string
-                        }
-                        alt={collection?.name as string}
-                        width={50}
-                        height={50}
-                        css={{
+                      }
+                    }}
+                  >
+                    <Img
+                      src={
+                        optimizeImage(collection?.image, 50 * 2) as string
+                      }
+                      alt={collection?.name as string}
+                      width={50}
+                      height={50}
+                      css={{
+                        width: 30,
+                        height: 30,
+                        border: '1px solid rgba(255,255,255,0.6)',
+                        borderRadius: 50,
+                        '@md': {
                           width: 50,
                           height: 50,
-                          border: '1px solid rgba(255,255,255,0.6)',
-                          borderRadius: 50,
-                        }}
-                      />
-                      <Text style="h6" as="h5" ellipsify>
-                        {collection?.name}
-                      </Text>
-                    </Flex>
-                  </Box>
-                )
-              })}
-          </Flex>
+                        }
+                      }}
+                    />
+                    <Text style="h6" as="h5" ellipsify css={{ maxWidth: '100%' }}>
+                      {collection?.name}
+                    </Text>
+                  </Flex>
+                </CarouselSlide>
+              ))}
+            </CarouselSlideList>
+
+            <Flex
+              align="center"
+              css={{
+                position: 'absolute',
+                top: 20,
+                left: 0,
+              }}
+            >
+              <CarouselPrevious
+                aria-label="Show previous demo"
+                tabIndex={-1}
+                as={CarouselArrowButton}
+                css={{
+                  height: 200,
+                  backgroundColor: '$pinkA11',
+                  borderRadius: 8,
+                  px: 8
+                }}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} width={16} height={16} color="#000" />
+              </CarouselPrevious>
+            </Flex>
+            <Flex
+              align="center"
+              css={{
+                position: 'absolute',
+                top: 20,
+                right: 0,
+              }}
+            >
+              <CarouselNext
+                tabIndex={-1}
+                as={CarouselArrowButton}
+                css={{
+                  height: 200,
+                  backgroundColor: '$pinkA11',
+                  borderRadius: 8,
+                  px: 8
+                }}
+              >
+                <FontAwesomeIcon icon={faArrowRight} width={16} height={16} color="#000" />
+              </CarouselNext>
+            </Flex>
+          </Carousel>
         )}
       </Box>
       <Box
@@ -465,12 +530,12 @@ const Home: NextPage<any> = ({ ssr }) => {
         <Flex
           justify="center"
           align="center"
-          css={{ flexWrap: 'wrap', mb: '$4', gap: '$3' }}
+          css={{ flexWrap: 'wrap', mb: '$4', gap: '$3', maxWidth: 1400, mx: 'auto' }}
         >
           <ChainToggle />
         </Flex>
         <Flex
-          css={{ mb: '$6', '@sm': { my: '$6' }, gap: 32 }}
+          css={{ mb: '$6', '@sm': { my: '$6' }, gap: 32,  maxWidth: 1400, mx: 'auto' }}
           direction="column"
         >
           <Flex
@@ -507,9 +572,11 @@ const Home: NextPage<any> = ({ ssr }) => {
           </Flex>
         </Flex>
         <Flex
-          justify="center"
           align="center"
-          css={{ flexWrap: 'wrap', mb: '$4', mt: '$6', gap: '$3' }}
+          css={{
+            mx: 'auto',
+            maxWidth: 1400,
+          }}
         >
           <Text style="h4" as="h4">
             Minting Now

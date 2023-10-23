@@ -55,6 +55,7 @@
     "react-responsive": "^9.0.0",
     "react-use-websocket": "^4.3.1",
     "react-window": "^1.8.9",
+    "smoothscroll-polyfill": "^0.4.4",
     "swr": "2.0.1",
     "upgrade": "^1.1.0",
     "usehooks-ts": "^2.9.1",
@@ -75,6 +76,7 @@
     "@types/react": "^18.0",
     "@types/react-dom": "^18.0",
     "@types/react-window": "^1.8.5",
+    "@types/smoothscroll-polyfill": "^0.3.2",
     "next-themes": "^0.2.0",
     "node-gyp": "9.4.0",
     "typescript": "^5.0.4"
