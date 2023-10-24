@@ -227,7 +227,7 @@ const HamburgerMenu = () => {
                 <Text
                   style="subtitle1"
                   css={{
-                    borderBottom: '1px solid $gray4',
+                    borderBottom: '1px solid #F4A7BB',
                     cursor: 'pointer',
                     pb: '$4',
                     pt: '24px',
