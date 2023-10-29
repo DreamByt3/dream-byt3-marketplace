@@ -5,7 +5,7 @@ import {
   faXmark,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons'
+import { faXTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount, useDisconnect } from 'wagmi'
@@ -134,7 +134,7 @@ const HamburgerMenu = () => {
                   pt: '24px',
                 }}
               >
-                Explore
+                Collections
               </Text>
             </Link>
             <Link href="/swap" legacyBehavior>
@@ -234,7 +234,7 @@ const HamburgerMenu = () => {
                     width: '100%',
                   }}
                 >
-                  Explore
+                  Collections
                 </Text>
               </Link>
               <Link href="/portfolio" legacyBehavior>
@@ -286,10 +286,10 @@ const HamburgerMenu = () => {
               size="small"
               color="primary"
             >
-              <FontAwesomeIcon icon={faTwitter} width={20} height={20} />
+              <FontAwesomeIcon icon={faXTwitter} width={20} height={20} />
             </Button>
           </a>
-          <a href="https://discord.gg/rt5VmK2pKK" target="_blank">
+          <a href="https://discord.gg/ENKWhXFnHj" target="_blank">
             <Button
               css={{ justifyContent: 'center', width: '44px', height: '44px' }}
               type="button"

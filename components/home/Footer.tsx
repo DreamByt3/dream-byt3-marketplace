@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Text, Box, Flex, Anchor, Button } from '../primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 
 type SectionTitleProps = {
   title: string
@@ -109,7 +109,7 @@ export const Footer = () => {
             href="https://twitter.com/DreamByt3"
           >
             <Button size="xs" color="primary">
-              <FontAwesomeIcon icon={faTwitter} width={14} height={14} />
+              <FontAwesomeIcon icon={faXTwitter} width={14} height={14} />
             </Button>
             </a>
           <a

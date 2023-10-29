@@ -21,7 +21,7 @@ import { FilterButton } from 'components/common/FilterButton'
 import { ListingsTable } from 'components/portfolio/ListingsTable'
 import { OffersTable } from 'components/portfolio/OffersTable'
 import {faCopy, faGlobe, faWallet} from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { faXTwitter, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ChainToggle from 'components/common/ChainToggle'
 import { Head } from 'components/Head'
@@ -218,7 +218,7 @@ const IndexPage: NextPage = () => {
                   <Flex justify="center" css={{ gap: 24, zIndex: 2 }}>
                     {profile?.twitter_id && (
                       <Link target="_blank" href={`https://twitter.com/${profile?.twitter_username}`}>
-                        <FontAwesomeIcon icon={faTwitter} width={40} height={40}  style={{
+                        <FontAwesomeIcon icon={faXTwitter} width={40} height={40}  style={{
                           padding: 5,
                           border: '1px #fff solid',
                           borderRadius: 5,

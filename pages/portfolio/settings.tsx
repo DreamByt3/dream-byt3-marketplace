@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
 import {useAccount, useConnect, useSignMessage} from "wagmi"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faGear, faGift} from '@fortawesome/free-solid-svg-icons'
+import {faGear, faEnvelope, faGift} from '@fortawesome/free-solid-svg-icons'
+import { faXTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import {useSession} from "next-auth/react";
 import {signIn} from "next-auth/react";
 import {Text, Flex, Box, Grid, Button} from 'components/primitives'
@@ -56,7 +57,7 @@ const PortfolioSettings : NextPage<Props> = ({ ssr }) => {
 
   useEffect(() => {
     if (!data) {
-      signMessage({ message: 'DREAMBYT3 wants you to sign in with your Ethereum account' })
+      signMessage({ message: 'DREAMBYT3 wants you to sign in with your Ethereum address' })
     }
   }, [data])
 
@@ -91,9 +92,9 @@ const PortfolioSettings : NextPage<Props> = ({ ssr }) => {
     return (
       <Layout>
         <Flex direction="column" align="center" justify="center" css={{ py: '40vh', gap: 20 }}>
-          <Text>Sign this message to prove your ownership of this wallet </Text>
+          <Text>Sign in with Ethereum to prove your ownership of this wallet </Text>
           <Button onClick={() => {
-            signMessage({ message: 'DREAMBYT3 wants you to sign in with your Ethereum account' })
+            signMessage({ message: 'DREAMBYT3 wants you to sign in with your Ethereum address' })
           }}>Sign</Button>
         </Flex>
       </Layout>

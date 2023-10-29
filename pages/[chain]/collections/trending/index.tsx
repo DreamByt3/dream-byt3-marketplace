@@ -391,7 +391,7 @@ const TrendingPage: NextPage<Props> = ({ ssr }) => {
             }}
           >
             <Text style="h4" as="h4">
-              Explore
+              Collections
             </Text>
             <Flex align="center" css={{ gap: '$4' }}>
               <CollectionsTimeDropdown
