@@ -6,14 +6,13 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction
 } from "wagmi";
-import {formatEther, parseEther, parseUnits, zeroAddress} from "viem";
+import {formatEther, parseEther, parseUnits} from "viem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink, faSquarePlus} from "@fortawesome/free-solid-svg-icons";
 import {useConnectModal} from "@rainbow-me/rainbowkit";
 import {useDebouncedEffect} from "@react-hookz/web";
 import {getPublicClient} from "@wagmi/core";
 import {mainnet} from "viem/chains";
-import {MaxUint256} from "ethers";
 import Link from "next/link";
 
 import Layout from "components/Layout";
@@ -34,6 +33,7 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 import AddressCollapsible from "../../components/staking/AddressCollapsible";
 import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 import {DREAM, DREAM_LP, POOL_ADDRESS, STAKING_UNI_PROXY, WETH_ADDRESS} from "../../utils/contracts";
+import {MaxUint256} from "@ethersproject/constants";
 
 const PoolPage = () => {
   const mounted = useMounted()
@@ -173,14 +173,14 @@ const PoolPage = () => {
     address: WETH_ADDRESS as `0x${string}`,
     abi: ERC20Abi,
     functionName: 'approve',
-    args:  [DREAM_LP, MaxUint256],
+    args:  [DREAM_LP, BigInt(MaxUint256.toString())],
   })
 
   const { writeAsync: approveDREAMAsync, isLoading: isLoadingDREAMApproval } = useContractWrite({
     address: DREAM,
     abi: ERC20Abi,
     functionName: 'approve',
-    args:  [DREAM_LP, MaxUint256],
+    args:  [DREAM_LP, BigInt(MaxUint256.toString())],
   })
 
   const { writeAsync: wrapEthAsync, isLoading: isLoadingWrapEth } = useContractWrite({

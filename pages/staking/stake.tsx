@@ -2,9 +2,8 @@ import {FC, useCallback, useEffect, useState} from "react";
 import {InferGetStaticPropsType} from "next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
-import {parseUnits} from "ethers";
 import {useAccount, useContractReads} from "wagmi";
-import {ContractFunctionConfig, formatEther} from "viem";
+import {ContractFunctionConfig, formatEther, parseUnits} from "viem";
 import {mainnet} from "viem/chains";
 import {useRouter} from "next/router";
 import Link from "next/link";
@@ -16,7 +15,7 @@ import NumericalInput from "components/common/NumericalInput";
 import StakingTab from "components/staking/StakingTab";
 import UnStakingTab from "components/staking/UnstakingTab";
 
-import {useMounted} from "hooks";
+import {useMarketplaceChain, useMounted} from "hooks";
 
 import {formatBN} from "utils/numbers";
 import {roundToWeek} from "utils/round";
@@ -31,9 +30,8 @@ import {DREAM, DREAM_LP, VE_DREAM} from "../../utils/contracts";
 export const MAX_LOCK_PERIOD_IN_DAYS = 365; // 1y
 export const MIN_LOCK_PERIOD_IN_DAYS = 28;
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>
-
-const StakingChainPage: FC<Props> = ({ ssr }) => {
+const StakingChainPage: FC = () => {
+  const chain = useMarketplaceChain()
   const [activeTab, setActiveTab] = useState('staking')
   const [valueEth, setValueEth] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
@@ -122,7 +120,7 @@ const StakingChainPage: FC<Props> = ({ ssr }) => {
 
   return (
     <Layout>
-      <AlertChainSwitch chainId={chain?.id}/>
+      <AlertChainSwitch chainId={mainnet.id}/>
       <Flex
         direction="column"
         css={{
@@ -156,7 +154,7 @@ const StakingChainPage: FC<Props> = ({ ssr }) => {
               color: '$gray10'
             }}
           >{`>`}</Text>
-          <Text style="subtitle1">{`veDREAM ${ssr.chain?.name}`}</Text>
+          <Text style="subtitle1">{`veDREAM ${chain.name}`}</Text>
         </Flex>
         <Flex
           direction="column"
@@ -187,8 +185,8 @@ const StakingChainPage: FC<Props> = ({ ssr }) => {
                 borderRadius: 8
               }}
             >
-              <img src={ssr.chain?.lightIconUrl} width={14} height={14}  alt={ssr.chain?.name}/>
-              <Text style="body3" color="dark">{ssr.chain?.name}</Text>
+              <img src={chain?.lightIconUrl} width={14} height={14}  alt={chain?.name}/>
+              <Text style="body3" color="dark">{chain?.name}</Text>
             </Flex>
           </Flex>
           <Flex
@@ -272,7 +270,7 @@ const StakingChainPage: FC<Props> = ({ ssr }) => {
                     }}
                   />
                   <CryptoCurrencyIcon
-                    address={chain?.LPDREAM as `0x${string}`}
+                    address={DREAM_LP}
                     chainId={chain?.id}
                     css={{
                       position: 'absolute',

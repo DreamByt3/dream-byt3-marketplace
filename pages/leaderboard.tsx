@@ -92,10 +92,7 @@ const LeaderboardPage: NextPage = () => {
           }}
         >
           <Text
-            style={{
-              '@initial': 'h3',
-              '@lg': 'h1',
-            }}
+            style="h3"
             css={{
               lineHeight: 1.2,
               letterSpacing: 2,

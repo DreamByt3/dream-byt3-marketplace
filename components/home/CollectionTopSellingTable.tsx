@@ -26,7 +26,6 @@ type FillType = 'any' | 'mint' | 'sale'
 
 type Props = {
   topSellingCollections: any
-  collections: any
   loading?: boolean
   fillType: FillType
 }
@@ -102,7 +101,7 @@ export const CollectionTopSellingTable: FC<Props> = ({
 
 const CollectionCell: FC<{
   topSellingCollection: NonNullable<Props['topSellingCollections']>[0]
-  collection: NonNullable<Props['collections']>[0]
+  collection: NonNullable<Props['topSellingCollections']>[0]
   rank: number
 }> = ({ collection, topSellingCollection, rank }) => {
   const { routePrefix } = useMarketplaceChain()
@@ -171,7 +170,7 @@ const CollectionCell: FC<{
 }
 
 const RecentSalesCell: FC<{
-  collection: NonNullable<Props['collections']>[0]
+  collection: NonNullable<Props['topSellingCollections']>[0]
   topSellingCollection: NonNullable<Props['topSellingCollections']>[0]
   isSmallDevice: boolean
 }> = ({ collection, topSellingCollection, isSmallDevice }) => {
