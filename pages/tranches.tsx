@@ -82,7 +82,7 @@ const TranchesPage = () => {
             <Text style="subtitle1">{`Transfer Target : ${data?.target}`}</Text>
             <Text style="subtitle1">{`Last Execution : ${lastTime}`}</Text>
             <Text style="subtitle1">{`Last Tx Value : ${data?.lastTransfer}`}</Text>
-            <Text style="subtitle1">{`Total Transferred : ${data?.total || 0}/3 ETH`}</Text>
+            <Text style="subtitle1">{`Total Transferred : ${data?.total || 0}/3 WETH`}</Text>
             {isLoading && (<LoadingSpinner />)}
           </Flex>
           <Flex direction="column" css={{ gap: 16, borderLeft: '1px solid $primary7', px: 16, width: '100%'}}>
@@ -109,7 +109,7 @@ const TranchesPage = () => {
                 </>
               )}
               {!historyData?.length && (
-                <Text>No transaction yet</Text>
+                <Text>No Transactions Yet</Text>
               )}
             </Flex>
           </Flex>
