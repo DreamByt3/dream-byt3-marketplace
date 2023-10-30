@@ -558,10 +558,11 @@ const Home: NextPage<any> = ({ ssr }) => {
               </Flex>
             ) : (
               <CollectionTopSellingTable
-                  key={`${chain.routePrefix}-top-collection`}
-                  topSellingCollections={topSellingCollectionsData?.collections}
-                  loading={isValidating}
-                  fillType={fillType} collections={undefined}              />
+                key={`${chain.routePrefix}-top-collection`}
+                topSellingCollections={topSellingCollectionsData?.collections}
+                loading={isValidating}
+                fillType={fillType}
+              />
             )}
             <Flex justify="center" css={{ my: '$5' }}>
               <Link href={`/${marketplaceChain.routePrefix}/collections/trending`}>

@@ -1,5 +1,4 @@
 import {FC, useCallback, useEffect, useState} from "react";
-import {InferGetStaticPropsType} from "next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 import {useAccount, useContractReads} from "wagmi";
@@ -26,10 +25,9 @@ import AddressCollapsible from "../../components/staking/AddressCollapsible";
 import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 import Decimal from "decimal.js-light";
 import {DREAM, DREAM_LP, VE_DREAM} from "../../utils/contracts";
-import { chain } from "lodash";
 
 export const MAX_LOCK_PERIOD_IN_DAYS = 365; // 1y
-export const MIN_LOCK_PERIOD_IN_DAYS = ; // 1w
+export const MIN_LOCK_PERIOD_IN_DAYS = 7; // 1w
 
 const StakingChainPage: FC = () => {
   const chain = useMarketplaceChain()
