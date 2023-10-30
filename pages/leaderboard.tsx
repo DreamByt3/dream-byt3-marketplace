@@ -131,7 +131,7 @@ const LeaderboardPage: NextPage = () => {
                   textAlign: 'center',
                 }}
               >
-                Climb the Leaderboard by aining XP!
+                Climb the Leaderboard by Gaining XP!
               </Text>
             </Box>
           </Box>
