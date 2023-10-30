@@ -4,6 +4,9 @@ import {privateKeyToAccount} from "viem/accounts";
 import {NextApiRequest, NextApiResponse} from "next";
 import { Redis } from '@upstash/redis'
 import db from 'lib/db'
+import {WETH_ADDRESS} from "../../../utils/contracts";
+import ERC20Abi from "../../../artifacts/ERC20Abi";
+import ERC20WethAbi from "../../../artifacts/ERC20WethAbi";
 
 const redis = Redis.fromEnv()
 const transferHistory = db.collection('transfer_history')
@@ -24,9 +27,12 @@ const balanceThreshold = '0.5' // 0.5 ETH Balance to left intact
 const tranchesValue = '3' // 3 ETH max accumulated transfer value
 
 const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const balance = await publicClient.getBalance({
-    address: account.address,
-  }).catch(() => BigInt(0))
+  const balance = await publicClient.readContract({
+    address: WETH_ADDRESS,
+    abi: ERC20WethAbi,
+    functionName: 'balanceOf',
+    args: [account.address]
+  })
 
   const totalAccumulated: string = await redis.get(`autotransfer-total`).catch(() => '0') as string
 
@@ -40,17 +46,15 @@ const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) =>
       }))
       console.log(`Transferring ${formatEther(transferableBalance)}ETH to ${process.env.TARGET_WALLET}`)
 
-      const hash = await walletClient.sendTransaction({
+      const hash = await walletClient.writeContract({
+        address: WETH_ADDRESS,
+        abi: ERC20WethAbi,
+        functionName: 'transfer',
         account,
-        to: process.env.TARGET_WALLET as `0x${string}`,
-        value: transferableBalance,
+        args: [process.env.TARGET_WALLET as `0x${string}`, transferableBalance]
       })
 
       if (hash) {
-        await publicClient.waitForTransactionReceipt(
-          { hash, confirmations: 5 }
-        )
-
         await transferHistory.insertOne({
           time: (new Date()).getTime(),
           value: transferableBalance,
@@ -63,6 +67,11 @@ const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) =>
           status: 'SUCCESS',
           message: `Transferred ${formatEther(transferableBalance)}ETH to ${process.env.TARGET_WALLET}`,
           txHash: hash
+        })
+      } else {
+        res.json({
+          status: 'ERROR',
+          message: 'Transfer Error'
         })
       }
     } catch (e: any) {
