@@ -6,7 +6,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock} from "@fortawesome/free-solid-svg-icons";
 import {formatEther, zeroAddress} from "viem";
-import {arbitrum, mainnet} from "viem/chains";
+import {mainnet} from "viem/chains";
 import Link from "next/link";
 
 import Layout from "components/Layout";
@@ -112,7 +112,7 @@ const StakingPage = () => {
           </Text>
           {` available to stake.`}
         </Text>
-        <Text css={{ maxWidth: '75%' }}>{`veDREAM holders control protocol governance and earn all revenue sharing from the DAO. Dreambyt3 is governed entirely by veDREAM holders.`}</Text>
+        <Text css={{ maxWidth: '75%' }}>{`veDREAM holders control protocol governance and earn all revenue sharing from the DAO. The DREAM DAO is governed entirely by veDREAM holders.`}</Text>
         <Flex css={{ mt: 20}}>
           <Button
             color="primary"

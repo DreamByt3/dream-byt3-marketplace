@@ -212,7 +212,7 @@ const Navbar = () => {
                   <NavItem
                     active={router.pathname.includes('staking')}
                   >
-                    {`Staking Reward`}
+                    {`Staking Rewards`}
                   </NavItem>
                 </Flex>
               </Card>

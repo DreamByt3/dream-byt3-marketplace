@@ -525,7 +525,7 @@ const PoolPage = () => {
                   <Text
                     as={Link}
                     style="body3"
-                    href="https://swap.defillama.com/?chain=mainnet&to=0x51b902f19a56f0c8e409a34a215ad2673edf3284"
+                    href="https://swap.defillama.com/?chain=mainnet&to=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e"
                     target="_blank"
                     css={{
                       backgroundColor: '$gray8',
@@ -691,7 +691,7 @@ const PoolPage = () => {
             }
           }}
         >
-          <Text style="body3"><h2> 1. Add liquidity to the DREAM-WETH pool on Uniswap. </h2>2. Lock up the resulting DREAM/WETH LP token received (DREAM/WETH LP). <br></br> 3. The longer you lock your DREAM/WETH LP token (1 year max), the more veDREAM you get, and the greater your rewards and voting power. <Text style="body3" as={Link} css={{ fontWeight: 'bold', '&:hover': { textDecoration: 'underline' } }} href="https://docs.dreambyt3.com/dream-token/vedream-and-staking" target="_blank"><h1>Learn more about veDREAM staking in the docs.</h1></Text></Text>
+          <Text style="body3"><h2> 1. Add liquidity to the DREAM-WETH pool on Uniswap. </h2>2. Lock up the resulting DREAM/WETH LP token received (DREAM/WETH LP). <br></br> 3. The longer you lock your DREAM/WETH LP token (1 year max), the more veDREAM you get, and the greater your rewards and voting power. <Text style="body3" as={Link} css={{ fontWeight: 'bold', '&:hover': { textDecoration: 'underline' } }} href="https://docs.dreambyt3.com/dream-token/vedream-and-staking" target="_blank"><h1>Learn more about veDREAM in the docs.</h1></Text></Text>
         </Flex>
       </Flex>
     </Layout>

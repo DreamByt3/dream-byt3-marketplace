@@ -27,9 +27,10 @@ import AddressCollapsible from "../../components/staking/AddressCollapsible";
 import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 import Decimal from "decimal.js-light";
 import {DREAM, DREAM_LP, VE_DREAM} from "../../utils/contracts";
+import { chain } from "lodash";
 
 export const MAX_LOCK_PERIOD_IN_DAYS = 365; // 1y
-export const MIN_LOCK_PERIOD_IN_DAYS = 28;
+export const MIN_LOCK_PERIOD_IN_DAYS = ; // 1w
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
