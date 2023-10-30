@@ -97,13 +97,16 @@ const TranchesPage = () => {
               }}
             >
               {(historyData && !!historyData.length) && (
-                historyData.map(d => (
-                  <Flex key={`tx-${d.txHash}`}>
-                    <Text>{`timestamp : ${d.time}`}</Text>
-                    <Text>{`value : ${d.value}`}</Text>
-                    <Text>{`txHash : ${d.txHash}`}</Text>
-                  </Flex>
-                ))
+                <>
+                  {historyData.map(d => (
+                    <Flex key={`tx-${d.txHash}`}>
+                      <Text>{`timestamp : ${d.time}`}</Text>
+                      <Text>{`value : ${d.value}`}</Text>
+                      <Text>{`txHash : ${d.txHash}`}</Text>
+                    </Flex>
+                  ))}
+                  <Box ref={loadMoreRef} css={{ height: 20 }}/>
+                </>
               )}
               {!historyData?.length && (
                 <Text>No transaction yet</Text>
