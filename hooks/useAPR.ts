@@ -20,7 +20,8 @@ import {
   WETH_ADDRESS
 } from "../utils/contracts";
 
-const useAPR = (timestamp: number = dayjs().startOf('day').toDate().getTime(), chain: Chain) => {
+const useAPR = (timestamp: number | undefined, chain: Chain) => {
+  timestamp = timestamp === undefined ? dayjs().startOf('day').toDate().getTime() : timestamp
   const previousWeekUnix = getPreviousWeek(timestamp);
 
   const { data, isLoading } = useContractReads({

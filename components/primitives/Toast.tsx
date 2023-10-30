@@ -73,7 +73,7 @@ const ToastAction = styled(ToastPrimitive.Action, {})
 type Props = {
   id?: string
   title?: string
-  description?: string
+  description?: ReactNode | string
   action?: ReactNode
   status?: 'success' | 'error'
 }

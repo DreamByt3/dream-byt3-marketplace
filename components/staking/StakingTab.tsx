@@ -3,17 +3,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleInfo, faExternalLink, faLock} from "@fortawesome/free-solid-svg-icons";
 import {
   parseEther,
-  formatEther, parseUnits, formatUnits
+  formatUnits,
+  Chain
 } from "viem";
 import dayjs, {} from "dayjs";
-import { MaxUint256 } from "ethers";
 import {
   useAccount,
   useContractRead,
   useContractWrite,
-  useNetwork,
   usePrepareContractWrite,
-  useSwitchNetwork,
   useWaitForTransaction,
 } from "wagmi";
 import {useConnectModal} from "@rainbow-me/rainbowkit";
@@ -23,7 +21,7 @@ import {Box, Button, CryptoCurrencyIcon, Flex, Text, Tooltip} from "../primitive
 import {ToastContext} from "context/ToastContextProvider";
 import {StakingDepositor} from "hooks/useStakingDepositor";
 
-import {formatBN, formatNumber} from "utils/numbers";
+import {formatBN} from "utils/numbers";
 import {parseError} from "utils/error";
 
 import ERC20Abi from "artifacts/ERC20Abi";
@@ -35,12 +33,14 @@ import { mainnet } from "viem/chains";
 import Decimal from "decimal.js-light";
 import {useAPR} from "../../hooks";
 import {DREAM_LP, VE_DREAM} from "../../utils/contracts";
+import {MaxUint256} from "@ethersproject/constants";
+import {AbiType} from "abitype";
 
 type Props = {
   value: string
   duration: number
   depositor: StakingDepositor | null
-  chain: OFTChain | null
+  chain: Chain | null
   onSuccess: () => void
 }
 
@@ -63,7 +63,7 @@ const StakingTab: FC<Props> = (props) => {
 
   const { data: allowance, refetch: refetchAllowance } = useContractRead({
     enabled: !!address,
-    abi:  ERC20Abi,
+    abi: ERC20Abi,
     address: DREAM_LP,
     functionName:  'allowance',
     args: [address as `0x${string}`, VE_DREAM],
@@ -123,7 +123,7 @@ const StakingTab: FC<Props> = (props) => {
     address: DREAM_LP,
     abi: ERC20Abi,
     functionName: 'approve',
-    args:  [VE_DREAM, MaxUint256],
+    args:  [VE_DREAM, BigInt(MaxUint256.toString())],
   })
 
   const { isLoading: isLoadingTransaction, isSuccess = true } = useWaitForTransaction({

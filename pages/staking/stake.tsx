@@ -344,7 +344,7 @@ const StakingChainPage: FC<Props> = ({ ssr }) => {
                 <StakingTab
                   value={`${parseFloat(valueEth)}`}
                   duration={parseInt(duration)}
-                  chain={chain}
+                  chain={mainnet}
                   depositor={{
                     id: address as `0x${string}`,
                     totalBalance: 0n,

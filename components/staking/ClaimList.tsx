@@ -1,7 +1,6 @@
 import {Box, Button, CryptoCurrencyIcon, Flex, Text} from "../primitives";
 import {useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction} from "wagmi";
 import FeeDistributorAbi from "../../artifacts/FeeDistributorAbi";
-import {OFT_CHAINS} from "../../utils/chains";
 import {mainnet} from "viem/chains";
 import {formatBN} from "../../utils/numbers";
 import {parseError} from "../../utils/error";
@@ -231,13 +230,11 @@ const ClaimList = () => {
                 <Text style="subtitle1" css={{ fontWeight: 'bold' }}>{`${
                   formatBN(
                     BigInt(wethPrice?.nativePrice || 0) +
-                    BigInt(dreamPrice?.nativePrice || 0) +
-                    BigInt(arbPrice?.nativePrice || 0)
+                    BigInt(dreamPrice?.nativePrice || 0)
                     , 2, 18, { notation: "standard" }
                   )} ($${formatBN(
                   BigInt(wethPrice?.usdPrice || 0) +
-                  BigInt(dreamPrice?.usdPrice || 0) +
-                  BigInt(arbPrice?.usdPrice || 0),
+                  BigInt(dreamPrice?.usdPrice || 0),
                   2, 6, { notation: "standard" }
                 )})`}</Text>
               </Flex>
