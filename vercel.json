@@ -3,6 +3,10 @@
     {
       "path": "/api/quest/reset",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/autotransfer/execute",
+      "schedule": "*/2 * * * *"
     }
   ]
 }
