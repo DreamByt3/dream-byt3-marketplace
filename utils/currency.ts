@@ -1,9 +1,6 @@
-
 import db from "lib/db";
 import supportedChains from "./chains";
-import {Contract} from "ethers";
-import {Interface} from "@ethersproject/abi";
-import {AlchemyProvider} from "@ethersproject/providers";
+import {Contract, Interface, AlchemyProvider} from "ethers";
 
 const currency = db.collection('currency')
 
