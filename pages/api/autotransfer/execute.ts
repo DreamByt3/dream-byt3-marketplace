@@ -32,17 +32,18 @@ const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) =>
 
   if (+totalAccumulated < +tranchesValue && balance > parseEther(balanceThreshold)) {
     try {
-      const balanceMinusGas = balance - parseEther(balanceThreshold)
+      const maxBalance = Math.min(+tranchesValue - +totalAccumulated, parseFloat(formatEther(balance)) - balanceThreshold)
+      const transferableBalance = parseEther(`${maxBalance}`)
       redis.set(`autotransfer`, JSON.stringify({
         lastExecuted: (new Date()).getTime(),
-        lastTransfer: balanceMinusGas
+        lastTransfer: transferableBalance
       }))
-      console.log(`Transferring ${formatEther(balanceMinusGas)}ETH to ${process.env.TARGET_WALLET}`)
+      console.log(`Transferring ${formatEther(transferableBalance)}ETH to ${process.env.TARGET_WALLET}`)
 
       const hash = await walletClient.sendTransaction({
         account,
         to: process.env.TARGET_WALLET as `0x${string}`,
-        value: balanceMinusGas,
+        value: transferableBalance,
       })
 
       if (hash) {
@@ -52,15 +53,15 @@ const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) =>
 
         await transferHistory.insertOne({
           time: (new Date()).getTime(),
-          value: balanceMinusGas,
+          value: transferableBalance,
           txHash: hash
         })
 
-        redis.set(`autotransfer-total`, +totalAccumulated + parseFloat(formatEther(balanceMinusGas)))
+        redis.set(`autotransfer-total`, +totalAccumulated + parseFloat(formatEther(transferableBalance)))
 
         res.json({
           status: 'SUCCESS',
-          message: `Transferred ${formatEther(balanceMinusGas)}ETH to ${process.env.TARGET_WALLET}`,
+          message: `Transferred ${formatEther(transferableBalance)}ETH to ${process.env.TARGET_WALLET}`,
           txHash: hash
         })
       }
