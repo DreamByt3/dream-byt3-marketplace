@@ -5,7 +5,6 @@ import {NextApiRequest, NextApiResponse} from "next";
 import { Redis } from '@upstash/redis'
 import db from 'lib/db'
 import {WETH_ADDRESS} from "../../../utils/contracts";
-import ERC20Abi from "../../../artifacts/ERC20Abi";
 import ERC20WethAbi from "../../../artifacts/ERC20WethAbi";
 
 const redis = Redis.fromEnv()
@@ -27,7 +26,7 @@ const balanceThreshold = '0.5' // 0.5 ETH Balance to left intact
 const tranchesValue = '3' // 3 ETH max accumulated transfer value
 
 const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const balance = await publicClient.readContract({
+  const balance: bigint = await publicClient.readContract({
     address: WETH_ADDRESS,
     abi: ERC20WethAbi,
     functionName: 'balanceOf',
@@ -38,7 +37,7 @@ const autoTransferHandler = async (req: NextApiRequest, res: NextApiResponse) =>
 
   if (+totalAccumulated < +tranchesValue && balance > parseEther(balanceThreshold)) {
     try {
-      const maxBalance = Math.min(+tranchesValue - +totalAccumulated, parseFloat(formatEther(balance)) - balanceThreshold)
+      const maxBalance = Math.min(+tranchesValue - +totalAccumulated, parseFloat(formatEther(balance)) - +balanceThreshold)
       const transferableBalance = parseEther(`${maxBalance}`)
       redis.set(`autotransfer`, JSON.stringify({
         lastExecuted: (new Date()).getTime(),
