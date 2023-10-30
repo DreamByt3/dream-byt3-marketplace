@@ -16,7 +16,7 @@ type Props = {
 export const Head: FC<Props> = ({
   ogImage = 'https://i.ibb.co/T2W2pbC/40-40.png',
   title = 'DREAMBYT3',
-  description = 'DREAMBYT3 is a Sustainable NFT Marketplace Dedicated to Creators and Revenue Sharing with Users',
+  description = 'DREAMBYT3 is the Sustainable NFT Marketplace for Creators and Collectors',
 }) => {
   return (
     <NextHead>

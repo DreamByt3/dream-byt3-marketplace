@@ -6,7 +6,7 @@ import { ToastContext } from 'context/ToastContextProvider'
 import {useDebounce, useMounted, useProfileCheck} from "hooks";
 import {useAccount} from "wagmi";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
+import {faDiscord, faXTwitter} from "@fortawesome/free-brands-svg-icons";
 import {useSession} from "next-auth/react";
 
 type Props = {
@@ -386,7 +386,7 @@ const DetailsSettings:FC<Props> = ({ profile }) => {
         {/*    /!*  justify="between"*!/*/}
         {/*    /!*>*!/*/}
         {/*    /!*  <Text>*!/*/}
-        {/*    /!*    <FontAwesomeIcon icon={faTwitter} width={16} height={16} style={{ marginRight: 10, display: 'inline-block' }} />*!/*/}
+        {/*    /!*    <FontAwesomeIcon icon={faXTwitter} width={16} height={16} style={{ marginRight: 10, display: 'inline-block' }} />*!/*/}
         {/*    /!*    {`Twitter`}*!/*/}
         {/*    /!*  </Text>*!/*/}
         {/*    /!*  <Button as="a" color="primary" href={`/api/social/twitter?wallet=${address}`} size="xs" css={{ justifyContent: 'center'}}>*!/*/}

@@ -51,7 +51,7 @@ const handleTwitterVerify = async (req: NextApiRequest, res: NextApiResponse) =>
       return res.json({
         status: 'ERROR',
         code: 408,
-        message: 'Your twitter already have connected to another account.'
+        message: 'Your X is already linked to another account.'
       })
     }
 

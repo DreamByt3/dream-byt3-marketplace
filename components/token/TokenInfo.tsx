@@ -1,7 +1,7 @@
 import { useCollections, useTokens } from '@reservoir0x/reservoir-kit-ui'
 import { Anchor, Button, Flex, Text, Tooltip } from 'components/primitives'
 import { ComponentPropsWithoutRef, FC, useRef, useState, useMemo } from 'react'
-import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import {
   faExternalLink,
   faGlobe,
@@ -162,7 +162,7 @@ export const TokenInfo: FC<Props> = ({ token, collection }) => {
           {twitterLink && (
             <a href={twitterLink} target="_blank" rel="noopener noreferrer">
               <CollectionAction>
-                <FontAwesomeIcon icon={faTwitter} width={16} height={16} />
+                <FontAwesomeIcon icon={faXTwitter} width={16} height={16} />
               </CollectionAction>
             </a>
           )}

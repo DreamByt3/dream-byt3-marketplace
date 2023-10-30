@@ -129,13 +129,13 @@ const Navbar = () => {
               }
             }}
           >
-            <NavItem>Explore</NavItem>
+            <NavItem>Collections</NavItem>
           </Flex>
         </Flex>
         <Flex justify="center" align="center" css={{ flex: 1, px: '$5'}}>
           <GlobalSearch
             ref={searchRef}
-            placeholder="Search NFTs..."
+            placeholder="Search..."
             containerCss={{ width: '100%', maxWidth: 480, margin: 'auto', position: 'relative' }}
             key={router.asPath}
           />
