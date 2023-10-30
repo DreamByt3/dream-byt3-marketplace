@@ -17,11 +17,7 @@ type Collection = {
   topBid: number | undefined
   reward: number
 }
-type CollectionReward = Record<string, Collection | undefined>
-const collectionReward: Record<number, CollectionReward | undefined> = {
-  10: undefined,
-  42161: undefined
-}
+const collectionReward: Record<string, Collection> = {}
 
 const fetchCollection =  async (chainId: number, continuation: string | undefined) => {
   const chain = supportedChains.find(c => c.id === chainId)
@@ -77,8 +73,8 @@ const getRewardForRank = (rank: number) => {
 const fetchCollectionRankReward = async (chainId: number, collectionId: string) => {
   const currentTime = (new Date()).getTime();
   // Fetch Rank Daily
-  if (collectionReward[chainId] && (lastUpdate + (1000 * 60 * 24)) > currentTime) {
-    return collectionReward[chainId]?.[collectionId.toLowerCase()] || {
+  if ((lastUpdate + (1000 * 60 * 24)) > currentTime) {
+    return collectionReward[collectionId.toLowerCase()] || {
       floorAsk: 0,
       topBid: 0,
       reward: 0
@@ -88,14 +84,11 @@ const fetchCollectionRankReward = async (chainId: number, collectionId: string) 
   let i = 0
   let continuation: string | undefined = undefined
 
-  collectionReward[chainId] = {}
-
   while (i < 100) {
     const result: any = await fetchCollection(chainId, continuation)
 
     result.collections.forEach((collection: any, j: number) => {
-      // @ts-ignore
-      collectionReward[chainId][collection.id.toLowerCase()] = {
+      collectionReward[collection.id.toLowerCase()] = {
         floorAsk: +collection.floorAsk?.price?.amount?.native,
         topBid: +collection.topBid?.price?.amount?.native,
         reward: getRewardForRank(i + j + 1)
@@ -108,7 +101,7 @@ const fetchCollectionRankReward = async (chainId: number, collectionId: string) 
 
   lastUpdate = currentTime
 
-  return collectionReward[chainId]?.[collectionId]
+  return collectionReward[collectionId]
 }
 
 type CalculateReward = (

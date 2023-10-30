@@ -113,7 +113,6 @@ export const CollectionDetails: FC<Props> = ({
             </Text>
             <Text
               style="body1"
-              as="p"
               ref={(ref) => {
                 if (!ref) return
                 descriptionRef.current = ref
@@ -133,7 +132,6 @@ export const CollectionDetails: FC<Props> = ({
               <Text
                 onClick={() => setDescriptionExpanded(!descriptionExpanded)}
                 style="body1"
-                as="p"
                 css={{
                   cursor: 'pointer',
                   mt: '$2',

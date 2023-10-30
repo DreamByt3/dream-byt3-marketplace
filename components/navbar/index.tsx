@@ -145,7 +145,7 @@ const Navbar = () => {
             <HoverCard.Trigger>
               <Flex align="center" css={{ height: 44, px: 24, borderRadius: 8, '&:hover': { backgroundColor: '$pinkA5' }}}>
                 <NavItem>
-                  More
+                  Token
                 </NavItem>
               </Flex>
             </HoverCard.Trigger>
@@ -174,29 +174,106 @@ const Navbar = () => {
                   <NavItem
                     active={router.pathname.includes('swap')}
                   >
-                    Buy DREAM
+                    {`Buy DREAM`}
+                  </NavItem>
+                </Flex>
+                <Flex
+                  as={Link}
+                  href={`/staking/pool`}
+                  align="center"
+                  css={{
+                    px: 16,
+                    height: 44,
+                    borderBottom: '1px solid $pinkA5',
+                    '&:hover': {
+                      backgroundColor: '$pinkA5'
+                    }
+                  }}
+                >
+                  <NavItem
+                    active={router.pathname.includes('staking/pool')}
+                  >
+                    {`Get veDREAM`}
+                  </NavItem>
+                </Flex>
+                <Flex
+                  as={Link}
+                  href={`/staking`}
+                  align="center"
+                  css={{
+                    px: 16,
+                    height: 44,
+                    borderBottom: '1px solid $pinkA5',
+                    '&:hover': {
+                      backgroundColor: '$pinkA5'
+                    }
+                  }}
+                >
+                  <NavItem
+                    active={router.pathname.includes('staking')}
+                  >
+                    {`Staking Reward`}
                   </NavItem>
                 </Flex>
               </Card>
             </HoverCard.Content>
           </HoverCard.Root>
-          {isConnected && (
-            <Flex
-              as={Link}
-              href="/portfolio"
-              align="center"
-              css={{
-                height: 44,
-                px: 16,
-                borderRadius: 8,
-                '&:hover': {
-                  backgroundColor: '$pinkA5'
-                }
-              }}
-            >
-              <NavItem>My Assets</NavItem>
-            </Flex>
-          )}
+          <HoverCard.Root openDelay={200}>
+            <HoverCard.Trigger>
+              <Flex align="center" css={{ height: 44, px: 24, borderRadius: 8, '&:hover': { backgroundColor: '$pinkA5' }}}>
+                <NavItem>
+                  More
+                </NavItem>
+              </Flex>
+            </HoverCard.Trigger>
+            <HoverCard.Content sideOffset={19} align="center">
+              <Card css={{
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+                borderRadius: 0,
+                backgroundColor: '$blackA12',
+                border: '1px solid $pinkA5'
+              }}>
+                <Flex
+                  as={Link}
+                  href={`/leaderboard`}
+                  align="center"
+                  css={{
+                    px: 16,
+                    height: 44,
+                    borderBottom: '1px solid $pinkA5',
+                    '&:hover': {
+                      backgroundColor: '$pinkA5'
+                    }
+                  }}
+                >
+                  <NavItem
+                    active={router.pathname.includes('leaderboard')}
+                  >
+                    Leaderboard
+                  </NavItem>
+                </Flex>
+              </Card>
+            </HoverCard.Content>
+          </HoverCard.Root>
+          {/*{isConnected && (*/}
+          {/*  <Flex*/}
+          {/*    as={Link}*/}
+          {/*    href="/portfolio"*/}
+          {/*    align="center"*/}
+          {/*    css={{*/}
+          {/*      height: 44,*/}
+          {/*      px: 16,*/}
+          {/*      borderRadius: 8,*/}
+          {/*      '&:hover': {*/}
+          {/*        backgroundColor: '$pinkA5'*/}
+          {/*      }*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    <NavItem>My Assets</NavItem>*/}
+          {/*  </Flex>*/}
+          {/*)}*/}
         </Flex>
       </Flex>
 

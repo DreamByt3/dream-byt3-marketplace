@@ -117,6 +117,10 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
       transitions: {},
       breakpoints: {
         sm: 100,
+        md: 768,
+        lg: 992,
+        xl: 1280,
+        xxl: 1536,
       },
     },
     utils: {

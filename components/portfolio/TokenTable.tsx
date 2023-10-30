@@ -446,7 +446,7 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
               mutate={mutate}
             />
           )}
-          {token?.token?.topBid?.price?.amount?.decimal && isOwner ? (
+          {(!!token?.token?.topBid?.price?.amount?.decimal && isOwner) ? (
             <AcceptBid
               tokenId={token.token.tokenId}
               collectionId={token?.token?.contract}
@@ -580,87 +580,91 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
               </Flex>
             </DropdownMenuItem>
 
-            {isOracleOrder &&
-            token?.ownership?.floorAsk?.id &&
-            token?.token?.tokenId &&
-            token?.token?.collection?.id ? (
-              <EditListingModal
-                trigger={
-                  <Flex
-                    align="center"
-                    css={{
-                      gap: '$2',
-                      px: '$2',
-                      py: '$3',
-                      borderRadius: 8,
-                      outline: 'none',
-                      cursor: 'pointer',
-                      '&:hover': {
-                        backgroundColor: '$gray5',
-                      },
-                      '&:focus': {
-                        backgroundColor: '$gray5',
-                      },
-                    }}
-                  >
-                    <Box css={{ color: '$gray10' }}>
-                      <FontAwesomeIcon icon={faEdit} />
-                    </Box>
-                    <Text>Edit Listing</Text>
-                  </Flex>
-                }
-                listingId={token?.ownership?.floorAsk?.id}
-                tokenId={token?.token?.tokenId}
-                collectionId={token?.token?.collection?.id}
-                onClose={(data, currentStep) => {
-                  if (mutate && currentStep == EditListingStep.Complete)
-                    mutate()
-                }}
-              />
-            ) : null}
+            {(isOracleOrder &&
+              !!token?.ownership?.floorAsk?.id &&
+              !!token?.token?.tokenId &&
+              !!token?.token?.collection?.id) && (
+              (
+                <EditListingModal
+                  trigger={
+                    <Flex
+                      align="center"
+                      css={{
+                        gap: '$2',
+                        px: '$2',
+                        py: '$3',
+                        borderRadius: 8,
+                        outline: 'none',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          backgroundColor: '$gray5',
+                        },
+                        '&:focus': {
+                          backgroundColor: '$gray5',
+                        },
+                      }}
+                    >
+                      <Box css={{ color: '$gray10' }}>
+                        <FontAwesomeIcon icon={faEdit} />
+                      </Box>
+                      <Text>Edit Listing</Text>
+                    </Flex>
+                  }
+                  listingId={token?.ownership?.floorAsk?.id}
+                  tokenId={token?.token?.tokenId}
+                  collectionId={token?.token?.collection?.id}
+                  onClose={(data, currentStep) => {
+                    if (mutate && currentStep == EditListingStep.Complete)
+                      mutate()
+                  }}
+                />
+              )
+            )}
 
-            {token?.ownership?.floorAsk?.id ? (
-              <CancelListing
-                listingId={token.ownership.floorAsk.id as string}
-                mutate={mutate}
-                trigger={
-                  <Flex
-                    css={{
-                      px: '$2',
-                      py: '$3',
-                      borderRadius: 8,
-                      outline: 'none',
-                      cursor: 'pointer',
-                      '&:hover': {
-                        backgroundColor: '$gray5',
-                      },
-                      '&:focus': {
-                        backgroundColor: '$gray5',
-                      },
-                    }}
-                  >
-                    {!isOracleOrder ? (
-                      <Tooltip
-                        content={
-                          <Text style="body2" as="p">
-                            Cancelling this order requires gas.
-                          </Text>
-                        }
-                      >
-                        <Flex align="center" css={{ gap: '$2' }}>
-                          <Box css={{ color: '$gray10' }}>
-                            <FontAwesomeIcon icon={faGasPump} />
-                          </Box>
-                          <Text color="error">Cancel</Text>
-                        </Flex>
-                      </Tooltip>
-                    ) : (
-                      <Text color="error">Cancel</Text>
-                    )}
-                  </Flex>
-                }
-              />
-            ) : null}
+            {!!token?.ownership?.floorAsk?.id && (
+              (
+                <CancelListing
+                  listingId={token.ownership.floorAsk.id as string}
+                  mutate={mutate}
+                  trigger={
+                    <Flex
+                      css={{
+                        px: '$2',
+                        py: '$3',
+                        borderRadius: 8,
+                        outline: 'none',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          backgroundColor: '$gray5',
+                        },
+                        '&:focus': {
+                          backgroundColor: '$gray5',
+                        },
+                      }}
+                    >
+                      {!isOracleOrder ? (
+                        <Tooltip
+                          content={
+                            <Text style="body2" as="p">
+                              Cancelling this order requires gas.
+                            </Text>
+                          }
+                        >
+                          <Flex align="center" css={{ gap: '$2' }}>
+                            <Box css={{ color: '$gray10' }}>
+                              <FontAwesomeIcon icon={faGasPump} />
+                            </Box>
+                            <Text color="error">Cancel</Text>
+                          </Flex>
+                        </Tooltip>
+                      ) : (
+                        <Text color="error">Cancel</Text>
+                      )}
+                    </Flex>
+                  }
+                />
+              )
+            )}
           </Dropdown>
         </Flex>
       </Flex>
@@ -1013,87 +1017,91 @@ const TokenTableRow: FC<TokenTableRowProps> = ({
                 </Flex>
               </DropdownMenuItem>
 
-              {isOracleOrder &&
-              token?.ownership?.floorAsk?.id &&
-              token?.token?.tokenId &&
-              token?.token?.collection?.id ? (
-                <EditListingModal
-                  trigger={
-                    <Flex
-                      align="center"
-                      css={{
-                        gap: '$2',
-                        px: '$2',
-                        py: '$3',
-                        borderRadius: 8,
-                        outline: 'none',
-                        cursor: 'pointer',
-                        '&:hover': {
-                          backgroundColor: '$gray5',
-                        },
-                        '&:focus': {
-                          backgroundColor: '$gray5',
-                        },
-                      }}
-                    >
-                      <Box css={{ color: '$gray10' }}>
-                        <FontAwesomeIcon icon={faEdit} />
-                      </Box>
-                      <Text>Edit Listing</Text>
-                    </Flex>
-                  }
-                  listingId={token?.ownership?.floorAsk?.id}
-                  tokenId={token?.token?.tokenId}
-                  collectionId={token?.token?.collection?.id}
-                  onClose={(data, currentStep) => {
-                    if (mutate && currentStep == EditListingStep.Complete)
-                      mutate()
-                  }}
-                />
-              ) : null}
+              {(isOracleOrder &&
+                !!token?.ownership?.floorAsk?.id &&
+                !!token?.token?.tokenId &&
+                !!token?.token?.collection?.id) && (
+                (
+                  <EditListingModal
+                    trigger={
+                      <Flex
+                        align="center"
+                        css={{
+                          gap: '$2',
+                          px: '$2',
+                          py: '$3',
+                          borderRadius: 8,
+                          outline: 'none',
+                          cursor: 'pointer',
+                          '&:hover': {
+                            backgroundColor: '$gray5',
+                          },
+                          '&:focus': {
+                            backgroundColor: '$gray5',
+                          },
+                        }}
+                      >
+                        <Box css={{ color: '$gray10' }}>
+                          <FontAwesomeIcon icon={faEdit} />
+                        </Box>
+                        <Text>Edit Listing</Text>
+                      </Flex>
+                    }
+                    listingId={token?.ownership?.floorAsk?.id}
+                    tokenId={token?.token?.tokenId}
+                    collectionId={token?.token?.collection?.id}
+                    onClose={(data, currentStep) => {
+                      if (mutate && currentStep == EditListingStep.Complete)
+                        mutate()
+                    }}
+                  />
+                )
+              )}
 
-              {token?.ownership?.floorAsk?.id ? (
-                <CancelListing
-                  listingId={token.ownership.floorAsk.id as string}
-                  mutate={mutate}
-                  trigger={
-                    <Flex
-                      css={{
-                        px: '$2',
-                        py: '$3',
-                        borderRadius: 8,
-                        outline: 'none',
-                        cursor: 'pointer',
-                        '&:hover': {
-                          backgroundColor: '$gray5',
-                        },
-                        '&:focus': {
-                          backgroundColor: '$gray5',
-                        },
-                      }}
-                    >
-                      {!isOracleOrder ? (
-                        <Tooltip
-                          content={
-                            <Text style="body2" as="p">
-                              Cancelling this order requires gas.
-                            </Text>
-                          }
-                        >
-                          <Flex align="center" css={{ gap: '$2' }}>
-                            <Box css={{ color: '$gray10' }}>
-                              <FontAwesomeIcon icon={faGasPump} />
-                            </Box>
-                            <Text color="error">Cancel</Text>
-                          </Flex>
-                        </Tooltip>
-                      ) : (
-                        <Text color="error">Cancel</Text>
-                      )}
-                    </Flex>
-                  }
-                />
-              ) : null}
+              {!!token?.ownership?.floorAsk?.id && (
+                (
+                  <CancelListing
+                    listingId={token.ownership.floorAsk.id as string}
+                    mutate={mutate}
+                    trigger={
+                      <Flex
+                        css={{
+                          px: '$2',
+                          py: '$3',
+                          borderRadius: 8,
+                          outline: 'none',
+                          cursor: 'pointer',
+                          '&:hover': {
+                            backgroundColor: '$gray5',
+                          },
+                          '&:focus': {
+                            backgroundColor: '$gray5',
+                          },
+                        }}
+                      >
+                        {!isOracleOrder ? (
+                          <Tooltip
+                            content={
+                              <Text style="body2" as="p">
+                                Cancelling this order requires gas.
+                              </Text>
+                            }
+                          >
+                            <Flex align="center" css={{ gap: '$2' }}>
+                              <Box css={{ color: '$gray10' }}>
+                                <FontAwesomeIcon icon={faGasPump} />
+                              </Box>
+                              <Text color="error">Cancel</Text>
+                            </Flex>
+                          </Tooltip>
+                        ) : (
+                          <Text color="error">Cancel</Text>
+                        )}
+                      </Flex>
+                    }
+                  />
+                )
+              )}
             </Dropdown>
           </Flex>
         </TableCell>

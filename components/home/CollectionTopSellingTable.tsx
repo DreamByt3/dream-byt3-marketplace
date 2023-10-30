@@ -36,7 +36,6 @@ const fiveTemplateColumns = '1.6fr 1fr 1fr 1fr 1.6fr'
 
 export const CollectionTopSellingTable: FC<Props> = ({
   topSellingCollections,
-  collections,
   loading,
   fillType,
 }) => {
@@ -67,7 +66,7 @@ export const CollectionTopSellingTable: FC<Props> = ({
                   <SaleTableRow
                     key={`sale-${routePrefix}-${collection.id}`}
                     topSellingCollection={collection}
-                    collection={collections[collection.id as string]}
+                    collection={collection}
                     rank={i + 1}
                     isSmallDevice={isSmallDevice}
                   />
@@ -77,7 +76,7 @@ export const CollectionTopSellingTable: FC<Props> = ({
                   <MintTableRow
                     key={`mint-${routePrefix}-${collection.id}`}
                     topSellingCollection={collection}
-                    collection={collections[collection.id as string]}
+                    collection={collection}
                     rank={i + 1}
                     isSmallDevice={isSmallDevice}
                   />
@@ -88,7 +87,7 @@ export const CollectionTopSellingTable: FC<Props> = ({
                   <AllSalesTableRow
                     key={`all-${routePrefix}-${collection.id}`}
                     topSellingCollection={collection}
-                    collection={collections[collection.id as string]}
+                    collection={collection}
                     rank={i + 1}
                     isSmallDevice={isSmallDevice}
                   />

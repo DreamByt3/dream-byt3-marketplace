@@ -14,6 +14,7 @@ export const Row = styled('div', {
 export const HeaderRow = styled(Row, {})
 
 export const TableRow = styled(Row, {
+  width: '100%',
   alignItems: 'center',
   borderBottom: '1px solid $primary11',
 })

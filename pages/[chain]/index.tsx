@@ -358,6 +358,7 @@ const Home: NextPage<any> = ({ ssr }) => {
                 position: 'relative',
                 gap: 10,
                 pt: 20,
+                overflowY: 'hidden',
 
                 // Remove the actual margin
                 '--margin-left-override': 0,
@@ -559,7 +560,6 @@ const Home: NextPage<any> = ({ ssr }) => {
               <CollectionTopSellingTable
                 key={`${chain.routePrefix}-top-collection`}
                 topSellingCollections={topSellingCollectionsData?.collections}
-                collections={topSellingCollectionsData}
                 loading={isValidating}
                 fillType={fillType}
               />

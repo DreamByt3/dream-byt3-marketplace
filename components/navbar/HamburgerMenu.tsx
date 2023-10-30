@@ -4,6 +4,7 @@ import {
   faBars,
   faXmark,
   faRightFromBracket,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
@@ -14,6 +15,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { Anchor, Box, Button, Flex, Text } from 'components/primitives'
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import { Avatar } from 'components/primitives/Avatar'
+import {Collapsible} from "../primitives/Collapsible";
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import Wallet from 'components/navbar/Wallet'
 import {useENSResolver, useMarketplaceChain, useProfile} from 'hooks'
@@ -80,7 +82,7 @@ const HamburgerMenu = () => {
                 backgroundColor: '$gray3',
                 color: '$gray12',
                 '&:hover': {
-                  backgroundColor: '$gray4',
+                  backgroundColor: '#F4A7BB',
                 },
               }}
             >
@@ -137,19 +139,126 @@ const HamburgerMenu = () => {
                 Explore
               </Text>
             </Link>
-            <Link href="/swap" legacyBehavior>
-              <Text
-                style="subtitle1"
+            <Collapsible
+              trigger={
+                <Flex
+                  justify="between"
+                  css={{
+                    width: '100%',
+                    borderBottom: '1px solid #F4A7BB',
+                    cursor: 'pointer',
+                    pb: '$4',
+                    pt: '24px',
+                  }}
+                >
+                  <Text
+                    style="subtitle1"
+                    css={{
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {`Token`}
+                  </Text>
+                  <FontAwesomeIcon icon={faChevronDown} width={20} height={20}/>
+                </Flex>
+              }>
+              <Flex
+                direction="column"
                 css={{
-                  borderBottom: '1px solid #F4A7BB',
-                  cursor: 'pointer',
-                  pb: '$4',
-                  pt: '24px',
+                  px: '$4'
                 }}
               >
-                Token
-              </Text>
-            </Link>
+                <Link href="/swap" legacyBehavior>
+                  <Text
+                    style="subtitle1"
+                    css={{
+                      borderBottom: '1px solid #F4A7BB',
+                      cursor: 'pointer',
+                      pb: '$4',
+                      pt: '24px',
+                    }}
+                  >
+                    Buy DREAM
+                  </Text>
+                </Link>
+                <Link href="/staking/pool" legacyBehavior>
+                  <Text
+                    style="subtitle1"
+                    css={{
+                      borderBottom: '1px solid #F4A7BB',
+                      cursor: 'pointer',
+                      pb: '$4',
+                      pt: '24px',
+                      alignItems: 'center',
+                      display: 'flex'
+                    }}
+                  >
+                    {`Get veDREAM`}
+                  </Text>
+                </Link>
+                <Link href="/staking" legacyBehavior>
+                  <Text
+                    style="subtitle1"
+                    css={{
+                      borderBottom: '1px solid #F4A7BB',
+                      cursor: 'pointer',
+                      pb: '$4',
+                      pt: '24px',
+                      alignItems: 'center',
+                      display: 'flex'
+                    }}
+                  >
+                    {`Staking Rewards`}
+                  </Text>
+                </Link>
+              </Flex>
+            </Collapsible>
+            <Collapsible
+              trigger={
+                <Flex
+                  justify="between"
+                  css={{
+                    width: '100%',
+                    borderBottom: '1px solid #F4A7BB',
+                    cursor: 'pointer',
+                    pb: '$4',
+                    pt: '24px',
+                  }}
+                >
+                  <Text
+                    style="subtitle1"
+                    css={{
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {`More`}
+                  </Text>
+                  <FontAwesomeIcon icon={faChevronDown} width={20} height={20}/>
+                </Flex>
+              }>
+              <Flex
+                direction="column"
+                css={{
+                  px: '$4'
+                }}
+              >
+                <Link href="/leaderboard" legacyBehavior>
+                  <Text
+                    style="subtitle1"
+                    css={{
+                      borderBottom: '1px solid #F4A7BB',
+                      cursor: 'pointer',
+                      pb: '$4',
+                      pt: '24px',
+                    }}
+                  >
+                    Leaderboard
+                  </Text>
+                </Link>
+              </Flex>
+            </Collapsible>
             <Link href="/portfolio" legacyBehavior>
               <Flex
                 direction="column"
@@ -167,7 +276,6 @@ const HamburgerMenu = () => {
               </Flex>
             </Link>
             <Wallet />
-
             <Link href="/portfolio/settings" legacyBehavior>
               <Flex
                 align="center"
@@ -251,18 +359,82 @@ const HamburgerMenu = () => {
                   Portfolio
                 </Text>
               </Link>
-              <Anchor
-                href="/swap"
-                css={{
-                  borderBottom: '1px solid #F4A7BB',
-                  cursor: 'pointer',
-                  pb: '$4',
-                  pt: '24px',
-                  width: '100%',
-                }}
-              >
-                <Text style="subtitle1">Token</Text>
-              </Anchor>
+              <Collapsible
+                trigger={
+                  <Flex
+                    justify="between"
+                    css={{
+                      width: '100%',
+                      borderBottom: '1px solid #F4A7BB',
+                      cursor: 'pointer',
+                      pb: '$4',
+                      pt: '24px',
+                    }}
+                  >
+                    <Text
+                      style="subtitle1"
+                      css={{
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {`Token`}
+                    </Text>
+                    <FontAwesomeIcon icon={faChevronDown} width={20} height={20}/>
+                  </Flex>
+                }>
+                <Flex
+                  direction="column"
+                  css={{
+                    backgroundColor: '$gray2',
+                    px: '$4'
+                  }}
+                >
+                  <Link href="/swap" legacyBehavior>
+                    <Text
+                      style="subtitle1"
+                      css={{
+                        borderBottom: '1px solid #F4A7BB',
+                        cursor: 'pointer',
+                        pb: '$4',
+                        pt: '24px',
+                      }}
+                    >
+                      Buy DREAM
+                    </Text>
+                  </Link>
+                  <Link href="/staking/pool" legacyBehavior>
+                    <Text
+                      style="subtitle1"
+                      css={{
+                        borderBottom: '1px solid #F4A7BB',
+                        cursor: 'pointer',
+                        pb: '$4',
+                        pt: '24px',
+                        alignItems: 'center',
+                        display: 'flex'
+                      }}
+                    >
+                      {`Get veDREAM`}
+                    </Text>
+                  </Link>
+                  <Link href="/staking" legacyBehavior>
+                    <Text
+                      style="subtitle1"
+                      css={{
+                        borderBottom: '1px solid #F4A7BB',
+                        cursor: 'pointer',
+                        pb: '$4',
+                        pt: '24px',
+                        alignItems: 'center',
+                        display: 'flex'
+                      }}
+                    >
+                      {`Staking Rewards`}
+                    </Text>
+                  </Link>
+                </Flex>
+              </Collapsible>
             </Flex>
             <Box css={{ pt: 24 }}>
               <ConnectWalletButton />
