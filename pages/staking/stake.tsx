@@ -29,7 +29,7 @@ import {DREAM, DREAM_LP, VE_DREAM} from "../../utils/contracts";
 import { chain } from "lodash";
 
 export const MAX_LOCK_PERIOD_IN_DAYS = 365; // 1y
-export const MIN_LOCK_PERIOD_IN_DAYS = ; // 1w
+export const MIN_LOCK_PERIOD_IN_DAYS = 7; // 1w
 
 const StakingChainPage: FC = () => {
   const chain = useMarketplaceChain()
