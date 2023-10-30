@@ -17,7 +17,7 @@ import ChainToggle from "../components/common/ChainToggle";
 import AlertChainSwitch from "../components/common/AlertChainSwitch";
 import dreamContracts from "../utils/dreamContracts";
 
-const nfteTokens = [
+const tokens = [
   {
     chainId: 1,
     address: '0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
@@ -39,7 +39,7 @@ const SwapPage = () => {
     chainId: marketplaceChain.id,
   })
   const chain = mainnet
-  const tokenList = [...uniswapToken.tokens, ...nfteTokens]
+  const tokenList = [...uniswapToken.tokens, ...tokens]
     .filter((token) => token.chainId === (marketplaceChain?.id || 1) && allowedTokenSymbols.includes(token.symbol))
   const [provider, setProvider] = useState<Web3Provider | undefined>()
   const { connector, isConnected } = useAccount()

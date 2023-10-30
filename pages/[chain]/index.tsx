@@ -1,3 +1,4 @@
+import { useContext, useState} from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import Link from 'next/link'
 import {
@@ -10,7 +11,10 @@ import {
 import Layout from 'components/Layout'
 import { motion, useViewportScroll, useTransform } from 'framer-motion'
 import { paths } from '@reservoir0x/reservoir-sdk'
-import { useContext, useState} from 'react'
+import {useCollections} from "@reservoir0x/reservoir-kit-ui";
+import ReactMarkdown from 'react-markdown'
+import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Footer } from 'components/home/Footer'
 import {useENSResolver, useMarketplaceChain, useMounted} from 'hooks'
 import supportedChains, { DefaultChain } from 'utils/chains'
@@ -19,7 +23,6 @@ import { ChainContext } from 'context/ChainContextProvider'
 
 import Img from 'components/primitives/Img'
 import useTopSellingCollections from 'hooks/useTopSellingCollections'
-import ReactMarkdown from 'react-markdown'
 import fetcher from 'utils/fetcher'
 import { styled } from 'stitches.config'
 import ChainToggle from 'components/common/ChainToggle'
@@ -28,12 +31,9 @@ import { MarkdownLink } from 'components/primitives/MarkdownLink'
 import {FillTypeToggle} from "../../components/home/FillTypeToggle";
 import {CollectionTopSellingTable} from "../../components/home/CollectionTopSellingTable";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import {useCollections} from "@reservoir0x/reservoir-kit-ui";
 import {Avatar} from "../../components/primitives/Avatar";
 import {formatNumber} from "../../utils/numbers";
 import HiddenScroll from "../../components/primitives/HiddenScroll";
-import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const StyledImage = styled('img', {})
 
@@ -763,11 +763,11 @@ const Home: NextPage<any> = ({ ssr }) => {
           }}
           css={{
             margin: '16px 0',
-            textAlign: 'center', 
+            textAlign: 'center',
           }}
         >Powered by $DREAM and the Community
         </Text>
-        
+
       </Flex>
       <Footer />
     </Layout>

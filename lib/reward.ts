@@ -123,8 +123,8 @@ export const calculateReward: CalculateReward = async (chainId, account, collect
   }
 
   if (isDREAM) {
-    const nfteToNative = await fetchDREAMToEthValue(chainId).catch(() => ({ nativePrice: 0 }))
-    value = BigNumber.from(value).mul(BigNumber.from(nfteToNative?.nativePrice)).toNumber()
+    const dreamToNative = await fetchDREAMToEthValue(chainId).catch(() => ({ nativePrice: 0 }))
+    value = BigNumber.from(value).mul(BigNumber.from(dreamToNative?.nativePrice)).toNumber()
   }
 
   const questEntry = (await entry.findOne({

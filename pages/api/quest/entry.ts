@@ -303,7 +303,7 @@ const handleQuestEntry = async (req: NextApiRequest, res: NextApiResponse) => {
         return await fetch(`${twitterFollowUrl}`, {
           headers: {
             Authorization: authHeader["Authorization"],
-            'user-agent': "NFTEarth"
+            'user-agent': "Dreambyt3"
           }
         }).then(response => response.json())
           .catch((e) => {
@@ -343,7 +343,7 @@ const handleQuestEntry = async (req: NextApiRequest, res: NextApiResponse) => {
       // const { relationship } = await fetch(twitterFollowUrl, {
       //   headers: {
       //     Authorization: authHeader["Authorization"],
-      //     'user-agent': "NFTEarth"
+      //     'user-agent': "Dreambyt3"
       //   }
       // }).then(response => response.json())
       //   .catch((e) => {
@@ -392,7 +392,7 @@ const handleQuestEntry = async (req: NextApiRequest, res: NextApiResponse) => {
           method: 'GET',
           headers: {
             Authorization: authHeader["Authorization"],
-            'user-agent': "NFTEarth"
+            'user-agent': "Dreambyt3"
           }
         }
       ).then(response => response.json())
@@ -529,7 +529,7 @@ const handleQuestEntry = async (req: NextApiRequest, res: NextApiResponse) => {
         let result: any = await getBuy(continuation)
         result.data.forEach((resp: any) => {
           if (resp && resp.value.data && resp.value.data.activities.length > 0) {
-            r.passes = resp.value.data.activities.filter((r: any) => r.order.source.domain === 'nftearth.exchange').length > 0;
+            r.passes = resp.value.data.activities.filter((r: any) => r.order.source.domain === 'dreambyt3.com').length > 0;
           } else {
             hasNextPage = false
           }
@@ -592,7 +592,7 @@ const handleQuestEntry = async (req: NextApiRequest, res: NextApiResponse) => {
         let result: any = await getBuy(continuation)
         result.data.forEach((resp: any, i: number) => {
           if (resp && resp.value.data && resp.value.data.activities.length > 0) {
-            const entryResult = resp.value.data.activities.filter((r: any) => r.order.source.domain === 'nftearth.exchange' && r.toAddress.toLowerCase() === wallet.toLowerCase());
+            const entryResult = resp.value.data.activities.filter((r: any) => r.order.source.domain === 'dreambyt3.com' && r.toAddress.toLowerCase() === wallet.toLowerCase());
             r.passes = entryResult.length > 0
 
             if (r.amount) {

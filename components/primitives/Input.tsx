@@ -2,6 +2,7 @@ import { styled } from 'stitches.config'
 import Flex from 'components/primitives/Flex'
 import {
   ComponentPropsWithoutRef,
+  CSSProperties,
   ElementRef,
   forwardRef,
   ReactNode,
@@ -40,14 +41,16 @@ const Input = forwardRef<
   ElementRef<typeof StyledInput>,
   ComponentPropsWithoutRef<typeof StyledInput> & {
     icon?: ReactNode
+    css?: CSS
     containerCss?: CSS
+    iconStyles?: CSSProperties,
   }
->(({ children, icon, containerCss, ...props }, forwardedRef) => (
+>(({ children, icon, css, containerCss, iconStyles, ...props }, forwardedRef) => (
   <Flex css={{ ...containerCss, position: 'relative' }}>
     {icon && (
-      <div style={{ position: 'absolute', top: 16, left: 16 }}>{icon}</div>
+      <div style={{ position: 'absolute', top: 16, left: 16, ...iconStyles }}>{icon}</div>
     )}
-    <StyledInput css={{ pl: icon ? 48 : 16 }} ref={forwardedRef} {...props} />
+    <StyledInput css={{ pl: icon ? 48 : 16, ...css }} ref={forwardedRef} {...props} />
   </Flex>
 ))
 
