@@ -535,7 +535,7 @@ const StakingPage = () => {
               }
             }}
             as={Link}
-            href="https://discord.com/channels/1062256160264171520/1063532288866005043"
+            href="https://discord.gg/ENKWhXFnHj"
             target="_blank"
           >
             Governance Discussion
