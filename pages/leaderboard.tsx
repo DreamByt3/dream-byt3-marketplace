@@ -92,7 +92,10 @@ const LeaderboardPage: NextPage = () => {
           }}
         >
           <Text
-            style="h3"
+            style={{
+              '@initial': 'h3',
+              '@lg': 'h3',
+            }}
             css={{
               lineHeight: 1.2,
               letterSpacing: 2,
@@ -128,7 +131,7 @@ const LeaderboardPage: NextPage = () => {
                   textAlign: 'center',
                 }}
               >
-                Climb the Leaderboard by gaining XP!
+                Climb the Leaderboard by aining XP!
               </Text>
             </Box>
           </Box>
