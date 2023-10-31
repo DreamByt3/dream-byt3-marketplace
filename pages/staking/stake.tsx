@@ -35,6 +35,7 @@ const StakingChainPage: FC = () => {
   const [valueEth, setValueEth] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
   const [maxDuration, setMaxDuration] = useState<string>('12')
+  const [enableUnStake, setEnableUnStake] = useState<boolean>(false)
   const { address } = useAccount()
   const mounted = useMounted()
   const router = useRouter()
@@ -83,6 +84,7 @@ const StakingChainPage: FC = () => {
       const oneYear = roundToWeek(dayjs().startOf('day').add(MAX_LOCK_PERIOD_IN_DAYS, 'days'))
       const daysLeft = oneYear.diff(roundedTime, 'days')
       setMaxDuration(`${Math.ceil(daysLeft / MIN_LOCK_PERIOD_IN_DAYS)}`)
+      setEnableUnStake(parseInt(`${locked?.result?.[1] || 0}`) * 1000 < (new Date()).getTime())
     }
   }, [locked])
 
@@ -225,6 +227,7 @@ const StakingChainPage: FC = () => {
                 onClick={() => {
                   setActiveTab('unstaking')
                 }}
+                disabled={!enableUnStake}
                 css={{
                   px: 0,
                   '&:disabled': {
@@ -236,7 +239,6 @@ const StakingChainPage: FC = () => {
                     color: '$gray11',
                   },
                 }}
-                disabled
               >Unstake</Button>
             </Flex>
             <Flex
@@ -245,131 +247,137 @@ const StakingChainPage: FC = () => {
                 gap: 20
               }}
             >
-              <Flex
-                direction="column"
-                css={{
-                  gap: 5,
-                  mt: 20
-                }}
-              >
-                <Flex
-                  justify="between"
-                >
-                  <Text style="body3">Select Amount</Text>
-                  <Text style="body3">{`DREAM/WETH LP Balance: ${formatBN(BigInt(dreamLPBalance?.result || 0), 4, 18 || 10)}`}</Text>
-                </Flex>
-                <Box
-                  css={{
-                    position: 'relative'
-                  }}
-                >
-                  <NumericalInput
-                    value={valueEth}
-                    onUserInput={handleSetValue}
-                    icon={<Button size="xs" onClick={handleSetMaxValue}>MAX</Button>}
-                    iconStyles={{
-                      top: 4,
-                      right: 4,
-                      left: 'auto'
-                    }}
-                    containerCss={{
-                      width: '100%'
-                    }}
-                    css={{
-                      pl: 40,
-                      pr: 80,
-                      boxShadow: '0 0 0 2px white'
-                    }}
-                  />
-                  <CryptoCurrencyIcon
-                    address={DREAM_LP}
-                    chainId={chain?.id}
-                    css={{
-                      position: 'absolute',
-                      width: 25,
-                      height: 25,
-                      top: 10,
-                      left: 10
-                    }}
-                  />
-                </Box>
-              </Flex>
-              <Flex
-                direction="column"
-                css={{
-                  gap: 5
-                }}
-              >
-                <Flex
-                  align="center"
-                  css={{
-                    gap: 5
-                  }}
-                >
-                  <Text style="body3">{+maxDuration < 1 ? 'You have locked for max duration' : `Stake Duration (${+maxDuration > 1 ? `1 to ${maxDuration}` : '1'}) months`}</Text>
-                  <Tooltip
-                    content={
-                      <Text
-                        style="body3"
-                        as="p"
-                        css={{
-                          background: '#fff',
-                          color: '#000',
-                          margin: '-$2',
-                          p: '$2',
-                          maxWidth: 150
-                        }}>
-                        Unlock time is rounded to UTC weeks
-                      </Text>
-                    }
-                  >
-                    <FontAwesomeIcon icon={faCircleInfo} width={10} height={10}/>
-                  </Tooltip>
-                </Flex>
-                <NumericalInput
-                  value={duration}
-                  disabled={+maxDuration < 1}
-                  onUserInput={handleSetDuration}
-                  min={0}
-                  max={maxDuration}
-                  step={1}
-                  inputMode="numeric"
-                  icon={<Button size="xs" onClick={() => setDuration(`${maxDuration}`)}>MAX</Button>}
-                  iconStyles={{
-                    top: 4,
-                    right: 4,
-                    left: 'auto'
-                  }}
-                  containerCss={{
-                    width: '100%'
-                  }}
-                  css={{
-                    pl: 10,
-                    pr: 80,
-                    boxShadow: '0 0 0 2px white'
-                  }}
-                />
-              </Flex>
               {activeTab === "staking" && (
-                <StakingTab
-                  value={`${parseFloat(valueEth)}`}
-                  duration={parseInt(duration)}
-                  chain={mainnet}
-                  depositor={{
-                    id: address as `0x${string}`,
-                    totalBalance: 0n,
-                    lockedBalance: locked?.result?.[0],
-                    lockEndTimestamp: locked?.result?.[1],
-                  }}
+                <>
+                  <Flex
+                    direction="column"
+                    css={{
+                      gap: 5,
+                      mt: 20
+                    }}
+                  >
+                    <Flex
+                      justify="between"
+                    >
+                      <Text style="body3">Select Amount</Text>
+                      <Text style="body3">{`DREAM/WETH LP Balance: ${formatBN(BigInt(dreamLPBalance?.result || 0), 4, 18 || 10)}`}</Text>
+                    </Flex>
+                    <Box
+                      css={{
+                        position: 'relative'
+                      }}
+                    >
+                      <NumericalInput
+                        value={valueEth}
+                        onUserInput={handleSetValue}
+                        icon={<Button size="xs" onClick={handleSetMaxValue}>MAX</Button>}
+                        iconStyles={{
+                          top: 4,
+                          right: 4,
+                          left: 'auto'
+                        }}
+                        containerCss={{
+                          width: '100%'
+                        }}
+                        css={{
+                          pl: 40,
+                          pr: 80,
+                          boxShadow: '0 0 0 2px white'
+                        }}
+                      />
+                      <CryptoCurrencyIcon
+                        address={DREAM_LP}
+                        chainId={chain?.id}
+                        css={{
+                          position: 'absolute',
+                          width: 25,
+                          height: 25,
+                          top: 10,
+                          left: 10
+                        }}
+                      />
+                    </Box>
+                  </Flex>
+                  <Flex
+                    direction="column"
+                    css={{
+                      gap: 5
+                    }}
+                  >
+                    <Flex
+                      align="center"
+                      css={{
+                        gap: 5
+                      }}
+                    >
+                      <Text style="body3">{+maxDuration < 1 ? 'You have locked for max duration' : `Stake Duration (${+maxDuration > 1 ? `1 to ${maxDuration}` : '1'}) months`}</Text>
+                      <Tooltip
+                        content={
+                          <Text
+                            style="body3"
+                            as="p"
+                            css={{
+                              background: '#fff',
+                              color: '#000',
+                              margin: '-$2',
+                              p: '$2',
+                              maxWidth: 150
+                            }}>
+                            Unlock time is rounded to UTC weeks
+                          </Text>
+                        }
+                      >
+                        <FontAwesomeIcon icon={faCircleInfo} width={10} height={10}/>
+                      </Tooltip>
+                    </Flex>
+                    <NumericalInput
+                      value={duration}
+                      disabled={+maxDuration < 1}
+                      onUserInput={handleSetDuration}
+                      min={0}
+                      max={maxDuration}
+                      step={1}
+                      inputMode="numeric"
+                      icon={<Button size="xs" onClick={() => setDuration(`${maxDuration}`)}>MAX</Button>}
+                      iconStyles={{
+                        top: 4,
+                        right: 4,
+                        left: 'auto'
+                      }}
+                      containerCss={{
+                        width: '100%'
+                      }}
+                      css={{
+                        pl: 10,
+                        pr: 80,
+                        boxShadow: '0 0 0 2px white'
+                      }}
+                    />
+                  </Flex>
+                  <StakingTab
+                    value={`${parseFloat(valueEth)}`}
+                    duration={parseInt(duration)}
+                    chain={mainnet}
+                    depositor={{
+                      id: address as `0x${string}`,
+                      totalBalance: 0n,
+                      lockedBalance: locked?.result?.[0],
+                      lockEndTimestamp: locked?.result?.[1],
+                    }}
+                    onSuccess={() => {
+                      setDuration('0')
+                      setValueEth('0.0')
+                      router.push('/staking')
+                    }}
+                  />
+                </>
+              )}
+              {activeTab === "unstaking" && (
+                <UnStakingTab
                   onSuccess={() => {
-                    setDuration('0')
-                    setValueEth('0.0')
                     router.push('/staking')
                   }}
                 />
-              )}
-              {activeTab === "unstaking" && (
-                <UnStakingTab/>
               )}
             </Flex>
           </Flex>
