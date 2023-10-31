@@ -22,7 +22,7 @@ const AlertChainSwitch = ({ chainId } : { chainId?: number }) => {
       justify="between"
       css={{
         p: 10,
-        backgroundColor: '$red11',
+        backgroundColor: '$red7',
         width: '100%',
         top: 80,
         left: 0,

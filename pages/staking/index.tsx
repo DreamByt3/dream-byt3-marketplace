@@ -30,6 +30,7 @@ import {formatBN} from "utils/numbers";
 import ERC20Abi from 'artifacts/ERC20Abi'
 import veDREAMAbi from 'artifacts/veDREAMAbi'
 import {DREAM_LP, VE_DREAM} from "../../utils/contracts";
+import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 
 const StakingPage = () => {
   const isMounted = useMounted()
@@ -135,6 +136,19 @@ const StakingPage = () => {
 
   return (
     <Layout>
+      <Flex
+        align="center"
+        justify="center"
+        css={{
+          p: 10,
+          backgroundColor: '$red7',
+          width: '100%',
+          top: 80,
+          left: 0,
+        }}
+      >
+        {`Staking is not enabled`}
+      </Flex>
       <Box
         css={{
           height: '100%',
