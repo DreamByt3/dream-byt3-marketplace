@@ -3,7 +3,7 @@
 
 DREAMBYT3 is the first sustainable NFT marketplace, powered by $DREAM and the community.
 
-LBP Live on Fjord Foundry: [DREAM LBP](https://fjordfoundry.com/pools/mainnet/0x80bA1773E82070c284907EAEe2Ba05453F14F071)
+Buy $DREAM on [Uniswap](https://app.uniswap.org/swap?outputCurrency=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e&chain=ethereum)
 
 ---
 
@@ -16,7 +16,7 @@ LBP Live on Fjord Foundry: [DREAM LBP](https://fjordfoundry.com/pools/mainnet/0x
 ---
 [X](https://x.com/DreamByt3)
 ---
-[Discord](https://discord.gg/rt5VmK2pKK)
+[Discord](https://discord.gg/ENKWhXFnHj)
 ---
 [Medium](https://medium.com/@DreamByt3)
 ---
