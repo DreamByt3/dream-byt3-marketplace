@@ -90,7 +90,7 @@ const SwapPage = () => {
               onSwitchChain={(params: AddEthereumChainParameter) => {
                 switchNetworkAsync?.(+params.chainId)
               }}
-              defaultOutputTokenAddress={[dreamContracts[chain.id]]}
+              defaultOutputTokenAddress={dreamContracts[chain.id]}
               onConnectWalletClick={() => openConnectModal?.()}
               provider={provider}
               onError={(error: any) => {
