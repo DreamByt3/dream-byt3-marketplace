@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
+import React, {FC, useMemo} from 'react'
 import { styled } from '../../stitches.config'
 import { StyledComponent } from '@stitches/react/types/styled-component'
 import { useReservoirClient } from '@reservoir0x/reservoir-kit-ui'
 import { zeroAddress } from 'viem'
+import {DREAM_LP, VE_DREAM} from "../../utils/contracts";
 
 type Props = {
   address: string
@@ -17,13 +18,28 @@ const CryptoCurrencyIcon: FC<Props> = ({
   css,
 }) => {
   const client = useReservoirClient()
-  const chain = client?.chains?.find((chain) =>
+  const chain = (client?.chains || [])?.find((chain) =>
     chainId !== undefined ? chain.id === chainId : chain.active
   )
 
+  const imageSrc = useMemo(() => {
+    const isDREAMLP = address.toLowerCase() === DREAM_LP.toLowerCase()
+    const isVEDREAM = address.toLowerCase() === VE_DREAM.toLowerCase()
+
+    if (isDREAMLP) {
+      return '/icons/currency/dream-lp.svg'
+    }
+
+    if (isVEDREAM) {
+      return '/icons/currency/ve-dream.svg'
+    }
+
+    return `${chain?.baseApiUrl}/redirect/currency/${address}/icon/v1`
+  }, [address])
+
   return (
     <StyledImg
-      src={`${chain?.baseApiUrl}/redirect/currency/${address}/icon/v1`}
+      src={imageSrc}
       css={css}
     />
   )

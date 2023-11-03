@@ -26,7 +26,7 @@ import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 import Decimal from "decimal.js-light";
 import {DREAM, DREAM_LP, VE_DREAM} from "../../utils/contracts";
 
-export const MAX_LOCK_PERIOD_IN_DAYS = 365; // 1y
+export const MAX_LOCK_PERIOD_IN_DAYS = 364; // 1y
 export const MIN_LOCK_PERIOD_IN_DAYS = 7; // 1w
 
 const StakingChainPage: FC = () => {
@@ -34,7 +34,7 @@ const StakingChainPage: FC = () => {
   const [activeTab, setActiveTab] = useState('staking')
   const [valueEth, setValueEth] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
-  const [maxDuration, setMaxDuration] = useState<string>('12')
+  const [maxDuration, setMaxDuration] = useState<string>('52')
   const [enableUnStake, setEnableUnStake] = useState<boolean>(false)
   const { address } = useAccount()
   const mounted = useMounted()
@@ -81,7 +81,7 @@ const StakingChainPage: FC = () => {
     if (new Date((parseInt(`${locked?.result?.[1]}`) || 0) * 1000) > new Date()) {
       const timeStamp =  new Date(parseInt(`${locked?.result?.[1] || 0}`) * 1000);
       const roundedTime = dayjs(timeStamp).startOf('day')
-      const oneYear = roundToWeek(dayjs().startOf('day').add(MAX_LOCK_PERIOD_IN_DAYS, 'days'))
+      const oneYear = dayjs().startOf('day').add(MAX_LOCK_PERIOD_IN_DAYS, 'days')
       const daysLeft = oneYear.diff(roundedTime, 'days')
       setMaxDuration(`${Math.ceil(daysLeft / MIN_LOCK_PERIOD_IN_DAYS)}`)
       setEnableUnStake(parseInt(`${locked?.result?.[1] || 0}`) * 1000 < (new Date()).getTime())
@@ -310,7 +310,7 @@ const StakingChainPage: FC = () => {
                         gap: 5
                       }}
                     >
-                      <Text style="body3">{+maxDuration < 1 ? 'You have locked for max duration' : `Stake Duration (${+maxDuration > 1 ? `1 to ${maxDuration}` : '1'}) months`}</Text>
+                      <Text style="body3">{+maxDuration < 1 ? 'You have locked for max duration' : `Stake Duration (${+maxDuration > 1 ? `1 to ${maxDuration}` : '1'}) weeks`}</Text>
                       <Tooltip
                         content={
                           <Text

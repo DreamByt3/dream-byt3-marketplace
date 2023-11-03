@@ -1,5 +1,5 @@
 import {useContractReads} from "wagmi";
-import {Chain, formatUnits} from "viem";
+import {Chain, formatUnits, ContractFunctionConfig, parseUnits} from "viem";
 import dayjs from "dayjs";
 
 import useUSDAndNativePrice from "./useUSDAndNativePrice";
@@ -7,18 +7,17 @@ import useUSDAndNativePrice from "./useUSDAndNativePrice";
 import FeeDistributorAbi from "../artifacts/FeeDistributorAbi";
 import veDREAMAbi from "../artifacts/veDREAMAbi";
 import DREAMLPAbi from "../artifacts/DREAMLPAbi";
-import UniswapV3Abi from "../artifacts/UniswapV3Abi";
 
 import {getPreviousWeek} from "../utils/date";
 import {
   DREAM,
   DREAM_LP,
-  POOL_ADDRESS,
   STAKING,
   STAKING_FEE_DISTRIBUTOR,
   VE_DREAM,
   WETH_ADDRESS
 } from "../utils/contracts";
+import {formatBN} from "../utils/numbers";
 
 const useAPR = (timestamp: number | undefined, chain: Chain) => {
   timestamp = timestamp === undefined ? dayjs().startOf('day').toDate().getTime() : timestamp
@@ -27,7 +26,7 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
   const { data, isLoading } = useContractReads({
     contracts: [
       {
-        abi: FeeDistributorAbi,
+        abi: FeeDistributorAbi as any,
         address: STAKING_FEE_DISTRIBUTOR,
         chainId: chain?.id,
         functionName: 'getTokensDistributedInWeek',
@@ -49,22 +48,13 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
       {
         abi: DREAMLPAbi,
         address: DREAM_LP as `0x${string}`,
-        functionName: 'getBasePosition',
-        chainId: chain?.id,
-      },
-      {
-        abi: UniswapV3Abi,
-        address: POOL_ADDRESS as `0x${string}`,
-        functionName: 'liquidity',
+        functionName: 'getReserves',
         chainId: chain?.id,
       }
-    ],
-    allowFailure: true,
-    watch: false,
-    keepPreviousData: true
+    ]
   })
 
-  const [distributedWeth, distributedDREAM, totalSupplyVeDream, basePositionLP, liquidity] = data || []
+  const [distributedWeth, distributedDREAM, totalSupplyVeDream, reserves] = data || []
 
   const { data: wethPrice, isLoading: isLoadingWethPrice } = useUSDAndNativePrice({
     chainId: chain.id,
@@ -78,20 +68,33 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
     price: distributedDREAM?.result || BigInt(0)
   })
 
+  const { data: wethLiquidity, isLoading: isLoadingWethLiquidity } = useUSDAndNativePrice({
+    chainId: chain.id,
+    contract: WETH_ADDRESS,
+    price: reserves?.result?.[0] || BigInt(0)
+  })
+
+  const { data: dreamLiquidity, isLoading: isLoadingDreamLiquidity } = useUSDAndNativePrice({
+    chainId: chain.id,
+    contract: DREAM,
+    price: reserves?.result?.[1] || BigInt(0)
+  })
+
   const veDreamSupply = parseFloat(formatUnits(totalSupplyVeDream?.result || BigInt(0), 18))
   const lastWeekWethRevenue =  parseFloat(formatUnits(BigInt(wethPrice?.usdPrice || 0), 8) || '0')
   const lastWeekDREAMRevenue =  parseFloat(formatUnits(BigInt(dreamPrice?.usdPrice || 0), 8) || '0')
 
   const lastWeekRevenue = (lastWeekWethRevenue + lastWeekDREAMRevenue)
   const dailyRevenue = lastWeekRevenue / 7;
-  const dreamLPLiquidity = parseFloat(formatUnits((basePositionLP?.result?.[0] || BigInt(0)) + (liquidity?.result || BigInt(0)), 18))
+  const dreamLPLiquidity = parseFloat(wethLiquidity?.usdPrice || 0) + parseFloat(dreamLiquidity?.usdPrice || 0)
+
   const APR = Math.round(
     (10000 * (365 * dailyRevenue)) / (dreamLPLiquidity * veDreamSupply)
   ) * 52
 
   return {
-    isLoading: isLoading || isLoadingWethPrice || isLoadingDREAMPrice,
-    TVL: (basePositionLP?.result?.[0] || BigInt(0)),
+    isLoading: isLoading || isLoadingWethPrice || isLoadingDREAMPrice || isLoadingDreamLiquidity || isLoadingWethLiquidity,
+    TVL: dreamLPLiquidity,
     dailyRevenue,
     lastWeekRevenue,
     dailyAPR: APR / 365,

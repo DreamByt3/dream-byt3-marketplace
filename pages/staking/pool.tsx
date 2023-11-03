@@ -1,6 +1,6 @@
 import {useCallback, useContext, useMemo, useState} from "react";
 import {
-  useAccount, useBalance,
+  useAccount, useBalance, useContractRead,
   useContractReads,
   useContractWrite,
   usePrepareContractWrite,
@@ -27,13 +27,14 @@ import {formatBN} from "utils/numbers";
 
 import ERC20Abi from 'artifacts/ERC20Abi'
 import ERC20WethAbi from 'artifacts/ERC20WethAbi'
-import UniProxyAbi from 'artifacts/UniProxyAbi'
+import UniswapV2RouterAbi from 'artifacts/UniswapV2RouterAbi'
 import useUSDAndNativePrice from "../../hooks/useUSDAndNativePrice";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import AddressCollapsible from "../../components/staking/AddressCollapsible";
 import AlertChainSwitch from "../../components/common/AlertChainSwitch";
-import {DREAM, DREAM_LP, POOL_ADDRESS, STAKING_UNI_PROXY, WETH_ADDRESS} from "../../utils/contracts";
+import {DREAM, DREAM_LP, STAKING_UNI_ROUTER, WETH_ADDRESS} from "../../utils/contracts";
 import {MaxUint256} from "@ethersproject/constants";
+import DREAMLPAbi from "../../artifacts/DREAMLPAbi";
 
 const PoolPage = () => {
   const mounted = useMounted()
@@ -50,16 +51,13 @@ const PoolPage = () => {
     'DREAM': DREAM,
     'WETH': WETH_ADDRESS,
     'DREAM/WETH LP': DREAM_LP,
-    'UniProxy': STAKING_UNI_PROXY,
-    'Pool': POOL_ADDRESS
+    'Uniswap Router': STAKING_UNI_ROUTER
   }
 
   const { data: ethBalance } = useBalance({
     address
-
   })
 
-  console.log('ethBalance', ethBalance)
   const { data: balanceData, refetch: refetchBalance } = useContractReads({
     contracts: [
       {
@@ -100,13 +98,13 @@ const PoolPage = () => {
         abi:  ERC20Abi,
         address: WETH_ADDRESS as `0x${string}`,
         functionName:  'allowance',
-        args: [address as `0x${string}`, DREAM_LP],
+        args: [address as `0x${string}`, STAKING_UNI_ROUTER],
       },
       {
         abi:  ERC20Abi,
         address: DREAM,
         functionName:  'allowance',
-        args: [address as `0x${string}`, DREAM_LP],
+        args: [address as `0x${string}`, STAKING_UNI_ROUTER],
       }
     ],
     watch: false,
@@ -114,6 +112,16 @@ const PoolPage = () => {
     enabled: !!address,
   })
 
+  const { data: reserveData } = useContractRead({
+    abi: DREAMLPAbi,
+    address: DREAM_LP,
+    functionName: 'getReserves',
+    args: [],
+    watch: true,
+    keepPreviousData: true
+  })
+
+  const [reserveETH, reserveDream, blockTimestampLast] = reserveData || []
   const [wethBalance, dreamBalance, dreamLPBalance ] = balanceData || [] as any
   const [wethAllowance, dreamAllowance] = allowanceData || [] as any
   const wethValue = useMemo(() => parseEther(valueWEth as `${number}`), [valueWEth])
@@ -134,22 +142,21 @@ const PoolPage = () => {
     if (value > BigInt(0)) {
       publicClient.readContract(
         {
-          abi: UniProxyAbi,
-          address: STAKING_UNI_PROXY,
-          functionName: 'getDepositAmount',
-          args: [DREAM_LP, isWethChange ? WETH_ADDRESS : DREAM, value]
+          abi: UniswapV2RouterAbi,
+          address: STAKING_UNI_ROUTER,
+          functionName: 'quote',
+          args: [value, isWethChange ? reserveETH : reserveDream, isWethChange ? reserveDream : reserveETH]
         }).then(async (res) => {
-          const minVal = BigInt(res[0] || 0)
-          const maxVal = BigInt(res[1] || 0)
-          const otherVal = maxVal - ((maxVal - minVal) / BigInt(2))
-          const val = formatEther(otherVal, 'wei')
+          // const minVal = res
+          // const otherVal = maxVal - ((maxVal - minVal) / BigInt(2))
+          const val = (parseFloat(formatEther(res, 'wei')) * 0.95).toString()
           if (isWethChange) {
             setValueDREAM(val)
           } else {
             setValueWEth(val)
           }
 
-          setExpectedDREAMLP((isWethChange ? wethValue : otherVal) * BigInt(2))
+          setExpectedDREAMLP((isWethChange ? wethValue : res) * BigInt(2))
           setChangedValue('')
           setLoading(false)
         }).catch(() => {
@@ -161,10 +168,11 @@ const PoolPage = () => {
 
   const { config, error: preparedError, refetch: refetchPrepareContract } = usePrepareContractWrite({
     enabled: !!address && !isZeroValue,
-    address: STAKING_UNI_PROXY,
-    abi: UniProxyAbi,
-    functionName: 'deposit',
-    args: [dreamValue, wethValue, address as `0x${string}`, DREAM_LP, [BigInt(0),BigInt(0),BigInt(0),BigInt(0)]]
+    address: STAKING_UNI_ROUTER,
+    abi: UniswapV2RouterAbi,
+    functionName: 'addLiquidity',
+    args: [DREAM, WETH_ADDRESS, dreamValue, wethValue, address as `0x${string}`, DREAM_LP],
+    account: address
   })
 
   const { writeAsync, error, data, isLoading } = useContractWrite(config)
@@ -174,6 +182,7 @@ const PoolPage = () => {
     abi: ERC20Abi,
     functionName: 'approve',
     args:  [DREAM_LP, BigInt(MaxUint256.toString())],
+    account: address
   })
 
   const { writeAsync: approveDREAMAsync, isLoading: isLoadingDREAMApproval } = useContractWrite({
@@ -181,13 +190,15 @@ const PoolPage = () => {
     abi: ERC20Abi,
     functionName: 'approve',
     args:  [DREAM_LP, BigInt(MaxUint256.toString())],
+    account: address
   })
 
   const { writeAsync: wrapEthAsync, isLoading: isLoadingWrapEth } = useContractWrite({
     address: WETH_ADDRESS as `0x${string}`,
     abi: ERC20WethAbi,
     functionName: 'deposit',
-    value: wethValue - BigInt(wethBalance?.result || 0)
+    value: wethValue - BigInt(wethBalance?.result || 0),
+    account: address
   })
 
   const { isLoading: isLoadingTransaction, isSuccess = true } = useWaitForTransaction({
@@ -500,6 +511,7 @@ const PoolPage = () => {
                   address={WETH_ADDRESS as `0x${string}`}
                   chainId={mainnet.id}
                   css={{
+                    objectFit: 'contain',
                     position: 'absolute',
                     width: 25,
                     height: 25,
@@ -586,6 +598,7 @@ const PoolPage = () => {
                   address={DREAM}
                   chainId={mainnet.id}
                   css={{
+                    objectFit: 'contain',
                     position: 'absolute',
                     width: 25,
                     height: 25,
