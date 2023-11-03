@@ -17,7 +17,6 @@ import {
   VE_DREAM,
   WETH_ADDRESS
 } from "../utils/contracts";
-import {formatBN} from "../utils/numbers";
 
 const useAPR = (timestamp: number | undefined, chain: Chain) => {
   timestamp = timestamp === undefined ? dayjs().startOf('day').toDate().getTime() : timestamp
@@ -26,7 +25,7 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
   const { data, isLoading } = useContractReads({
     contracts: [
       {
-        abi: FeeDistributorAbi as any,
+        abi: FeeDistributorAbi,
         address: STAKING_FEE_DISTRIBUTOR,
         chainId: chain?.id,
         functionName: 'getTokensDistributedInWeek',

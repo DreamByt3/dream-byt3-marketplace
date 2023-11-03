@@ -175,7 +175,16 @@ const PoolPage: FC<Props> = () => {
     address: STAKING_UNI_ROUTER,
     abi: UniswapV2RouterAbi,
     functionName: 'addLiquidity',
-    args: [DREAM, WETH_ADDRESS, dreamValue, wethValue, address as `0x${string}`, DREAM_LP],
+    args: [
+      WETH_ADDRESS,
+      DREAM,
+      wethValue,
+      dreamValue,
+      parseEther(`${parseFloat(valueWEth) * 0.97}`), // 0.3% slippage
+      parseEther(`${parseFloat(valueDREAM) * 0.97}`), // 0.3% slippage
+      address as `0x${string}`,
+      Math.round(((new Date()).getTime() + (1000 * 60 * 5)) / 1000) // 5 Minute Deadline
+    ],
     account: address
   })
 
