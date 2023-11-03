@@ -1,4 +1,4 @@
-import {useCallback, useContext, useMemo, useState} from "react";
+import {FC, useCallback, useContext, useMemo, useState} from "react";
 import {
   useAccount, useBalance, useContractRead,
   useContractReads,
@@ -59,7 +59,7 @@ const PoolPage: FC<Props> = () => {
   }
 
   const { data: ethBalance } = useBalance({
-    address
+    address: address as `0x${string}`
   })
 
   const { data: balanceData, refetch: refetchBalance } = useContractReads({
@@ -120,7 +120,6 @@ const PoolPage: FC<Props> = () => {
     abi: DREAMLPAbi,
     address: DREAM_LP,
     functionName: 'getReserves',
-    args: [],
     watch: true,
     keepPreviousData: true
   })
@@ -149,7 +148,7 @@ const PoolPage: FC<Props> = () => {
           abi: UniswapV2RouterAbi,
           address: STAKING_UNI_ROUTER,
           functionName: 'quote',
-          args: [value, isWethChange ? reserveETH : reserveDream, isWethChange ? reserveDream : reserveETH]
+          args: [value, isWethChange ? reserveETH || BigInt(0) : reserveDream || BigInt(0), isWethChange ? reserveDream || BigInt(0) : reserveETH || BigInt(0)]
         }).then(async (res) => {
           // const minVal = res
           // const otherVal = maxVal - ((maxVal - minVal) / BigInt(2))
@@ -183,7 +182,7 @@ const PoolPage: FC<Props> = () => {
       parseEther(`${parseFloat(valueWEth) * 0.97}`), // 0.3% slippage
       parseEther(`${parseFloat(valueDREAM) * 0.97}`), // 0.3% slippage
       address as `0x${string}`,
-      Math.round(((new Date()).getTime() + (1000 * 60 * 5)) / 1000) // 5 Minute Deadline
+      BigInt(Math.round(((new Date()).getTime() + (1000 * 60 * 5)) / 1000)) // 5 Minute Deadline
     ],
     account: address
   })

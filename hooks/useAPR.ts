@@ -85,7 +85,7 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
 
   const lastWeekRevenue = (lastWeekWethRevenue + lastWeekDREAMRevenue)
   const dailyRevenue = lastWeekRevenue / 7;
-  const dreamLPLiquidity = parseFloat(wethLiquidity?.usdPrice || 0) + parseFloat(dreamLiquidity?.usdPrice || 0)
+  const dreamLPLiquidity = parseFloat(wethLiquidity?.usdPrice || '0') + parseFloat(dreamLiquidity?.usdPrice || '0')
 
   const APR = Math.round(
     (10000 * (365 * dailyRevenue)) / (dreamLPLiquidity * veDreamSupply)
