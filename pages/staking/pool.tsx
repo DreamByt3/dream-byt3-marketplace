@@ -123,8 +123,7 @@ const PoolPage: FC<Props> = () => {
         functionName: 'totalSupply',
       }
     ],
-    watch: true,
-    keepPreviousData: true
+    watch: true
   })
 
   const [reserveData, totalSupplyLP] = lpData || [] as any
@@ -169,9 +168,10 @@ const PoolPage: FC<Props> = () => {
             setValueWEth(val)
           }
 
-          const wethLiquidity = wethValue * BigInt(totalSupplyLP?.result || 0) / BigInt(reserveETH || 0);
-          const dreamLiquidity = dreamValue * BigInt(totalSupplyLP?.result || 0) / BigInt(reserveDream || 0)
-          const expectedDreamLP = wethLiquidity > dreamLiquidity ? dreamLiquidity : wethLiquidity;
+          const wethLiquidity = (isWethChange ? value : parseEther(val)) * BigInt(totalSupplyLP?.result || 0) / BigInt(reserveETH || 0);
+          const dreamLiquidity = (isWethChange ? parseEther(val) : value) * BigInt(totalSupplyLP?.result || 0) / BigInt(reserveDream || 0)
+          const expectedDreamLP = dreamLiquidity > wethLiquidity ? wethLiquidity : dreamLiquidity;
+          console.log(wethLiquidity, dreamLiquidity, expectedDreamLP, res, totalSupplyLP?.result)
           setExpectedDREAMLP(expectedDreamLP)
           setChangedValue('')
           setLoading(false)
