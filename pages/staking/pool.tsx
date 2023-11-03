@@ -132,9 +132,9 @@ const PoolPage: FC<Props> = () => {
   const [wethAllowance, dreamAllowance] = allowanceData || [] as any
   const wethValue = useMemo(() => parseEther(valueWEth as `${number}`), [valueWEth])
   const dreamValue = useMemo(() => parseEther(valueDREAM as `${number}`), [valueDREAM])
-  const requireWethAllowance = BigInt(wethAllowance?.result || 0) < wethValue
-  const requireDREAMAllowance = BigInt(dreamAllowance?.result || 0) < dreamValue;
-  const requireETHWrap = BigInt(wethBalance?.result || 0) < wethValue && (BigInt(ethBalance?.value || 0) + BigInt(wethBalance?.result || 0)) >= wethValue
+  const requireWethAllowance = useMemo(() => BigInt(wethAllowance?.result || 0) < wethValue, [wethAllowance?.result, wethValue]);
+  const requireDREAMAllowance = useMemo(() => BigInt(dreamAllowance?.result || 0) < dreamValue, [dreamAllowance?.result, dreamValue]);
+  const requireETHWrap = useMemo(() => BigInt(wethBalance?.result || 0) < wethValue && (BigInt(ethBalance?.value || 0) + BigInt(wethBalance?.result || 0)) >= wethValue, [ethBalance?.value, wethBalance?.result, wethValue])
 
   const { data: usdPrice, isLoading: isLoadingUSDPrice } = useUSDAndNativePrice({
     chainId: mainnet.id,
@@ -159,8 +159,6 @@ const PoolPage: FC<Props> = () => {
           functionName: 'quote',
           args: [value, isWethChange ? reserveETH || BigInt(0) : reserveDream || BigInt(0), isWethChange ? reserveDream || BigInt(0) : reserveETH || BigInt(0)]
         }).then(async (res) => {
-          // const minVal = res
-          // const otherVal = maxVal - ((maxVal - minVal) / BigInt(2))
           const val = (parseFloat(formatEther(res, 'wei')) * 0.97).toString()
           if (isWethChange) {
             setValueDREAM(val)
