@@ -35,8 +35,12 @@ import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 import {DREAM, DREAM_LP, STAKING_UNI_ROUTER, WETH_ADDRESS} from "../../utils/contracts";
 import {MaxUint256} from "@ethersproject/constants";
 import DREAMLPAbi from "../../artifacts/DREAMLPAbi";
+import {InferGetServerSidePropsType} from "next";
+import {getServerSideProps} from "../portfolio/settings";
 
-const PoolPage = () => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>
+
+const PoolPage: FC<Props> = () => {
   const mounted = useMounted()
   const { address} = useAccount()
   const { openConnectModal } = useConnectModal()
@@ -530,7 +534,7 @@ const PoolPage = () => {
                   <Text
                     as={Link}
                     style="body3"
-                    href="https://swap.defillama.com/?chain=mainnet&to=0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+                    href="/swap/?output=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
                     target="_blank"
                     css={{
                       backgroundColor: '$gray8',
@@ -550,7 +554,7 @@ const PoolPage = () => {
                   <Text
                     as={Link}
                     style="body3"
-                    href="https://swap.defillama.com/?chain=mainnet&to=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e"
+                    href="/swap/?output=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e"
                     target="_blank"
                     css={{
                       backgroundColor: '$gray8',
@@ -723,5 +727,7 @@ const PoolPage = () => {
     </Layout>
   )
 }
+
+
 
 export default PoolPage

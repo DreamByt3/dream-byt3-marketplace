@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {FC, useContext, useEffect, useState} from "react";
 import {useAccount, useSwitchNetwork} from "wagmi";
 import {Web3Provider} from "@ethersproject/providers";
 import uniswapToken from '@uniswap/default-token-list'
@@ -15,7 +15,8 @@ import {parseError} from "../utils/error";
 import {mainnet} from "viem/chains";
 import ChainToggle from "../components/common/ChainToggle";
 import AlertChainSwitch from "../components/common/AlertChainSwitch";
-import dreamContracts from "../utils/dreamContracts";
+import {DREAM} from "../utils/contracts";
+import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 
 const tokens = [
   {
@@ -28,9 +29,11 @@ const tokens = [
   }
 ]
 
-const allowedTokenSymbols = ['ETH', 'DREAM']
+const allowedTokenSymbols = ['ETH', 'WETH', 'DREAM']
 
-const SwapPage = () => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>
+
+const SwapPage : FC<Props> = (props) => {
   const mounted = useMounted()
   const { openConnectModal } = useConnectModal()
   const { addToast } = useContext(ToastContext)
@@ -41,6 +44,8 @@ const SwapPage = () => {
   const chain = mainnet
   const tokenList = [...uniswapToken.tokens, ...tokens]
     .filter((token) => token.chainId === (marketplaceChain?.id || 1) && allowedTokenSymbols.includes(token.symbol))
+
+  console.log('tokenList', tokenList)
   const [provider, setProvider] = useState<Web3Provider | undefined>()
   const { connector, isConnected } = useAccount()
   useEffect(() => {
@@ -54,7 +59,10 @@ const SwapPage = () => {
       setProvider(new Web3Provider(provider, marketplaceChain.id))
     })
   }, [connector, marketplaceChain.id])
+  const inputToken = props.ssr?.input || undefined
+  const outputToken = props.ssr?.output || DREAM
 
+  console.log(props.ssr);
 
   return (
     <Layout>
@@ -90,7 +98,8 @@ const SwapPage = () => {
               onSwitchChain={(params: AddEthereumChainParameter) => {
                 switchNetworkAsync?.(+params.chainId)
               }}
-              defaultOutputTokenAddress={dreamContracts[chain.id]}
+              defaultInputTokenAddress={inputToken}
+              defaultOutputTokenAddress={outputToken}
               onConnectWalletClick={() => openConnectModal?.()}
               provider={provider}
               onError={(error: any) => {
@@ -129,6 +138,24 @@ const SwapPage = () => {
       </Box>
     </Layout>
   )
+}
+
+type SSRProps = {
+  input: string | null
+  output: string
+}
+
+export const getServerSideProps: GetServerSideProps<{
+  ssr: SSRProps
+}> = async ({ query }) => {
+  const input = query?.input as string || null
+  const output = query?.output as string || DREAM
+
+  return {
+    props: {
+      ssr: { input, output },
+    },
+  }
 }
 
 export default SwapPage

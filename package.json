@@ -36,6 +36,7 @@
     "@reservoir0x/reservoir-kit-ui": "1.11.2",
     "@sentry/nextjs": "^7.53.1",
     "@types/uuid": "^9.0.1",
+    "@uniswap/default-token-list": "^11.9.0",
     "@upstash/redis": "^1.23.4",
     "@walletconnect/ethereum-provider": "^2.10.4",
     "dayjs": "^1.11.6",
