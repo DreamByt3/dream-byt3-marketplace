@@ -6,6 +6,7 @@ import {Box, Button, CryptoCurrencyIcon, Flex, Text} from "../primitives";
 
 import {formatBN} from "utils/numbers";
 import dayjs from "dayjs";
+import {DREAM} from "../../utils/contracts";
 
 type Props = {
   lockedBalance: bigint
@@ -35,7 +36,7 @@ const StakeList : FC<Props> = (props) => {
             transition: 'border-color 0.3s',
             '&:hover': {
               backgroundColor: 'rgba(255,255,255,0.1)',
-              borderColor: '#79ffa8',
+              borderColor: '#f4a7bb',
             }
           }}
         >
@@ -46,7 +47,7 @@ const StakeList : FC<Props> = (props) => {
             }}
           >
             <CryptoCurrencyIcon
-              address="0x82496243c0a1a39c5c6250bf0115c134Ba76698c"
+              address={DREAM}
               chainId={mainnet.id}
               css={{
                 width: 20,
@@ -102,7 +103,7 @@ const StakeList : FC<Props> = (props) => {
       ) : (
         <Box
           css={{
-            border: '1px dashed #79ffa8',
+            border: '1px dashed #f4a7bb',
             opacity: 0.2,
             minWidth: '16.125rem',
             background: '#323232',
@@ -116,7 +117,7 @@ const StakeList : FC<Props> = (props) => {
       {/*  <Box*/}
       {/*    key={`box-${i}`}*/}
       {/*    css={{*/}
-      {/*      border: '1px dashed #79ffa8',*/}
+      {/*      border: '1px dashed #f4a7bb',*/}
       {/*      opacity: 0.2,*/}
       {/*      minWidth: '16.125rem',*/}
       {/*      background: '#323232',*/}
