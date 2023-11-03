@@ -392,19 +392,6 @@ const PoolPage: FC<Props> = () => {
     <Layout>
       <AlertChainSwitch chainId={mainnet.id}/>
       <Flex
-        align="center"
-        justify="center"
-        css={{
-          p: 10,
-          backgroundColor: '$red7',
-          width: '100%',
-          top: 80,
-          left: 0,
-        }}
-      >
-        {`Pool is not enabled`}
-      </Flex>
-      <Flex
         direction="column"
         css={{
           mx: 20,
