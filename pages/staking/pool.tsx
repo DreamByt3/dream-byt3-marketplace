@@ -88,12 +88,6 @@ const PoolPage: FC<Props> = () => {
     enabled: !!address,
   })
 
-  const { data: usdPrice, isLoading: isLoadingUSDPrice } = useUSDAndNativePrice({
-    chainId: mainnet.id,
-    contract: WETH_ADDRESS,
-    price: expectedDREAMLP
-  })
-
   const isZeroValue = parseEther(valueWEth as `${number}`, 'wei', ) <= BigInt(0)
 
   const { data: allowanceData, refetch: refetchAllowance } = useContractReads({
@@ -143,6 +137,12 @@ const PoolPage: FC<Props> = () => {
   const requireDREAMAllowance = BigInt(dreamAllowance?.result || 0) < dreamValue;
   const requireETHWrap = BigInt(wethBalance?.result || 0) < wethValue && (BigInt(ethBalance?.value || 0) + BigInt(wethBalance?.result || 0)) >= wethValue
 
+  const { data: usdPrice, isLoading: isLoadingUSDPrice } = useUSDAndNativePrice({
+    chainId: mainnet.id,
+    contract: WETH_ADDRESS,
+    price: wethValue * BigInt(2)
+  })
+
   useDebouncedEffect(() => {
     if (changedValue === '') {
       return;
@@ -180,7 +180,7 @@ const PoolPage: FC<Props> = () => {
           setLoading(false)
         })
     }
-  }, [changedValue, wethValue, dreamValue, lpData], 1000)
+  }, [changedValue, wethValue, dreamValue, totalSupplyLP?.result, reserveDream, reserveETH], 1000)
 
   const { config, error: preparedError, refetch: refetchPrepareContract } = usePrepareContractWrite({
     enabled: !!address && !isZeroValue,
