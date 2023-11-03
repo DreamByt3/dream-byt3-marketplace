@@ -116,15 +116,25 @@ const PoolPage: FC<Props> = () => {
     enabled: !!address,
   })
 
-  const { data: reserveData } = useContractRead({
-    abi: DREAMLPAbi,
-    address: DREAM_LP,
-    functionName: 'getReserves',
+  const { data: lpData } = useContractReads({
+    contracts: [
+      {
+        abi: DREAMLPAbi,
+        address: DREAM_LP,
+        functionName: 'getReserves'
+      },
+      {
+        abi: DREAMLPAbi,
+        address: DREAM_LP,
+        functionName: 'totalSupply',
+      }
+    ],
     watch: true,
     keepPreviousData: true
   })
 
-  const [reserveETH, reserveDream, blockTimestampLast] = reserveData || []
+  const [reserveData, totalSupplyLP] = lpData || [] as any
+  const [reserveETH, reserveDream, blockTimestampLast] = reserveData?.result || [] as any
   const [wethBalance, dreamBalance, dreamLPBalance ] = balanceData || [] as any
   const [wethAllowance, dreamAllowance] = allowanceData || [] as any
   const wethValue = useMemo(() => parseEther(valueWEth as `${number}`), [valueWEth])
@@ -152,14 +162,17 @@ const PoolPage: FC<Props> = () => {
         }).then(async (res) => {
           // const minVal = res
           // const otherVal = maxVal - ((maxVal - minVal) / BigInt(2))
-          const val = (parseFloat(formatEther(res, 'wei')) * 0.95).toString()
+          const val = (parseFloat(formatEther(res, 'wei')) * 0.97).toString()
           if (isWethChange) {
             setValueDREAM(val)
           } else {
             setValueWEth(val)
           }
 
-          setExpectedDREAMLP((isWethChange ? wethValue : res) * BigInt(2))
+          const wethLiquidity = wethValue * BigInt(totalSupplyLP?.result || 0) / BigInt(reserveETH || 0);
+          const dreamLiquidity = dreamValue * BigInt(totalSupplyLP?.result || 0) / BigInt(reserveDream || 0)
+          const expectedDreamLP = wethLiquidity > dreamLiquidity ? dreamLiquidity : wethLiquidity;
+          setExpectedDREAMLP(expectedDreamLP)
           setChangedValue('')
           setLoading(false)
         }).catch(() => {
@@ -167,7 +180,7 @@ const PoolPage: FC<Props> = () => {
           setLoading(false)
         })
     }
-  }, [changedValue, wethValue, dreamValue], 1000)
+  }, [changedValue, wethValue, dreamValue, lpData], 1000)
 
   const { config, error: preparedError, refetch: refetchPrepareContract } = usePrepareContractWrite({
     enabled: !!address && !isZeroValue,

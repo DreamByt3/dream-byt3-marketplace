@@ -135,19 +135,6 @@ const StakingPage = () => {
 
   return (
     <Layout>
-      <Flex
-        align="center"
-        justify="center"
-        css={{
-          p: 10,
-          backgroundColor: '$red7',
-          width: '100%',
-          top: 80,
-          left: 0,
-        }}
-      >
-        {`Staking is not enabled`}
-      </Flex>
       <Box
         css={{
           height: '100%',

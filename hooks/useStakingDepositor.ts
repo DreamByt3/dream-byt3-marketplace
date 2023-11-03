@@ -3,7 +3,7 @@ import useSWR, {SWRConfiguration} from "swr";
 import {DREAMLPToken} from "./useStakingLP";
 
 const subgraphFetcher = <T>([query, variables]: [RequestDocument, Variables]) =>
-  request<T>('https://api.thegraph.com/subgraphs/name/ryuzaki01/staking', query, variables)
+  request<T>('https://api.thegraph.com/subgraphs/name/oxcodex/dreambyt3-staking', query, variables)
 
 export type StakingDepositor = {
   id: `0x${string}`
