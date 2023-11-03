@@ -30,7 +30,6 @@ import {formatBN} from "utils/numbers";
 import ERC20Abi from 'artifacts/ERC20Abi'
 import veDREAMAbi from 'artifacts/veDREAMAbi'
 import {DREAM_LP, VE_DREAM} from "../../utils/contracts";
-import AlertChainSwitch from "../../components/common/AlertChainSwitch";
 
 const StakingPage = () => {
   const isMounted = useMounted()
@@ -270,6 +269,7 @@ const StakingPage = () => {
                   )}
                   {activeTab === 'staking' && (
                     <StakingList
+                      APR={APR}
                       dreamLPBalance={dreamLPBalance?.result || BigInt(0)}
                     />
                   )}

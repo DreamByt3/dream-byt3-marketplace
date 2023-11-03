@@ -17,7 +17,6 @@ import UnStakingTab from "components/staking/UnstakingTab";
 import {useMarketplaceChain, useMounted} from "hooks";
 
 import {formatBN} from "utils/numbers";
-import {roundToWeek} from "utils/round";
 
 import DREAMAbi from 'artifacts/DREAMAbi'
 import veDREAMAbi from "artifacts/veDREAMAbi";

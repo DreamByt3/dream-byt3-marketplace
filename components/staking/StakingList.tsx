@@ -5,13 +5,15 @@ import { mainnet } from "viem/chains";
 import {Box, Button, CryptoCurrencyIcon, Flex, Text} from "../primitives";
 
 import {formatBN} from "utils/numbers";
+import {DREAM_LP} from "../../utils/contracts";
 
 type Props = {
+  APR: number
   dreamLPBalance: bigint
 }
 
 const StakingList: FC<Props> = (props) => {
-  const { dreamLPBalance } = props
+  const { dreamLPBalance, APR } = props
 
   return (
     <>
@@ -44,7 +46,7 @@ const StakingList: FC<Props> = (props) => {
             }}
           >
             <CryptoCurrencyIcon
-              address="0x82496243c0a1a39c5c6250bf0115c134Ba76698c"
+              address={DREAM_LP}
               chainId={mainnet.id}
               css={{
                 width: 20,
@@ -80,7 +82,7 @@ const StakingList: FC<Props> = (props) => {
               direction="column"
             >
               <Text style="body3" css={{ textAlign: 'right' }}>APR</Text>
-              <Text style="h6">986.03%</Text>
+              <Text style="h6">{`${APR}%`}</Text>
             </Flex>
           </Flex>
           <Flex
