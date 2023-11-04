@@ -47,8 +47,8 @@ const developerSectionLinks = [
 
 const companySectionLinks = [
   {
-    name: '$DREAM Token',
-    href: 'https://etherscan.io/address/0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
+    name: 'CoinGecko',
+    href: 'https://www.coingecko.com/en/coins/dream-marketplace',
   }, {
     name: 'Governance',
     href: 'https://snapshot.org/#/dreambyt3.eth',
