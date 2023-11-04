@@ -36,6 +36,16 @@ const currencies = [
     },
     coinGeckoId: 'weth',
   },
+  {
+    address: '0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
+    symbol: 'DREAM',
+    decimals: mainnet.nativeCurrency.decimals,
+    chain: {
+      id: mainnet.id,
+      name: mainnet.name,
+    },
+    coinGeckoId: 'dream-marketplace',
+  },
   /*{
     address: zeroAddress,
     symbol: 'MATIC',
