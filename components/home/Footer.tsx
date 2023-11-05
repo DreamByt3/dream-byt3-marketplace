@@ -55,7 +55,7 @@ const companySectionLinks = [
     href: 'https://snapshot.org/#/dreambyt3.eth',
   },
   {
-    name: 'DREAM Token Contract On Etherscan',
+    name: 'DREAM Contract Address: 0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
     href: 'https://etherscan.io/token/0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
   },
   {
