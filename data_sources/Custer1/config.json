@@ -1,0 +1,10 @@
+{
+    "name": "Custer1",
+    "type": "mongodb-atlas",
+    "config": {
+        "clusterName": "Custer1",
+        "readPreference": "primary",
+        "wireProtocolEnabled": false
+    },
+    "version": 1
+}
