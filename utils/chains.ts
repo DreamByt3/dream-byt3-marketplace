@@ -18,6 +18,7 @@ import {
   // arbitrumNova,
 } from 'wagmi/chains'
 import usdcContracts from './usdcContracts'
+import dreamContracts from './dreamContracts'
 
 //CONFIGURABLE: The default export controls the supported chains for the marketplace. Removing
 // or adding chains will result in adding more or less chains to the marketplace.
@@ -47,10 +48,17 @@ const nativeCurrencyBase = {
 }
 
 const usdcCurrencyBase = {
-  contract: '',
+  contract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
   symbol: 'USDC',
   decimals: 6,
   coinGeckoId: 'usd-coin',
+}
+
+const dreamCurrencyBase = {
+  contract: '0xebcf2fbe20e7bbbd5232eb186b85c143d362074e',
+  symbol: 'DREAM',
+  decimals: 18,
+  coinGeckoId: 'dream-marketplace',
 }
 
 export const DefaultChain: ReservoirChain = {
@@ -82,6 +90,10 @@ export const DefaultChain: ReservoirChain = {
     {
       ...usdcCurrencyBase,
       contract: usdcContracts[mainnet.id],
+    },
+    {
+      ...dreamCurrencyBase,
+      contract: dreamContracts[mainnet.id],
     },
   ],
   oracleBidsEnabled: true,
