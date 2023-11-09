@@ -38,6 +38,7 @@
     "@types/uuid": "^9.0.1",
     "@uniswap/default-token-list": "^11.9.0",
     "@upstash/redis": "^1.23.4",
+    "@vercel/postgres": "^0.5.1",
     "@walletconnect/ethereum-provider": "^2.10.4",
     "dayjs": "^1.11.6",
     "ethers": "^6.8.0",
