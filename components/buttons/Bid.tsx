@@ -58,10 +58,10 @@ const Bid: FC<Props> = ({
         coinGeckoId: 'ethereum',
       },
       {
-        contract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-        symbol: 'USDC',
-        decimals: 6,
-        coinGeckoId: 'usd-coin',
+        contract: '0xebcf2fbe20e7bbbd5232eb186b85c143d362074e',
+        symbol: 'DREAM',
+        decimals: 18,
+        coinGeckoId: 'dream-marketplace',
       },
     ]
   }

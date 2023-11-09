@@ -43,10 +43,7 @@ const developerSectionLinks = [
     name: 'Medium',
     href: 'https://medium.com/@DreamByt3',
   },
-  {
-    name: 'CoinGecko',
-    href: 'https://www.coingecko.com/en/coins/dream-marketplace',
-  },
+
 ]
 
 const companySectionLinks = [
@@ -55,11 +52,7 @@ const companySectionLinks = [
     href: 'https://snapshot.org/#/dreambyt3.eth',
   },
   {
-    name: 'DREAM Contract Address: 0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
-    href: 'https://etherscan.io/token/0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
-  },
-  {
-    name: 'Contact Support: support@dreambyt3.com',
+    name: 'Support: support@dreambyt3.com',
     href: 'mailto:support@dreambyt3.com',
   },
   {
@@ -70,6 +63,22 @@ const companySectionLinks = [
     name: 'Privacy',
     href: '/privacy',
   },
+]
+
+const tokenSectionLinks = [
+  {
+    name: 'CoinGecko',
+    href: 'https://www.coingecko.com/en/coins/dream-marketplace',
+  },
+  {
+    name: 'DexScreener',
+    href: 'https://dexscreener.com/ethereum/0x28f384b76454a2b0d8e41e5b92715e9a36eda494',
+  },
+  {
+    name: 'Contract Address: 0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
+    href: 'https://etherscan.io/token/0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
+  },
+  
 ]
 
 export const Footer = () => {
@@ -105,6 +114,12 @@ export const Footer = () => {
             <SectionLink key={props.name} {...props} />
           ))}
         </Flex>
+      </Flex>
+      <Flex direction="column">
+          <SectionTitle title="DREAM Token" />
+          {tokenSectionLinks.map((props) => (
+            <SectionLink key={props.name} {...props} />
+          ))}
       </Flex>
       <Flex
         direction="column"
