@@ -57,7 +57,7 @@ const PortfolioSettings : NextPage<Props> = ({ ssr }) => {
 
   useEffect(() => {
     if (!data) {
-      signMessage({ message: 'DREAMBYT3 wants you to sign in with your Ethereum address' })
+      signMessage({ message: 'Please sign in with your Ethereum address' })
     }
   }, [data])
 
@@ -94,7 +94,7 @@ const PortfolioSettings : NextPage<Props> = ({ ssr }) => {
         <Flex direction="column" align="center" justify="center" css={{ py: '40vh', gap: 20 }}>
           <Text>Sign in with Ethereum to prove your ownership of this wallet </Text>
           <Button onClick={() => {
-            signMessage({ message: 'DREAMBYT3 wants you to sign in with your Ethereum address' })
+            signMessage({ message: 'Please sign in with your Ethereum address' })
           }}>Sign</Button>
         </Flex>
       </Layout>
