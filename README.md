@@ -3,7 +3,7 @@
 
 DREAMBYT3 is the sustainable NFT marketplace powered by $DREAM and the community.
 
-Buy $DREAM on [Uniswap](https://app.uniswap.org/swap?outputCurrency=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e&chain=ethereum)
+# Buy $DREAM on [Uniswap](https://app.uniswap.org/swap?outputCurrency=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e&chain=ethereum)
 
 ---
 
