@@ -158,7 +158,7 @@ const HamburgerMenu = () => {
                       alignItems: 'center'
                     }}
                   >
-                    {`Token`}
+                    {`Rewards`}
                   </Text>
                   <FontAwesomeIcon icon={faChevronDown} width={20} height={20}/>
                 </Flex>
@@ -233,7 +233,7 @@ const HamburgerMenu = () => {
                       alignItems: 'center'
                     }}
                   >
-                    {`More`}
+                    {`Airdrop`}
                   </Text>
                   <FontAwesomeIcon icon={faChevronDown} width={20} height={20}/>
                 </Flex>
@@ -378,7 +378,7 @@ const HamburgerMenu = () => {
                         alignItems: 'center'
                       }}
                     >
-                      {`Token`}
+                      {`Rewards`}
                     </Text>
                     <FontAwesomeIcon icon={faChevronDown} width={20} height={20}/>
                   </Flex>
