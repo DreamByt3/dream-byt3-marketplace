@@ -16,7 +16,7 @@ import {SessionProvider} from 'next-auth/react'
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-
+import { Analytics } from '@vercel/analytics/react';
 import {
   ReservoirKitProvider,
   darkTheme as reservoirDarkTheme,
@@ -33,6 +33,7 @@ import ReferralContextProvider, {
   ReferralContext,
 } from 'context/ReferralContextProvider'
 import {useTheme} from "next-themes";
+
 
 //CONFIGURABLE: Use nextjs to load your own custom font: https://nextjs.org/docs/basic-features/font-optimization
 const inter = Inter({
@@ -88,6 +89,7 @@ function AppWrapper(props: AppProps & { baseUrl: string }) {
         <ChainContextProvider>
           <ReferralContextProvider>
             <MyApp {...props} />
+            <Analytics />
           </ReferralContextProvider>
         </ChainContextProvider>
       </SessionProvider>

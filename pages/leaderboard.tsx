@@ -114,7 +114,7 @@ const LeaderboardPage: NextPage = () => {
               0 0 151px #f4a7bb`
             }}
           >
-            XP Leaderboard
+           $DREAM DROP XP Leaderboard
           </Text>
 
           <Box css={{ width: '100%' }}>
@@ -127,11 +127,11 @@ const LeaderboardPage: NextPage = () => {
             <Box css={{ textAlign: 'center' }}>
               <Text
                 css={{
-                  color: '#f4a7bb',
+                  color: '#f4a7e2',
                   textAlign: 'center',
                 }}
               >
-                Climb the Leaderboard by Gaining XP!
+                Earn XP Points for the $DREAM Airdrop from by listing and making bids on NFTs!
               </Text>
             </Box>
           </Box>
