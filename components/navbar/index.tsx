@@ -145,7 +145,7 @@ const Navbar = () => {
             <HoverCard.Trigger>
               <Flex align="center" css={{ height: 44, px: 24, borderRadius: 8, '&:hover': { backgroundColor: '$pinkA5' }}}>
                 <NavItem>
-                  Token
+                  Rewards
                 </NavItem>
               </Flex>
             </HoverCard.Trigger>
