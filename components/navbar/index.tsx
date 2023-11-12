@@ -1,10 +1,10 @@
 import { useRef } from 'react'
-import { Box, Flex, Card } from '../primitives'
+import { Box, Flex } from '../primitives'
 import GlobalSearch from './GlobalSearch'
 import { useRouter } from 'next/router'
 import { useHotkeys } from 'react-hotkeys-hook'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import NavItem from './NavItem'
 import HamburgerMenu from './HamburgerMenu'
@@ -14,8 +14,16 @@ import { useMarketplaceChain, useMounted } from '../../hooks'
 import { useAccount } from 'wagmi'
 import CartButton from './CartButton'
 import { AccountSidebar } from 'components/navbar/AccountSidebar'
-
-import * as HoverCard from '@radix-ui/react-hover-card'
+import { Dropdown, DropdownMenuItem } from 'components/primitives/Dropdown'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faDollarSign,
+  faChevronDown,
+  faDroplet,
+  faArrowsLeftRight,
+  faBridge
+} from "@fortawesome/free-solid-svg-icons";
+import { link } from 'fs'
 
 export const NAVBAR_HEIGHT = 81
 export const NAVBAR_HEIGHT_MOBILE = 77
@@ -141,122 +149,120 @@ const Navbar = () => {
           />
         </Flex>
         <Flex css={{ gap: '$2', mr: 12 }}>
-          <HoverCard.Root openDelay={200}>
-            <HoverCard.Trigger>
-              <Flex align="center" css={{ height: 44, px: 24, borderRadius: 8, '&:hover': { backgroundColor: '$pinkA5' }}}>
-                <NavItem>
-                  Rewards
-                </NavItem>
-              </Flex>
-            </HoverCard.Trigger>
-            <HoverCard.Content sideOffset={19} align="center">
-              <Card css={{
+        <Dropdown
+            modal={false}
+            trigger={
+              <NavItem>
+                <Flex as="span" align="center">
+             
+       
+                  {`Rewards`}
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    width={16}
+                    height={16}
+                    style={{
+                      marginLeft: 5,
+                      display: 'inline-block'
+                    }}
+                  />
+                </Flex>
+              </NavItem>
+            }
+            contentProps={{
+              asChild: true,
+              forceMount: true,
+              sideOffset: 35
+            }}
+          >
+            <DropdownMenuItem
+              as={Link}
+              href="/swap"
+              css={{
                 display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden',
-                borderRadius: 0,
-                backgroundColor: '$blackA12',
-                border: '1px solid $pinkA5'
-              }}>
-                <Flex
-                  as={Link}
-                  href={`/swap`}
-                  align="center"
-                  css={{
-                    px: 16,
-                    height: 44,
-                    borderBottom: '1px solid $pinkA5',
-                    '&:hover': {
-                      backgroundColor: '$pinkA5'
-                    }
-                  }}
-                >
-                  <NavItem
-                    active={router.pathname.includes('swap')}
-                  >
-                    {`Buy DREAM`}
-                  </NavItem>
-                </Flex>
-                <Flex
-                  as={Link}
-                  href={`/staking/pool`}
-                  align="center"
-                  css={{
-                    px: 16,
-                    height: 44,
-                    borderBottom: '1px solid $pinkA5',
-                    '&:hover': {
-                      backgroundColor: '$pinkA5'
-                    }
-                  }}
-                >
-                  <NavItem
-                    active={router.pathname.includes('staking/pool')}
-                  >
-                    {`Get veDREAM`}
-                  </NavItem>
-                </Flex>
-                <Flex
-                  as={Link}
-                  href={`/staking`}
-                  align="center"
-                  css={{
-                    px: 16,
-                    height: 44,
-                    borderBottom: '1px solid $pinkA5',
-                    '&:hover': {
-                      backgroundColor: '$pinkA5'
-                    }
-                  }}
-                >
-                  <NavItem
-                    active={router.pathname.includes('staking')}
-                  >
-                    {`Staking Rewards`}
-                  </NavItem>
-                </Flex>
-              </Card>
-            </HoverCard.Content>
-          </HoverCard.Root>
-          <HoverCard.Root openDelay={200}>
-            <HoverCard.Trigger>
-              <Flex align="center" css={{ height: 44, px: 24, borderRadius: 8, '&:hover': { backgroundColor: '$pinkA5' }}}>
-                <NavItem>
-                  Airdrop
-                </NavItem>
-              </Flex>
-            </HoverCard.Trigger>
-            <HoverCard.Content sideOffset={19} align="center">
-              <Card css={{
+                py: '$3',
+                width: '100%',
+                alignItems: 'center',
+                gap: 10
+              }}
+            >
+              <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faArrowsLeftRight} width={20} height={20}/>
+              Buy DREAM
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              as={Link}
+              href="/staking/pool"
+              css={{
                 display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden',
-                borderRadius: 0,
-                backgroundColor: '$blackA12',
-                border: '1px solid $pinkA5'
-              }}>
-                <Flex
-                  as={Link}
-                  href={`/leaderboard`}
-                  align="center"
-                  css={{
-                    px: 16,
-                    height: 44,
-                    borderBottom: '1px solid $pinkA5',
-                    '&:hover': {
-                      backgroundColor: '$pinkA5'
-                    }
-                  }}
-                >
-                  <NavItem
-                    active={router.pathname.includes('leaderboard')}
-                  >
-                    Leaderboard
-                  </NavItem>
+                py: '$3',
+                width: '100%',
+                alignItems: 'center',
+                gap: 10
+              }}
+            >
+              <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faDroplet} width={20} height={20}/>
+              {`Get veDREAM`}
+    
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              as={Link}
+              href="/staking"
+              css={{
+                display: 'flex',
+                py: '$3',
+                width: '100%',
+                alignItems: 'center',
+                gap: 10
+              }}
+            >
+              <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faDollarSign} width={20} height={20}/>
+              {`Staking Rewards`}
+              
+            </DropdownMenuItem>
+            </Dropdown>
+          <Dropdown
+            modal={false}
+            trigger={
+              <NavItem>
+                <Flex as="span" align="center">
+             
+       
+                  {`Airdrop`}
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    width={16}
+                    height={16}
+                    style={{
+                      marginLeft: 5,
+                      display: 'inline-block'
+                    }}
+                  />
                 </Flex>
-              </Card>
-            </HoverCard.Content>
-          </HoverCard.Root>
+              </NavItem>
+            }
+            contentProps={{
+              asChild: true,
+              forceMount: true,
+              sideOffset: 35
+            }}
+          >
+            <DropdownMenuItem
+              as={Link}
+              href="/leaderboard"
+              css={{
+                display: 'flex',
+                py: '$3',
+                width: '100%',
+                alignItems: 'center',
+                gap: 10
+              }}
+            >
+              <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faArrowsLeftRight} width={20} height={20}/>
+              Leaderboard
+            </DropdownMenuItem>
+            </Dropdown>
+                </Flex>
+              
           {/*{isConnected && (*/}
           {/*  <Flex*/}
           {/*    as={Link}*/}
@@ -274,7 +280,7 @@ const Navbar = () => {
           {/*    <NavItem>My Assets</NavItem>*/}
           {/*  </Flex>*/}
           {/*)}*/}
-        </Flex>
+     
       </Flex>
 
       <Flex css={{ gap: '$3' }} justify="end" align="center">
