@@ -131,7 +131,7 @@ const LeaderboardPage: NextPage = () => {
                   textAlign: 'center',
                 }}
               >
-                Earn XP Points for the $DREAM Airdrop from by listing and making bids on NFTs!
+                Earn XP Points for the $DREAM Airdrop by listing and making bids on NFTs
               </Text>
             </Box>
           </Box>

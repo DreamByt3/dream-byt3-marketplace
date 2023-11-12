@@ -262,7 +262,7 @@ const PoolPage: FC<Props> = () => {
 
   const buttonText = useMemo(() => {
     if (!address) {
-      return 'Connect Wallet'
+      return 'Login'
     }
 
     if (requireETHWrap) {

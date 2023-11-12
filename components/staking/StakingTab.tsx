@@ -141,7 +141,7 @@ const StakingTab: FC<Props> = (props) => {
     }
 
     if (!address) {
-      return 'Connect Wallet'
+      return 'Login'
     }
 
     if (isZeroValue && totalValue <= BigInt(0)) {

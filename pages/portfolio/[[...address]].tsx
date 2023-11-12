@@ -486,7 +486,7 @@ const IndexPage: NextPage = () => {
               style="body1"
               css={{ color: '$gray11', textAlign: 'center', mb: '$4' }}
             >
-              Connect to DreamByt3 to trade NFTs
+              Connect to DREAMBYT3 to trade NFTs
             </Text>
             <ConnectWalletButton />
           </Flex>

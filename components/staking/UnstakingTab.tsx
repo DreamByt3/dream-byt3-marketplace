@@ -55,7 +55,7 @@ const UnStakingTab: FC<UnStakingTabProps> = (props) => {
     }
 
     if (!address) {
-      return 'Connect Wallet'
+      return 'Login'
     }
 
     if (totalValue <= BigInt(0)) {

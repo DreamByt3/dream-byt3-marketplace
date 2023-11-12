@@ -75,7 +75,7 @@ const tokenSectionLinks = [
     href: 'https://dexscreener.com/ethereum/0x28f384b76454a2b0d8e41e5b92715e9a36eda494',
   },
   {
-    name: 'Contract Address: 0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
+    name: '0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
     href: 'https://etherscan.io/token/0xEBcF2FbE20e7bBBD5232EB186B85c143d362074e',
   },
   
@@ -116,7 +116,7 @@ export const Footer = () => {
         </Flex>
       </Flex>
       <Flex direction="column">
-          <SectionTitle title="DREAM Token" />
+          <SectionTitle title="Token" />
           {tokenSectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
