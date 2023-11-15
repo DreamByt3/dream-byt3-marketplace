@@ -48,6 +48,8 @@ export const Head: FC<Props> = ({
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="DreamByt3" />
       <meta property="og:url" content="https://i.ibb.co/T2W2pbC/40-40.png"></meta>
+
+      <meta name="debank-cloud-site-verification" content="f4645100371cf978a6231170961b5041" />
     </NextHead>
   )
 }
