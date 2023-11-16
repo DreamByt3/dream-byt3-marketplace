@@ -1,6 +1,7 @@
 import {useContractReads} from "wagmi";
 import {Chain, formatUnits, ContractFunctionConfig, parseUnits} from "viem";
 import dayjs from "dayjs";
+import {mainnet} from "viem/chains";
 
 import useUSDAndNativePrice from "./useUSDAndNativePrice";
 
@@ -17,6 +18,9 @@ import {
   VE_DREAM,
   WETH_ADDRESS
 } from "../utils/contracts";
+
+
+const POOL_ADDRESS = '0x28f384b76454a2B0d8e41e5b92715E9A36edA494'
 
 const useAPR = (timestamp: number | undefined, chain: Chain) => {
   timestamp = timestamp === undefined ? dayjs().startOf('day').toDate().getTime() : timestamp
@@ -56,25 +60,25 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
   const [distributedWeth, distributedDREAM, totalSupplyVeDream, reserves] = data || []
 
   const { data: wethPrice, isLoading: isLoadingWethPrice } = useUSDAndNativePrice({
-    chainId: chain.id,
+    chainId: mainnet.id,
     contract: WETH_ADDRESS,
     price: distributedWeth?.result || BigInt(0)
   })
 
   const { data: dreamPrice, isLoading: isLoadingDREAMPrice } = useUSDAndNativePrice({
-    chainId: chain.id,
+    chainId: mainnet.id,
     contract: DREAM,
     price: distributedDREAM?.result || BigInt(0)
   })
 
   const { data: wethLiquidity, isLoading: isLoadingWethLiquidity } = useUSDAndNativePrice({
-    chainId: chain.id,
+    chainId: mainnet.id,
     contract: WETH_ADDRESS,
     price: reserves?.result?.[0] || BigInt(0)
   })
 
   const { data: dreamLiquidity, isLoading: isLoadingDreamLiquidity } = useUSDAndNativePrice({
-    chainId: chain.id,
+    chainId: mainnet.id,
     contract: DREAM,
     price: reserves?.result?.[1] || BigInt(0)
   })
