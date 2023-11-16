@@ -296,7 +296,7 @@ const StakingTab: FC<Props> = (props) => {
         >
           <CryptoCurrencyIcon
             address={DREAM_LP}
-            chainId={chain?.id}
+            chainId={mainnet.id}
             css={{
               width: 20,
               height: 20

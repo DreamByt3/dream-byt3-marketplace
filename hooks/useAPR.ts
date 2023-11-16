@@ -13,14 +13,12 @@ import {getPreviousWeek} from "../utils/date";
 import {
   DREAM,
   DREAM_LP,
-  STAKING,
   STAKING_FEE_DISTRIBUTOR,
   VE_DREAM,
-  WETH_ADDRESS
+  WETH_ADDRESS,
+  POOL_ADDRESS
 } from "../utils/contracts";
 
-
-const POOL_ADDRESS = '0x28f384b76454a2B0d8e41e5b92715E9A36edA494'
 
 const useAPR = (timestamp: number | undefined, chain: Chain) => {
   timestamp = timestamp === undefined ? dayjs().startOf('day').toDate().getTime() : timestamp
@@ -30,17 +28,17 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
     contracts: [
       {
         abi: FeeDistributorAbi,
-        address: STAKING_FEE_DISTRIBUTOR,
+        address: STAKING_FEE_DISTRIBUTOR as `0x${string}`,
         chainId: chain?.id,
         functionName: 'getTokensDistributedInWeek',
-        args: [WETH_ADDRESS, BigInt(`${previousWeekUnix}`)],
+        args: [WETH_ADDRESS as `0x${string}`, BigInt(`${previousWeekUnix}`)],
       },
       {
         abi: FeeDistributorAbi,
-        address: STAKING_FEE_DISTRIBUTOR,
+        address: STAKING_FEE_DISTRIBUTOR as `0x${string}`,
         chainId: chain.id,
         functionName: 'getTokensDistributedInWeek',
-        args: [STAKING, BigInt(`${previousWeekUnix}`)],
+        args: [DREAM as `0x${string}`, BigInt(`${previousWeekUnix}`)],
       },
       {
         abi: veDREAMAbi,
@@ -54,7 +52,10 @@ const useAPR = (timestamp: number | undefined, chain: Chain) => {
         functionName: 'getReserves',
         chainId: chain?.id,
       }
-    ]
+    ],
+    allowFailure: true,
+    watch: false,
+    keepPreviousData: true
   })
 
   const [distributedWeth, distributedDREAM, totalSupplyVeDream, reserves] = data || []

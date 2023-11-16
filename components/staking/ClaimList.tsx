@@ -227,13 +227,8 @@ const ClaimList = () => {
                   width: '100%'
                 }}
               >
-                <Text style="body3">Total Rewards</Text>
-                <Text style="subtitle1" css={{ fontWeight: 'bold' }}>{`${
-                  formatBN(
-                    BigInt(wethPrice?.nativePrice || 0) +
-                    BigInt(dreamPrice?.nativePrice || 0)
-                    , 2, 18, { notation: "standard" }
-                  )} ($${formatBN(
+                <Text style="body3">Rewards in USD</Text>
+                <Text style="subtitle1" css={{ fontWeight: 'bold' }}>{`($${formatBN(
                   BigInt(wethPrice?.usdPrice || 0) +
                   BigInt(dreamPrice?.usdPrice || 0),
                   2, 6, { notation: "standard" }

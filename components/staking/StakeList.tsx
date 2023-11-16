@@ -6,7 +6,7 @@ import {Box, Button, CryptoCurrencyIcon, Flex, Text} from "../primitives";
 
 import {formatBN} from "utils/numbers";
 import dayjs from "dayjs";
-import {DREAM} from "../../utils/contracts";
+import {DREAM, DREAM_LP} from "../../utils/contracts";
 
 type Props = {
   lockedBalance: bigint
@@ -47,7 +47,7 @@ const StakeList : FC<Props> = (props) => {
             }}
           >
             <CryptoCurrencyIcon
-              address={DREAM}
+              address={DREAM_LP}
               chainId={mainnet.id}
               css={{
                 width: 20,
