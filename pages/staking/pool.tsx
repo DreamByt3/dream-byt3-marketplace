@@ -540,7 +540,7 @@ const PoolPage: FC<Props> = () => {
                   <Text
                     as={Link}
                     style="body3"
-                    href="/swap/?output=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                    href="https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
                     target="_blank"
                     css={{
                       backgroundColor: '$gray8',
@@ -560,7 +560,7 @@ const PoolPage: FC<Props> = () => {
                   <Text
                     as={Link}
                     style="body3"
-                    href="/swap/?output=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e"
+                    href="https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xebcf2fbe20e7bbbd5232eb186b85c143d362074e"
                     target="_blank"
                     css={{
                       backgroundColor: '$gray8',
@@ -727,7 +727,7 @@ const PoolPage: FC<Props> = () => {
             }
           }}
         >
-          <Text style="body3"><h2> 1. Add liquidity to the DREAM-WETH pool on Uniswap. </h2>2. Lock up the resulting DREAM/WETH LP token received (DREAM/WETH LP). <br></br> 3. The longer you lock your DREAM/WETH LP token (1 year max), the more veDREAM you get, and the greater your rewards and voting power. <Text style="body3" as={Link} css={{ fontWeight: 'bold', '&:hover': { textDecoration: 'underline' } }} href="https://docs.dreambyt3.com/dream-token/vedream-and-staking" target="_blank"><h1>Learn more about veDREAM in the docs.</h1></Text></Text>
+          <Text style="body3"><h2> 1. Add to the DREAM/WETH liquidity pool on Uniswap. </h2>2. Lock up the DREAM/WETH liquidity tokens received (DREAM/WETH LP). <br></br> 3. The longer lock of your DREAM/WETH LP tokens (max 1 year), the more veDREAM you get, and the greater your rewards and voting power. <Text style="body3" as={Link} css={{ fontWeight: 'bold', '&:hover': { textDecoration: 'underline' } }} href="https://docs.dreambyt3.com/dream-token/vedream-and-staking" target="_blank"><h1>Learn more about veDREAM in our docs.</h1></Text></Text>
         </Flex>
       </Flex>
     </Layout>
