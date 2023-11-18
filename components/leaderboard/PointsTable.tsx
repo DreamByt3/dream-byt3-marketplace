@@ -67,6 +67,18 @@ const PointsTableRow: FC<PointsTableRowProps> = ({
   const isSmallDevice = useMediaQuery({ maxWidth: 900 })
   const { theme } = useTheme()
 
+// Common style for TableCell
+  const cellStyle = {
+    border: theme
+      ? theme === 'dark'
+        ? '1px solid #39FF14'
+        : '1px solid $primary13'
+      : '1px solid $primary13',
+    textAlign: 'center',
+    pl: '$2',
+    py: '$5',
+  };
+
   return (
     <TableRow
       css={{
@@ -158,7 +170,7 @@ const PointsTableRow: FC<PointsTableRowProps> = ({
 
 const TableHeading = () => {
   const isSmallDevice = useMediaQuery({ maxWidth: 900 })
-  const headings = ['OFFER XP', 'LISTING XP', 'TOTAL XP']
+  const headings = ['LIST DREAMxp', 'BID DREAMxp', 'TOTAL DREAMxp']
   const { theme } = useTheme()
   return (
     <HeaderRow
