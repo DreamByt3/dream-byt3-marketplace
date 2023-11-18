@@ -59,12 +59,12 @@ export const LeaderboardTable: FC<Props> = ({ loading, data, disabled }) => {
           onChange={(e) => {
             setSearchWallet(e.target.value)
           }}
-          placeholder="Search Wallet Address"
+          placeholder="Search Any Wallet Address"
           style={{
-            borderRadius: '10px',
+            borderRadius: '12px',
             fontFamily: 'monospace',
             background: '#3C3C3C',
-            border: '1px solid #f4a7bb',
+            border: '1px solid #ffffff',
             width: '500px',
             maxWidth: '70vw',
             marginLeft: 'auto',
