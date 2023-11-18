@@ -67,13 +67,13 @@ const PointsTableRow: FC<PointsTableRowProps> = ({
   const isSmallDevice = useMediaQuery({ maxWidth: 900 })
   const { theme } = useTheme()
 
-// Common style for TableCell
+ // Common style for TableCell
   const cellStyle = {
     border: theme
       ? theme === 'dark'
-        ? '1px solid #39FF14'
-        : '1px solid $primary13'
-      : '1px solid $primary13',
+        ? '1px solid #7d7d7d' // Dark gray
+        : '1px solid #b0b0b0' // Light gray
+      : '1px solid #b0b0b0', // Light gray
     textAlign: 'center',
     pl: '$2',
     py: '$5',
@@ -88,53 +88,14 @@ const PointsTableRow: FC<PointsTableRowProps> = ({
         borderBottomColor: theme === 'light' ? '$primary11' : '$primary6',
       }}
     >
-      <TableCell
-        css={{
-          border: theme
-            ? theme === 'dark'
-              ? '1px solid #39FF14'
-              : '1px solid $primary13'
-            : '1px solid $primary13',
-          textAlign: 'center',
-          pl: '$2',
-          py: '$5',
-        }}
-      >
-        <Text
-          css={{
-            color: theme
-              ? theme === 'dark'
-                ? '#39FF14'
-                : '$gray11'
-              : '#39FF14',
-          }}
-        >
+      <TableCell css={cellStyle}>
+        <Text css={{ color: theme ? (theme === 'dark' ? '#7d7d7d' : '$gray11') : '#7d7d7d' }}>
           {bidPoints}
         </Text>
       </TableCell>
 
-      <TableCell
-        css={{
-          border: theme
-            ? theme === 'dark'
-              ? '1px solid #39FF14'
-              : '1px solid $primary13'
-            : '1px solid $primary13',
-          textAlign: 'center',
-          pl: '$2',
-          py: '$5',
-        }}
-      >
-        <Text
-          css={{
-            color: theme
-              ? theme === 'dark'
-                ? '#39FF14'
-                : '$gray11'
-              : '#39FF14',
-          }}
-          style="subtitle2"
-        >
+      <TableCell css={cellStyle}>
+        <Text css={{ color: theme ? (theme === 'dark' ? '#7d7d7d' : '$gray11') : '#7d7d7d' }} style="subtitle2">
           {listPoints}
         </Text>
       </TableCell>
